@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Nueva Vida App</string>
+    <string name="desarrollador">Desarrollado por : Diego Mata M.</string>
+
+    <string name="navigation_drawer_open">Open Navigation Drawer</string>
+    <string name="navigation_drawer_close">Close Navigation Drawer</string>
+
+    <!-- Menu Administrador-->
+    <string name="inicio_admin">Inicio</string>
+    <string name="perfil">Perfil Administrador</string>
+    <string name="registrar">Registrar</string>
+    <string name="lista_admin">Lista de administradores</string>
+    <string name="salir">Cerrar Sesion</string>
+
+    <!-- Menu Cliente-->
+    <string name="opcionesTXT">Opciones</string>
+    <string name="masOpcionesTXT">Más Opciones</string>
+    <string name="inicio_cliente">Inicio</string>
+    <string name="acercade">Acerca de</string>
+    <string name="compartir">Compartir</string>
+    <string name="administrador">Administrador</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>

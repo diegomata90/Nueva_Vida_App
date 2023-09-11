@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <item
+        android:id="@+id/opcionesTXT"
+        android:title="@string/opcionesTXT">
+        <menu>
+            <item
+                android:id="@+id/inicio_cliente"
+                android:icon="@drawable/home_ico"
+                android:title="@string/inicio_cliente" />
+        </menu>
+    </item>
+
+
+    <item
+        android:id="@+id/masOpcionesTXT"
+        android:title="@string/masOpcionesTXT">
+
+        <menu>
+            <item
+                android:id="@+id/acercade"
+                android:icon="@drawable/info_ico"
+                android:title="@string/acercade" />
+            <item
+                android:id="@+id/compartir"
+                android:icon="@drawable/compartir_ico"
+                android:title="@string/compartir" />
+            <item
+                android:id="@+id/administrador"
+                android:icon="@drawable/administrador_ico"
+                android:title="@string/administrador" />
+        </menu>
+
+    </item>
+
+</menu>
