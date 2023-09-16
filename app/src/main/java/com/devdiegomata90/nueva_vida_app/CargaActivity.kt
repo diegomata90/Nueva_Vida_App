@@ -27,14 +27,14 @@ class CargaActivity : AppCompatActivity() {
         // Mostrar la actividad de carga
         Handler(Looper.getMainLooper()).postDelayed({
             // Ir a la siguiente actividad
-            val intent = Intent(this@CargaActivity, MainActivity::class.java)
+            val intent = Intent(this@CargaActivity, MainActivityAdmin::class.java)
             startActivity(intent)
             finish()
         }, duracion)
 
         //Crear tipo letra personalizado
-        var typefaceCaveat = Typeface.createFromAsset(this.assets,"fons/Caveat-Medium.ttf")
-        var typefaceUbuntu =Typeface.createFromAsset(this.assets,"fons/UbuntuCondensed-Regular.ttf")
+        val typefaceCaveat = Typeface.createFromAsset(this.assets,"fons/Caveat-Medium.ttf")
+        val typefaceUbuntu =Typeface.createFromAsset(this.assets,"fons/UbuntuCondensed-Regular.ttf")
 
         app_name.typeface = typefaceCaveat
         desarrollador.typeface = typefaceUbuntu

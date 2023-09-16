@@ -1,60 +1,55 @@
 package com.devdiegomata90.nueva_vida_app.FragmentoAdmin
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.devdiegomata90.nueva_vida_app.R
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [RegistrarAdmin.newInstance] factory method to
- * create an instance of this fragment.
- */
 class RegistrarAdmin : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var fechaRegistrarAdmin: TextView
+    private lateinit var Correo :EditText
+    private lateinit var Password: EditText
+    private lateinit var Nombre:EditText
+    private lateinit var Apellidos:EditText
+    private lateinit var btnRegistrar:Button
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_registrar_admin, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_registrar_admin, container, false)
+
+        //Inicializar la variable con su respectivo campo en fragmento Registro
+        fechaRegistrarAdmin = view.findViewById(R.id.fechaRegistro)
+        Correo = view.findViewById(R.id.correo)
+        Password = view.findViewById(R.id.password)
+        Nombre = view.findViewById(R.id.nombre)
+        Apellidos = view.findViewById(R.id.apellidos)
+        btnRegistrar = view.findViewById(R.id.btnregistrar)
+
+        //Seteo de variable
+        val correo:String = Correo.text.toString()
+        val pass:String = Password.text.toString()
+
+
+
+        //Evento
+        btnRegistrar?.setOnClickListener { RegistrarAdministradores(correo , pass ) }
+
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RegistrarAdmin.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RegistrarAdmin().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
+     fun RegistrarAdministradores(correo:String, pass:String) {
+         // Tu lógica de registro aquí
+         val msg = Toast.makeText(requireContext(), "Registro correo:  $correo  contraseña: $pass", Toast.LENGTH_SHORT).show()
+     }
 }

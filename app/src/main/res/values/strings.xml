@@ -19,8 +19,16 @@
     <string name="acercade">Acerca de</string>
     <string name="compartir">Compartir</string>
     <string name="administrador">Administrador</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Registro Administrador -->
+    <string name="registroAdministrador">Registro de Administrador</string>
+    <string name="correo">Correo Electrónico</string>
+    <string name="nombre">Nombre Completo</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="password">Contraseña</string>
+    <string name="fechaRegistro">Fecha de Registro</string>
+    <string name="btnregistrar">Registrar</string>
+
 
 
 </resources>

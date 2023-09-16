@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "889991606218",
+    "project_id": "app-nueva-vida",
+    "storage_bucket": "app-nueva-vida.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:889991606218:android:921204c9dff32bc7032933",
+        "android_client_info": {
+          "package_name": "com.devdiegomata90.nueva_vida_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZOzd7icsvEu2VFYBV_cqDrOKNzQi5Uj4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

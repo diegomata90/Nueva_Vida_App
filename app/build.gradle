@@ -34,7 +34,7 @@ android {
 
 dependencies {
     implementation 'androidx.fragment:fragment-ktx:1.6.1'
-    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -43,7 +43,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'  /* MENU DRAWER */
-
-
     implementation 'com.airbnb.android:lottie:4.2.1'                /* ANIMACION CON LOTTIE */
+
+    // Import the Firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.2.3"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
 }
