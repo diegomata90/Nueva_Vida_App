@@ -1,7 +1,6 @@
 package com.devdiegomata90.nueva_vida_app.FragmentoAdmin
 
 
-import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -17,6 +16,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.devdiegomata90.nueva_vida_app.MainActivityAdmin
 import com.devdiegomata90.nueva_vida_app.R
+import com.devdiegomata90.nueva_vida_app.uitel.LoadingDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import java.time.LocalDate
@@ -32,7 +32,8 @@ class RegistrarAdmin : Fragment() {
     private lateinit var Apellidos: EditText
     private lateinit var btnRegistrar: Button
     private lateinit var auth: FirebaseAuth
-    private lateinit var progressDialog:ProgressDialog
+   // private lateinit var progressDialog:ProgressDialog
+    private lateinit var loadingDialog: LoadingDialog
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -63,6 +64,7 @@ class RegistrarAdmin : Fragment() {
         fechaRegistrarAdmin.text = Sfechaactual
 
 
+
         //Eventos
         btnRegistrar.setOnClickListener {
             //Seteo de campos
@@ -73,19 +75,24 @@ class RegistrarAdmin : Fragment() {
                 RegistrarAdministradores(correo, password)
             }
         }
-        progressDialog = ProgressDialog(activity)
-        progressDialog.setMessage("Registrando, espere por favor")
-        progressDialog.setCancelable(false)
+
+        //Inicializa el dialogo
+        loadingDialog = LoadingDialog(requireActivity())
+        loadingDialog.mensaje = "Registrando, espere por favor"
+        loadingDialog.setCancelable= false
+
 
         return view
     }
+
 
     //METODO PARA REGISTRAR ADMINISTRADORES
     @RequiresApi(Build.VERSION_CODES.O)
     fun RegistrarAdministradores(email: String, pass: String) {
 
         //Muestra el progressdialog
-        progressDialog.show()
+        loadingDialog.starLoading()
+
 
         //Inicializando Firebase Authentication
         auth = FirebaseAuth.getInstance()
@@ -96,15 +103,14 @@ class RegistrarAdmin : Fragment() {
             .addOnCompleteListener { task ->
                 // Si el administrador fue creado correctamente
                 if (task.isSuccessful) {
-                   progressDialog.dismiss()
+                 //  progressDialog.dismiss()
+                    loadingDialog.isDismiss()
                     // afirmar de que el adminstrador no es nulo
                     val user = auth.currentUser!!
 
                     //Convertir a cadena los datos de los adminstradores
                     val UID = user.uid
-                    val correo = Correo.text.toString()
-                    val pass = Password.text.toString()
-                    val nombre: String = Nombre.getText().toString()
+                    val nombre: String = Nombre.text.toString()
                     val apellidos = Apellidos.text.toString()
                     val fechaRegistro = LocalDate.now().toString()
 
@@ -112,7 +118,7 @@ class RegistrarAdmin : Fragment() {
                     //HasMap sirve para enviar datos para ser recogido en otro lado
                     val Administradores = HashMap<Any, Any>()
                     Administradores["UID"] = UID
-                    Administradores["CORREO"] = correo
+                    Administradores["CORREO"] = email
                     Administradores["PASSWORD"] = pass
                     Administradores["NOMBRES"] = nombre
                     Administradores["APELLIDOS"] = apellidos
@@ -127,7 +133,8 @@ class RegistrarAdmin : Fragment() {
                     Toast.makeText(activity, "Registro existoso", Toast.LENGTH_SHORT).show()
                     activity!!.finish()
                 } else {
-                    progressDialog.dismiss()
+                    //progressDialog.dismiss()
+                    loadingDialog.isDismiss()
                     Toast.makeText(activity, "Ha ocurrido un error", Toast.LENGTH_SHORT).show()
                 }
             }
