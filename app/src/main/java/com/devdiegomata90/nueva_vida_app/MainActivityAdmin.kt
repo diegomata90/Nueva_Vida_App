@@ -23,17 +23,15 @@ class MainActivityAdmin : AppCompatActivity(), NavigationView.OnNavigationItemSe
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var firebaseAuth: FirebaseAuth
-    private lateinit var currentUser:FirebaseUser
+    var currentUser: FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_admin)
 
         //INICIALIZAR INSTANCIA BASEDATOS
-
-        //INICIALIZAR INSTANCIA BASEDATOS
         firebaseAuth = FirebaseAuth.getInstance()
-        currentUser = firebaseAuth.getCurrentUser()!!;
+        currentUser = firebaseAuth.currentUser
 
 
         //Inicializar la barra de menu
@@ -65,9 +63,7 @@ class MainActivityAdmin : AppCompatActivity(), NavigationView.OnNavigationItemSe
             navigationView.setCheckedItem(R.id.inicio_admin)
         }
 
-
     }
-
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -96,27 +92,35 @@ class MainActivityAdmin : AppCompatActivity(), NavigationView.OnNavigationItemSe
                     ListaAdmin()
                 ).commit()
             }
-            R.id.salir -> Toast.makeText(this, "Salir", Toast.LENGTH_SHORT).show()
+            R.id.salir -> {
+                CerraSession()
+            }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 
-    fun ComprabarInicioSession() {
+    private fun ComprabarInicioSession() {
         //Validar que exista el usuario
         if (currentUser != null) {
-            Toast.makeText(this, "Session iniciada con correo " + currentUser.email, Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Session iniciada con correo " + currentUser?.email, Toast.LENGTH_LONG).show()
         } else {
-            Toast.makeText(this, "Session cerrada", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            //Si no se ha inciado sesion, es porque el usuario es un cliente
+            startActivity(Intent(this@MainActivityAdmin, MainActivity::class.java))
             finish()
         }
     }
 
+    private fun CerraSession(){
+        firebaseAuth.signOut()
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        Toast.makeText(this, "Sesion cerrada exitosamente", Toast.LENGTH_SHORT).show()
+    }
+
 
     override fun onStart() {
-        ComprabarInicioSession()
         super.onStart()
+        ComprabarInicioSession()
     }
 }

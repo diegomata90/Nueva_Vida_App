@@ -34,7 +34,7 @@ class CargaActivity : AppCompatActivity() {
 
         //Crear tipo letra personalizado
         val typefaceCaveat = Typeface.createFromAsset(this.assets,"fons/Caveat-Medium.ttf")
-        val typefaceUbuntu =Typeface.createFromAsset(this.assets,"fons/UbuntuCondensed-Regular.ttf")
+        val typefaceUbuntu =Typeface.createFromAsset(this.assets,"fons/Ubuntu.ttf")
 
         app_name.typeface = typefaceCaveat
         desarrollador.typeface = typefaceUbuntu
