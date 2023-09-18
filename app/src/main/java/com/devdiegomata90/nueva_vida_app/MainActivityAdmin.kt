@@ -1,5 +1,6 @@
 package com.devdiegomata90.nueva_vida_app
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
@@ -13,16 +14,27 @@ import com.devdiegomata90.nueva_vida_app.FragmentoAdmin.ListaAdmin
 import com.devdiegomata90.nueva_vida_app.FragmentoAdmin.PerfilAdmin
 import com.devdiegomata90.nueva_vida_app.FragmentoAdmin.RegistrarAdmin
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 
 class MainActivityAdmin : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var toggle: ActionBarDrawerToggle
+    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var currentUser:FirebaseUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_admin)
+
+        //INICIALIZAR INSTANCIA BASEDATOS
+
+        //INICIALIZAR INSTANCIA BASEDATOS
+        firebaseAuth = FirebaseAuth.getInstance()
+        currentUser = firebaseAuth.getCurrentUser()!!;
+
 
         //Inicializar la barra de menu
         val toolbar = findViewById<Toolbar>(R.id.toobarA)
@@ -52,6 +64,8 @@ class MainActivityAdmin : AppCompatActivity(), NavigationView.OnNavigationItemSe
             ).commit()
             navigationView.setCheckedItem(R.id.inicio_admin)
         }
+
+
     }
 
 
@@ -86,5 +100,23 @@ class MainActivityAdmin : AppCompatActivity(), NavigationView.OnNavigationItemSe
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    fun ComprabarInicioSession() {
+        //Validar que exista el usuario
+        if (currentUser != null) {
+            Toast.makeText(this, "Session iniciada con correo " + currentUser.email, Toast.LENGTH_LONG).show()
+        } else {
+            Toast.makeText(this, "Session cerrada", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+    }
+
+
+    override fun onStart() {
+        ComprabarInicioSession()
+        super.onStart()
     }
 }

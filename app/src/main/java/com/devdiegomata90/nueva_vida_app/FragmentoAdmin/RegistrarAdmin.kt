@@ -81,7 +81,6 @@ class RegistrarAdmin : Fragment() {
         loadingDialog.mensaje = "Registrando, espere por favor"
         loadingDialog.setCancelable= false
 
-
         return view
     }
 
