@@ -12,7 +12,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.devdiegomata90.nueva_vida_app.FragmentoCliente.AcercaDeCliente
 import com.devdiegomata90.nueva_vida_app.FragmentoCliente.CompartirCliente
 import com.devdiegomata90.nueva_vida_app.FragmentoCliente.InicioCliente
-import com.devdiegomata90.nueva_vida_app.FragmentoCliente.Login_Admin
+import com.devdiegomata90.nueva_vida_app.FragmentoCliente.LoginAdmin
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -79,7 +79,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.administrador -> {
                 supportFragmentManager.beginTransaction().replace(
                     R.id.fragment_container,
-                    Login_Admin()
+                    LoginAdmin()
                 ).commit()
             }
             R.id.salir -> {
