@@ -120,7 +120,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:background="@color/red_app"
+            android:background="@drawable/btn_personalizado"
             android:textColor="@color/white"
             android:layout_marginTop="10dp"
             android:id="@+id/btnregistrar"
