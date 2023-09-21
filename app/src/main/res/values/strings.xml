@@ -28,9 +28,11 @@
     <string name="password">Contraseña</string>
     <string name="fechaRegistro">Fecha de Registro</string>
     <string name="btnregistrar">Registrar</string>
-
-    <!-- -->
     <string name="SoloadminTXT">Solo Administradores</string>
     <string name="btnAcceder">Acceder</string>
+
+    <!-- Inicio Session-->
+    <string name="loginTXT">Login Administrador</string>
+
 
 </resources>
