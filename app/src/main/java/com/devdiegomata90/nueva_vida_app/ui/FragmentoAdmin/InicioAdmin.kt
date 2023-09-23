@@ -1,4 +1,4 @@
-package com.devdiegomata90.nueva_vida_app.FragmentoAdmin
+package com.devdiegomata90.nueva_vida_app.ui.FragmentoAdmin
 
 import android.os.Bundle
 import android.util.Log

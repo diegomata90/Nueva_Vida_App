@@ -1,4 +1,4 @@
-package com.devdiegomata90.nueva_vida_app.uitel
+package com.devdiegomata90.nueva_vida_app.ui.uitel
 
 import android.app.Activity
 import android.app.AlertDialog

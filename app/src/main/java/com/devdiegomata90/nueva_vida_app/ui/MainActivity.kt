@@ -1,4 +1,4 @@
-package com.devdiegomata90.nueva_vida_app
+package com.devdiegomata90.nueva_vida_app.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,10 +9,11 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 
-import com.devdiegomata90.nueva_vida_app.FragmentoCliente.AcercaDeCliente
-import com.devdiegomata90.nueva_vida_app.FragmentoCliente.CompartirCliente
-import com.devdiegomata90.nueva_vida_app.FragmentoCliente.InicioCliente
-import com.devdiegomata90.nueva_vida_app.FragmentoCliente.LoginAdmin
+import com.devdiegomata90.nueva_vida_app.ui.FragmentoCliente.AcercaDeCliente
+import com.devdiegomata90.nueva_vida_app.ui.FragmentoCliente.CompartirCliente
+import com.devdiegomata90.nueva_vida_app.ui.FragmentoCliente.InicioCliente
+import com.devdiegomata90.nueva_vida_app.ui.FragmentoCliente.LoginAdmin
+import com.devdiegomata90.nueva_vida_app.R
 import com.google.android.material.navigation.NavigationView
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {

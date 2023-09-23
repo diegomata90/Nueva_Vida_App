@@ -1,4 +1,4 @@
-package com.devdiegomata90.nueva_vida_app
+package com.devdiegomata90.nueva_vida_app.ui
 
 import android.content.Intent
 import android.content.res.Configuration
@@ -9,6 +9,7 @@ import android.os.Looper
 import android.widget.TextView
 import android.graphics.Typeface
 import androidx.appcompat.widget.AppCompatImageView
+import com.devdiegomata90.nueva_vida_app.R
 
 class CargaActivity : AppCompatActivity() {
 

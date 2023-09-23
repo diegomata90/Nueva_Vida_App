@@ -1,4 +1,4 @@
-package com.devdiegomata90.nueva_vida_app.FragmentoAdmin
+package com.devdiegomata90.nueva_vida_app.ui.FragmentoAdmin
 
 
 import android.content.Intent
@@ -14,9 +14,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import com.devdiegomata90.nueva_vida_app.MainActivityAdmin
+import com.devdiegomata90.nueva_vida_app.ui.MainActivityAdmin
 import com.devdiegomata90.nueva_vida_app.R
-import com.devdiegomata90.nueva_vida_app.uitel.LoadingDialog
+import com.devdiegomata90.nueva_vida_app.ui.uitel.LoadingDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import java.time.LocalDate
