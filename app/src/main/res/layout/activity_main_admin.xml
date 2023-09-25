@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="#fff"
-    tools:context=".ui.MainActivityAdmin"
+    tools:context=".ui.view.MainActivityAdmin"
     tools:openDrawer="start">
 
     <androidx.appcompat.widget.LinearLayoutCompat

@@ -1,4 +1,4 @@
-package com.devdiegomata90.nueva_vida_app.ui
+package com.devdiegomata90.nueva_vida_app.ui.view
 
 import android.content.Intent
 import android.content.res.Configuration

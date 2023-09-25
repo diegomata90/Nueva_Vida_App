@@ -1,4 +1,5 @@
 package com.devdiegomata90.nueva_vida_app.data.model
 
-class Categoria(val nombre:String) {
+data class Categoria(val nombre:String, val imagen:String) {
+    constructor() : this("", "")
 }

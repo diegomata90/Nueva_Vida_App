@@ -1,4 +1,4 @@
-package com.devdiegomata90.nueva_vida_app.ui
+package com.devdiegomata90.nueva_vida_app.ui.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -9,10 +9,10 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 
-import com.devdiegomata90.nueva_vida_app.ui.FragmentoCliente.AcercaDeCliente
-import com.devdiegomata90.nueva_vida_app.ui.FragmentoCliente.CompartirCliente
-import com.devdiegomata90.nueva_vida_app.ui.FragmentoCliente.InicioCliente
-import com.devdiegomata90.nueva_vida_app.ui.FragmentoCliente.LoginAdmin
+import com.devdiegomata90.nueva_vida_app.ui.view.FragmentoCliente.AcercaDeCliente
+import com.devdiegomata90.nueva_vida_app.ui.view.FragmentoCliente.CompartirCliente
+import com.devdiegomata90.nueva_vida_app.ui.view.FragmentoCliente.InicioCliente
+import com.devdiegomata90.nueva_vida_app.ui.view.FragmentoCliente.LoginAdmin
 import com.devdiegomata90.nueva_vida_app.R
 import com.google.android.material.navigation.NavigationView
 

@@ -1,4 +1,4 @@
-package com.devdiegomata90.nueva_vida_app.ui.FragmentoCliente
+package com.devdiegomata90.nueva_vida_app.ui.view.FragmentoCliente
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import com.devdiegomata90.nueva_vida_app.ui.InicioSesion
+import com.devdiegomata90.nueva_vida_app.ui.view.InicioSesion
 import com.devdiegomata90.nueva_vida_app.R
 
 class LoginAdmin : Fragment() {

@@ -12,21 +12,21 @@
         android:theme="@style/Nueva_Vida_App"
         tools:targetApi="31">
         <activity
-            android:name=".ui.InicioSesion"
+            android:name=".ui.view.InicioSesion"
             android:exported="false" />
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.view.MainActivity"
             android:exported="false"
             android:theme="@style/Nueva_Vida_App.NoActionBar"
             ></activity>
 
         <activity
-            android:name=".ui.MainActivityAdmin"
+            android:name=".ui.view.MainActivityAdmin"
             android:exported="false"
             android:theme="@style/Nueva_Vida_App.NoActionBar"
             ></activity>
         <activity
-            android:name=".ui.CargaActivity"
+            android:name=".ui.view.CargaActivity"
             android:exported="true"
             android:theme="@style/Nueva_Vida_App.NoActionBar"
             >

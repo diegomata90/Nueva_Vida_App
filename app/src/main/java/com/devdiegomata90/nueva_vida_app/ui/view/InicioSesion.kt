@@ -1,4 +1,4 @@
-package com.devdiegomata90.nueva_vida_app.ui
+package com.devdiegomata90.nueva_vida_app.ui.view
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -9,7 +9,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.devdiegomata90.nueva_vida_app.R
-import com.devdiegomata90.nueva_vida_app.ui.uitel.LoadingDialog
+import com.devdiegomata90.nueva_vida_app.util.LoadingDialog
 import com.google.firebase.auth.FirebaseAuth
 
 

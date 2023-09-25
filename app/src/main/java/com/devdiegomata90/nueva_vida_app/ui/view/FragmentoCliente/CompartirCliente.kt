@@ -1,4 +1,4 @@
-package com.devdiegomata90.nueva_vida_app.ui.FragmentoCliente
+package com.devdiegomata90.nueva_vida_app.ui.view.FragmentoCliente
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
