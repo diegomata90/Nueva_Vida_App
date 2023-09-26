@@ -1,35 +1,218 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
     tools:context=".ui.view.FragmentoCliente.InicioCliente">
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-
-        <TextView
-            android:id="@+id/inicio_cliente"
-            android:layout_gravity="center"
-            android:textSize="30sp"
+        <!-- Contenedor Principal-->
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/inicio_cliente"
-            android:layout_marginBottom="20dp"/>
+            android:orientation="vertical">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvCategorias"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <!-- Contenedor de menu Principal-->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-        </androidx.recyclerview.widget.RecyclerView>
+                <!-- Categorias Txt-->
+                <TextView
+                    android:id="@+id/CategoriasTXT"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:padding="5dp"
+                    android:text="@string/CategoriasTXT"
+                    android:textColor="@color/titulos"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <!-- Fila 1-->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <!-- Evento-->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardEvento"
+                        android:layout_margin="5dp"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        app:cardCornerRadius="15dp"
+                        app:cardBackgroundColor="@color/menu"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/Evento"
+                            style="@style/menuApp"
+                            android:layout_margin="5dp"
+                            android:text="@string/Evento"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                        <!-- Animacion de la pagina lottie        -->
+                        <!-- Lottie: https://lottiefiles.com/ -->
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="10dp"
+                            app:lottie_autoPlay="true"
+                            app:lottie_fileName="evento_animacion.json"
+                            app:lottie_imageAssetsFolder="assets"
+                            app:lottie_loop="true" />
+
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Biblia-->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardBiblia"
+                        android:layout_margin="5dp"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        app:cardCornerRadius="15dp"
+                        app:cardBackgroundColor="@color/menu"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/Biblia"
+                            style="@style/menuApp"
+                            android:layout_margin="5dp"
+                            android:text="@string/Biblia"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                        <!-- Animacion de la pagina lottie        -->
+                        <!-- Lottie: https://lottiefiles.com/ -->
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_gravity="center"
+                            app:lottie_imageAssetsFolder="assets"
+                            app:lottie_fileName="biblia_animacion.json"
+                            app:lottie_loop="true"
+                            app:lottie_autoPlay="true"/>
+
+                    </androidx.cardview.widget.CardView>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <!-- Fila 2-->
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <!-- Audio-->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardAudio"
+                        android:layout_margin="5dp"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        app:cardCornerRadius="15dp"
+                        app:cardBackgroundColor="@color/menu"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/Audio"
+                            style="@style/menuApp"
+                            android:layout_margin="5dp"
+                            android:text="@string/Audio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                        <!-- Animacion de la pagina lottie        -->
+                        <!-- Lottie: https://lottiefiles.com/ -->
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_gravity="center"
+                            app:lottie_imageAssetsFolder="assets"
+                            app:lottie_fileName="audio_animacion.json"
+                            app:lottie_loop="true"
+                            app:lottie_autoPlay="true"/>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <!-- Video-->
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cardVideo"
+                        android:layout_margin="5dp"
+                        android:layout_width="150dp"
+                        android:layout_height="150dp"
+                        app:cardCornerRadius="15dp"
+                        app:cardBackgroundColor="@color/menu"
+                        android:layout_weight="1">
+
+                        <TextView
+                            android:id="@+id/Video"
+                            style="@style/menuApp"
+                            android:layout_margin="5dp"
+                            android:text="@string/Video"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                        <!-- Animacion de la pagina lottie        -->
+                        <!-- Lottie: https://lottiefiles.com/ -->
+
+                        <com.airbnb.lottie.LottieAnimationView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="3dp"
+                            android:layout_gravity="center"
+                            app:lottie_imageAssetsFolder="assets"
+                            app:lottie_fileName="video_animacion.json"
+                            app:lottie_loop="true"
+                            app:lottie_autoPlay="true"/>
+
+                    </androidx.cardview.widget.CardView>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
 
+            <!-- OtrasCategorías Txt-->
+            <TextView
+                android:id="@+id/OtrasCategoriasTXT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:text="@string/OtrasCategoriasTXT"
+                android:textColor="@color/titulos"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-</FrameLayout>
+            <!-- Recycleview Categoria  -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCategorias"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </RelativeLayout>
+
+
+</ScrollView>

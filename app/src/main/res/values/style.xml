@@ -15,5 +15,12 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="menuApp">
+        <item name="android:textColor">@color/textcolor_rv</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
 
 </resources>

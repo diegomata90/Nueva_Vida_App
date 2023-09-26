@@ -14,4 +14,9 @@
     <color name="red_app">#BD1D2D</color>
     <color name="red2_app">#C02A35</color>
     <color name="black_app">#201C1D</color>
+    <color name="titulos">#C02A35</color>
+    <color name="menu">#DFDFDF</color>
+    <color name="backgroud_RV">#DFDFDF</color>
+    <color name="textcolor_rv">#201C1D</color>
+
 </resources>

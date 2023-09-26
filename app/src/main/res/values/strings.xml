@@ -34,5 +34,13 @@
     <!-- Inicio Session-->
     <string name="loginTXT">Inicio como Administrador</string>
 
+    <!-- Inicio Cliente-->
+    <string name="CategoriasTXT">Categorías</string>
+    <string name="OtrasCategoriasTXT">Otras Categorías</string>
+    <string name="Evento">Evento</string>
+    <string name="Biblia">Biblia</string>
+    <string name="Audio">Audio</string>
+    <string name="Video">Video</string>
+
 
 </resources>
