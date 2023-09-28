@@ -113,7 +113,6 @@ class InicioSesion : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        @Suppress("DEPRECATION")
         onBackPressed()
         return super.onSupportNavigateUp()
     }

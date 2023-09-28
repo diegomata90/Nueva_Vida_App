@@ -42,5 +42,14 @@
     <string name="Audio">Audio</string>
     <string name="Video">Video</string>
 
+    <!-- Agregar Eventos-->
+    <string name="EventoTXT">Agregar Evento</string>
+    <string name="TituloEvento">Título</string>
+    <string name="descripcion">Descripción</string>
+    <string name="lugar">Lugar</string>
+    <string name="fecha">Seleciona la fecha del evento</string>
+    <string name="hora">Hora</string>
+    <string name="imagen">Imagen</string>
+
 
 </resources>

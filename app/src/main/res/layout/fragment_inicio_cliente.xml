@@ -51,6 +51,7 @@
                         android:layout_height="150dp"
                         app:cardCornerRadius="15dp"
                         app:cardBackgroundColor="@color/menu"
+                        app:cardElevation="5dp"
                         android:layout_weight="1">
 
                         <TextView
@@ -84,6 +85,7 @@
                         android:layout_height="150dp"
                         app:cardCornerRadius="15dp"
                         app:cardBackgroundColor="@color/menu"
+                        app:cardElevation="5dp"
                         android:layout_weight="1">
 
                         <TextView
@@ -126,6 +128,7 @@
                         android:layout_height="150dp"
                         app:cardCornerRadius="15dp"
                         app:cardBackgroundColor="@color/menu"
+                        app:cardElevation="5dp"
                         android:layout_weight="1">
 
                         <TextView
@@ -159,6 +162,7 @@
                         android:layout_height="150dp"
                         app:cardCornerRadius="15dp"
                         app:cardBackgroundColor="@color/menu"
+                        app:cardElevation="5dp"
                         android:layout_weight="1">
 
                         <TextView

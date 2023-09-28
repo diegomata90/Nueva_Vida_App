@@ -1,5 +1,6 @@
 package com.devdiegomata90.nueva_vida_app.ui.view.FragmentoCliente
 
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.data.model.Categoria
+import com.devdiegomata90.nueva_vida_app.ui.view.Evento.EventoActivity
+import com.devdiegomata90.nueva_vida_app.ui.view.MainActivityAdmin
 import com.devdiegomata90.nueva_vida_app.ui.viewmodel.CategoriasAdapter
 import com.google.firebase.database.*
 
@@ -116,20 +119,19 @@ class InicioCliente : Fragment() {
     }
 
     private fun eventos() {
+
         cardEvento.setOnClickListener{
-            Toast.makeText(requireContext(),"Ya casi esta listo la EVENTO, porfavor esperar",Toast.LENGTH_SHORT).show()
+            startActivity(Intent(requireContext(), EventoActivity::class.java))
         }
         cardBiblia.setOnClickListener {
             Toast.makeText(requireContext(),"Ya casi esta listo la BIBLIA, porfavor esperar",Toast.LENGTH_SHORT).show()
         }
         cardAudio.setOnClickListener {
-            Toast.makeText(requireContext(),"Ya casi esta listo la AUDIO, porfavor esperar",Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(),"Ya casi esta listo los AUDIO, porfavor esperar",Toast.LENGTH_SHORT).show()
         }
         cardVideo.setOnClickListener {
-            Toast.makeText(requireContext(),"Ya casi esta listo la VIDEO, porfavor esperar",Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(),"Ya casi esta listo los VIDEO, porfavor esperar",Toast.LENGTH_SHORT).show()
         }
-
-
 
     }
 
