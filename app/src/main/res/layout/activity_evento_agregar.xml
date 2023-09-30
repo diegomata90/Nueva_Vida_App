@@ -19,13 +19,25 @@
 
             <!--Nombre TXT Evento-->
             <TextView
-                android:gravity="center"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:textSize="18sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/EventoTXT" />
+                android:gravity="center"
+                android:text="@string/EventoTXT"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <!-- Animacion de la pagina lottie        -->
+            <!-- Lottie: https://lottiefiles.com/ -->
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="evento_animacion.json"
+                app:lottie_imageAssetsFolder="assets"
+                app:lottie_loop="true" />
 
             <!-- Titulo del Evento-->
             <com.google.android.material.textfield.TextInputLayout
@@ -34,11 +46,11 @@
                 android:layout_marginTop="10dp">
 
                 <EditText
-                    android:id="@+id/titulo"
-                    android:drawableStart="@drawable/email_et"
-                    android:drawablePadding="10dp"
+                    android:id="@+id/TituloEvento"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/title_et"
+                    android:drawablePadding="10dp"
                     android:hint="@string/TituloEvento" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -50,12 +62,12 @@
                 android:layout_marginTop="10dp">
 
                 <EditText
-                    android:id="@+id/descripcion"
-                    android:drawableStart="@drawable/email_et"
-                    android:drawablePadding="10dp"
+                    android:id="@+id/DescripcionEvento"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint= "@string/descripcion"
+                    android:drawableStart="@drawable/descrip_et"
+                    android:drawablePadding="10dp"
+                    android:hint="@string/DescripcionEvento"
                     android:inputType="textMultiLine" />
 
 
@@ -68,12 +80,12 @@
                 android:layout_marginTop="10dp">
 
                 <EditText
-                    android:id="@+id/lugar"
-                    android:drawableStart="@drawable/email_et"
-                    android:drawablePadding="10dp"
+                    android:id="@+id/LugarEvento"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/lugar" />
+                    android:drawableStart="@drawable/location_et"
+                    android:drawablePadding="10dp"
+                    android:hint="@string/LugarEvento" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -84,13 +96,14 @@
                 android:layout_marginTop="10dp">
 
                 <EditText
-                    android:id="@+id/fecha"
-                    android:drawableStart="@drawable/calendar_ico"
-                    android:drawablePadding="10dp"
+                    android:id="@+id/FechaEvento"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:clickable="false"
+                    android:drawableStart="@drawable/calendar_ico"
+                    android:drawablePadding="10dp"
                     android:focusable="false"
-                    android:hint="@string/fecha" />
+                    android:hint="@string/FechaEvento" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -101,19 +114,34 @@
                 android:layout_marginTop="10dp">
 
                 <EditText
-                    android:id="@+id/hora"
-                    android:drawableStart="@drawable/calendar_ico"
-                    android:drawablePadding="10dp"
+                    android:id="@+id/HoraEvento"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:clickable="false"
+                    android:drawableStart="@drawable/time_et"
+                    android:drawablePadding="10dp"
                     android:focusable="false"
-                    android:hint="@string/hora" />
+                    android:hint="@string/HoraEvento" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!--ICONO PARA ABRIR LA GALERIA-->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imagenAgregarEvento"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:src="@drawable/image_ico" />
 
-
+            <!--BOTON PARA ENVIAR EL FORMULARIO-->
+            <Button
+                android:id="@+id/PublicarEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_personalizado"
+                android:text="@string/PublicarEvento"
+                android:textColor="@color/white"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

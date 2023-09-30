@@ -32,7 +32,6 @@ class RegistrarAdmin : Fragment() {
     private lateinit var Apellidos: EditText
     private lateinit var btnRegistrar: Button
     private lateinit var auth: FirebaseAuth
-   // private lateinit var progressDialog:ProgressDialog
     private lateinit var loadingDialog: LoadingDialog
 
 

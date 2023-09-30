@@ -16,7 +16,6 @@ class DataPickerFragment(val listener:(year:Int, month:Int, day:Int) -> Unit) :
        listener(year,month,dayofMonth)
     }
 
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val c = Calendar.getInstance()
         val year = c.get(Calendar.YEAR)
