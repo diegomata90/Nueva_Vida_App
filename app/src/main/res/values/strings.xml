@@ -51,5 +51,9 @@
     <string name="HoraEvento">Hora del evento</string>
     <string name="PublicarEvento">Publicar</string>
 
+    <!-- Agregar Eventos A-->
+    <string name="EventoA">Evento Administrador</string>
+
+
 
 </resources>

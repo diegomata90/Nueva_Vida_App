@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.view.Evento.EventoActivity">
+    tools:context=".ui.view.EventoA.EventoaActivity">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center">
 
         <TextView
-            android:layout_marginStart="35dp"
             android:textStyle="bold"
             android:textSize="25sp"
-            android:text="@string/Evento"
+            android:gravity="center"
+            android:text="@string/EventoA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
-
-        <!-- Recycleview Evento  -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvEventos"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
+        <Button
+            android:id="@+id/CrearEvento"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Crear Evento" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-</ScrollView>
+</RelativeLayout>

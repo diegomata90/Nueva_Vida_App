@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="5dp"
+    android:layout_marginVertical="5dp"
+    tool:cardBackgroundColor="@color/backgroud_RV"
+    tool:cardCornerRadius="16dp">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imageEvento"
+            android:layout_width="124dp"
+            android:layout_height="124dp"
+            tools:src="@drawable/image_ico" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/TituloEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/textcolor_rv"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                tools:text="@string/TituloEvento" />
+
+            <TextView
+                android:id="@+id/FechaEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="6dp"
+                android:drawableStart="@drawable/calendar_ico"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                tools:text="@string/FechaEvento" />
+
+            <TextView
+                android:id="@+id/LugarEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:drawableStart="@drawable/location_et"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                tools:text="@string/LugarEvento"/>
+
+            <TextView
+                android:id="@+id/HoraEvento"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:drawableStart="@drawable/time_et"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                tools:text="@string/HoraEvento" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</androidx.cardview.widget.CardView>

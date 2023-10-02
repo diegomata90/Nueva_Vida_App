@@ -1,10 +1,15 @@
 package com.devdiegomata90.nueva_vida_app.ui.view.EventoA
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.data.model.Evento
@@ -13,6 +18,8 @@ import com.devdiegomata90.nueva_vida_app.util.LoadingDialog
 import com.devdiegomata90.nueva_vida_app.util.TimePickerFragment
 import com.google.firebase.database.FirebaseDatabase
 
+
+@Suppress("DEPRECATION")
 class EventoAgregarActivity : AppCompatActivity() {
 
     private lateinit var loadingDialog: LoadingDialog
@@ -24,6 +31,7 @@ class EventoAgregarActivity : AppCompatActivity() {
     private lateinit var imagenAgregarEvento: AppCompatImageView
     private lateinit var publicarEvento: Button
     private lateinit var eventoData: Evento
+    private var RutaArchivoUri: Uri? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +39,7 @@ class EventoAgregarActivity : AppCompatActivity() {
         setContentView(R.layout.activity_evento_agregar)
         initComponent()
         initUI()
+        evento()
 
         // Crear una instancia de Evento y asignarla a eventoData
         eventoData = Evento() // Esto inicializa eventoData
@@ -48,7 +57,7 @@ class EventoAgregarActivity : AppCompatActivity() {
             eventoData.fecha = fechaEvento.text.toString()
             eventoData.hora = horaEvento.text.toString()
             eventoData.lugar = lugarEvento.text.toString()
-            eventoData.imagen = "url"// pendiente implementar
+            eventoData.imagen = RutaArchivoUri.toString()
             eventoData.uid = "xyz" // Asumiendo que UID debería ser una cadena vacía aquí
 
             if (etValidado()) {
@@ -64,12 +73,6 @@ class EventoAgregarActivity : AppCompatActivity() {
     //Inicializa los elemento del xml
     private fun initComponent() {
 
-        //Inicializa el dialogo
-        loadingDialog = LoadingDialog(this)
-        loadingDialog.mensaje = "Registrando, espere por favor"
-        loadingDialog.setCancelable = false
-
-
         //Inicializar
         tituloEvento = findViewById(R.id.TituloEvento)
         descripcionEvento = findViewById(R.id.DescripcionEvento)
@@ -81,14 +84,47 @@ class EventoAgregarActivity : AppCompatActivity() {
 
     }
 
+    //Init
+    private fun initUI(){
+        //Inicializa el dialogo
+        loadingDialog = LoadingDialog(this)
+        loadingDialog.mensaje = "Registrando, espere por favor"
+        loadingDialog.setCancelable = false
+    }
+
     //Agrega evento
-    private fun initUI() {
+    private fun evento() {
 
         //Crear un evento
         fechaEvento.setOnClickListener { showDatePickerDialog() }
         horaEvento.setOnClickListener { showTimePickerDialog() }
 
+        //Agregar evento para seleccionar la imagen
+        imagenAgregarEvento.setOnClickListener {
+            seleccionarImagenDeGaleria()
+        }
     }
+
+    private fun seleccionarImagenDeGaleria() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "image/*"
+        ObtenerImagenGaleria.launch(intent)
+    }
+
+    private val ObtenerImagenGaleria =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
+            // Manejar el resultado de nuestro intent
+            if (result.resultCode == Activity.RESULT_OK) {
+                // Selección de imagen
+                val data: Intent? = result.data
+                // Obtener URI de la imagen
+                RutaArchivoUri = data?.data
+                // Mostrar la imagen en ImageView
+                imagenAgregarEvento.setImageURI(RutaArchivoUri)
+            } else {
+                Toast.makeText(this, "Cancelado", Toast.LENGTH_SHORT).show()
+            }
+        }
 
 
     //Instancia de la clase DataPickerFragment
@@ -140,7 +176,6 @@ class EventoAgregarActivity : AppCompatActivity() {
     private fun onTimeSelect(time: String) {
         horaEvento.setText("$time")
     }
-
 
     //Validacion de los campos
     private fun etValidado(): Boolean {
@@ -199,6 +234,8 @@ class EventoAgregarActivity : AppCompatActivity() {
             if (task.isSuccessful) {
                 loadingDialog.isDismiss()
                 Toast.makeText(this, "Éxito al agregar el evento", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this,EventoaActivity::class.java))
+                finish()
             } else {
                 loadingDialog.isDismiss()
                 Toast.makeText(this, "Error al agregar el evento: " + task.exception?.message, Toast.LENGTH_SHORT).show()
@@ -210,7 +247,6 @@ class EventoAgregarActivity : AppCompatActivity() {
 
     }
 
-
     //Metodo para modificar el action bar
     private fun actionBarpersonalizado(titulo: String) {
         // AFIRMAMOS QUE EL ACTIONBAR NO SEA NULO
@@ -219,7 +255,6 @@ class EventoAgregarActivity : AppCompatActivity() {
         actionBar.setDisplayHomeAsUpEnabled(true) // HABILITAMOS EL BOTON DE RETROCESO
         actionBar.setDisplayShowHomeEnabled(true)
     }
-
 
     //Regresar al actividad anterior
     override fun onSupportNavigateUp(): Boolean {
