@@ -16,7 +16,15 @@ import com.devdiegomata90.nueva_vida_app.data.model.Evento
 import com.devdiegomata90.nueva_vida_app.util.DataPickerFragment
 import com.devdiegomata90.nueva_vida_app.util.LoadingDialog
 import com.devdiegomata90.nueva_vida_app.util.TimePickerFragment
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.OnProgressListener
+import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 @Suppress("DEPRECATION")
@@ -30,9 +38,13 @@ class EventoAgregarActivity : AppCompatActivity() {
     private lateinit var horaEvento: EditText
     private lateinit var imagenAgregarEvento: AppCompatImageView
     private lateinit var publicarEvento: Button
-    private lateinit var eventoData: Evento
-    private var RutaArchivoUri: Uri? = null
+    private lateinit var nuevoEvento: Evento
+    private lateinit var mStorageReference: StorageReference
 
+
+    private var rutaSubida: String = "Eventos_Subidos"
+    private var rutaBaseDatos: String = "EVENTOS"
+    private var RutaArchivoUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,8 +53,6 @@ class EventoAgregarActivity : AppCompatActivity() {
         initUI()
         evento()
 
-        // Crear una instancia de Evento y asignarla a eventoData
-        eventoData = Evento() // Esto inicializa eventoData
 
         //Se agregar el actionBar personalizado
         actionBarpersonalizado("Nuevo Evento")
@@ -51,17 +61,8 @@ class EventoAgregarActivity : AppCompatActivity() {
         //Evento del boton publicar
         publicarEvento.setOnClickListener {
 
-            //Seteo de campos
-            eventoData.titulo = tituloEvento.text.toString()
-            eventoData.descripcion = descripcionEvento.text.toString()
-            eventoData.fecha = fechaEvento.text.toString()
-            eventoData.hora = horaEvento.text.toString()
-            eventoData.lugar = lugarEvento.text.toString()
-            eventoData.imagen = RutaArchivoUri.toString()
-            eventoData.uid = "xyz" // Asumiendo que UID debería ser una cadena vacía aquí
-
             if (etValidado()) {
-                RegistrarEvento(eventoData)
+                RegistrarEvento()
             } else {
                 Toast.makeText(this, "Revisar campos vacios", Toast.LENGTH_SHORT).show()
             }
@@ -85,7 +86,7 @@ class EventoAgregarActivity : AppCompatActivity() {
     }
 
     //Init
-    private fun initUI(){
+    private fun initUI() {
         //Inicializa el dialogo
         loadingDialog = LoadingDialog(this)
         loadingDialog.mensaje = "Registrando, espere por favor"
@@ -204,48 +205,73 @@ class EventoAgregarActivity : AppCompatActivity() {
 
 
     //Metodo para registrar evento
-    private fun RegistrarEvento(Evento: Evento) {
-        //Muestra el progressdialog
-        loadingDialog.starLoading()
+    private fun RegistrarEvento() {
 
-        //Convertir a cadena los datos de los adminstradores
-        val UID = "1"
+        val titulo = tituloEvento.text.toString()
 
-        // Crear un objeto Evento
-        val nuevoEvento = Evento(
-            null,  // El ID se generará automáticamente
-            Evento.titulo,
-            Evento.descripcion,
-            Evento.lugar,
-            Evento.fecha,
-            Evento.hora,
-            Evento.imagen,
-            Evento.uid
-        )
+        if (titulo.isEmpty() || RutaArchivoUri == null) {
+            Toast.makeText(this, "LLenar todos los campos ", Toast.LENGTH_SHORT).show()
+        } else {
+            //Muestra el progressdialog
+            loadingDialog.starLoading()
+            //Se sube la imagen al StorageFirebase
 
-        //Inicializar FirebaseDatabase
-        val database = FirebaseDatabase.getInstance()
-        val reference = database.getReference("EVENTOS")
+            val storageReference = FirebaseStorage.getInstance().reference.child(rutaSubida + "/imagen_" + System.currentTimeMillis())
 
-        // Genera un nuevo ID único para el evento
-        val eventoID = reference.push().key
+            //Se guarda la imagen en el storege de firebase
+            storageReference.putFile(RutaArchivoUri!!).addOnSuccessListener {
+                storageReference.downloadUrl.addOnSuccessListener { downloadUri ->
+                    val downloadUrl = downloadUri.toString()
+                    // Aquí puedes hacer lo que necesites con la URL de descarga
 
-        reference.child(eventoID!!).setValue(nuevoEvento).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
+                    //Inicializar FirebaseDatabase
+                    val database = FirebaseDatabase.getInstance()
+                    val reference = database.getReference(rutaBaseDatos)
+
+                    // Genera un nuevo ID único para el evento
+                    val eventoID = reference.push().key
+
+                    // Crear una instancia de Evento y asignarla a eventoData
+                    nuevoEvento = Evento() // Esto inicializa eventoData
+
+                    //Seteo de campos
+                    nuevoEvento.titulo = tituloEvento.text.toString()
+                    nuevoEvento.descripcion = descripcionEvento.text.toString()
+                    nuevoEvento.fecha = fechaEvento.text.toString()
+                    nuevoEvento.hora = horaEvento.text.toString()
+                    nuevoEvento.lugar = lugarEvento.text.toString()
+                    nuevoEvento.imagen = downloadUrl
+                    nuevoEvento.uid = "xyz" // Asumiendo que UID debería ser una cadena vacía aquí
+
+
+                    reference.child(eventoID!!).setValue(nuevoEvento).addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            loadingDialog.isDismiss()
+                            Toast.makeText(this, "Éxito al agregar el evento", Toast.LENGTH_SHORT).show()
+                            startActivity(Intent(this, EventoaActivity::class.java))
+                            finish()
+                        } else {
+                            loadingDialog.isDismiss()
+                            Toast.makeText(
+                                this,
+                                "Error al agregar el evento: " + task.exception?.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }.addOnFailureListener { e ->
+                        loadingDialog.isDismiss()
+                        Toast.makeText(this, "Error al agregar el evento: " + e.message, Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            }.addOnFailureListener { e ->
                 loadingDialog.isDismiss()
-                Toast.makeText(this, "Éxito al agregar el evento", Toast.LENGTH_SHORT).show()
-                startActivity(Intent(this,EventoaActivity::class.java))
-                finish()
-            } else {
-                loadingDialog.isDismiss()
-                Toast.makeText(this, "Error al agregar el evento: " + task.exception?.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Error al agregar la imagen: " + e.message, Toast.LENGTH_SHORT).show()
             }
-        }.addOnFailureListener { e ->
-            loadingDialog.isDismiss()
-            Toast.makeText(this, "Error al agregar el evento: " + e.message, Toast.LENGTH_SHORT).show()
-        }
 
-    }
+
+    }}
+
 
     //Metodo para modificar el action bar
     private fun actionBarpersonalizado(titulo: String) {
