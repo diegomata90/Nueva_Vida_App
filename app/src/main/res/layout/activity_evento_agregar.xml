@@ -19,6 +19,7 @@
 
             <!--Nombre TXT Evento-->
             <TextView
+                android:id="@+id/EventoTXT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -136,7 +137,7 @@
 
             <!--BOTON PARA ENVIAR EL FORMULARIO-->
             <Button
-                android:id="@+id/PublicarEvento"
+                android:id="@+id/BotonEvento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_personalizado"

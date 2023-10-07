@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -16,13 +17,12 @@ import com.devdiegomata90.nueva_vida_app.data.model.Evento
 import com.devdiegomata90.nueva_vida_app.util.DataPickerFragment
 import com.devdiegomata90.nueva_vida_app.util.LoadingDialog
 import com.devdiegomata90.nueva_vida_app.util.TimePickerFragment
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.OnProgressListener
 import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.UploadTask
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -37,14 +37,18 @@ class EventoAgregarActivity : AppCompatActivity() {
     private lateinit var fechaEvento: EditText
     private lateinit var horaEvento: EditText
     private lateinit var imagenAgregarEvento: AppCompatImageView
-    private lateinit var publicarEvento: Button
+    private lateinit var botonEvento: Button
     private lateinit var nuevoEvento: Evento
-    private lateinit var mStorageReference: StorageReference
-
+    private lateinit var actualizarEvento: Evento
+    private lateinit var eventoTXT: TextView
 
     private var rutaSubida: String = "Eventos_Subidos"
     private var rutaBaseDatos: String = "EVENTOS"
     private var RutaArchivoUri: Uri? = null
+    private lateinit var mStorageReference: StorageReference
+
+    private lateinit var firebaseAuth: FirebaseAuth
+    var currentUser: FirebaseUser? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,19 +57,43 @@ class EventoAgregarActivity : AppCompatActivity() {
         initUI()
         evento()
 
-
         //Se agregar el actionBar personalizado
         actionBarpersonalizado("Nuevo Evento")
 
+        //Se recibir los valores que viene de Viewholder para parsearlos al evento
+        //RECUPERAR DATOS RECIBIDOS
+        val intent = intent.extras
 
-        //Evento del boton publicar
-        publicarEvento.setOnClickListener {
+        //se inicializar el contenedor de los campos del intent a recibir
+        actualizarEvento = Evento()
 
-            if (etValidado()) {
-                RegistrarEvento()
-            } else {
-                Toast.makeText(this, "Revisar campos vacios", Toast.LENGTH_SHORT).show()
-            }
+        if (intent!= null) {
+
+            //Se cambia el titulo del Actionbar personalizado
+            supportActionBar!!.title = "Actualizar Evento"
+
+            //Se cambiar el titulo de la activity
+            eventoTXT.text = "Actualizar Evento"
+
+            //Cambiar el nombre al boton
+            botonEvento.text = "Actualizar"
+
+
+            //Cargar datos en el contenedor de los campos recibido del intent
+            actualizarEvento.id = intent.getString("eventoTitulo");
+            actualizarEvento.titulo = intent.getString("eventoTitulo");
+            actualizarEvento.descripcion = intent.getString("eventoDescrip");
+            actualizarEvento.fecha = intent.getString("eventoFecha")
+            actualizarEvento.lugar = intent.getString("eventoLugar");
+            actualizarEvento.hora = intent.getString("eventoHora");
+            actualizarEvento.imagen = intent.getString("eventoImagen");
+
+            //Seteo de valores recibidos en los EditText
+            tituloEvento.setText(actualizarEvento.titulo)
+            descripcionEvento.setText(actualizarEvento.descripcion)
+            fechaEvento.setText(actualizarEvento.fecha)
+            lugarEvento.setText(actualizarEvento.lugar)
+            horaEvento.setText(actualizarEvento.hora)
 
         }
 
@@ -81,7 +109,8 @@ class EventoAgregarActivity : AppCompatActivity() {
         fechaEvento = findViewById(R.id.FechaEvento)
         horaEvento = findViewById(R.id.HoraEvento)
         imagenAgregarEvento = findViewById(R.id.imagenAgregarEvento)
-        publicarEvento = findViewById(R.id.PublicarEvento)
+        botonEvento = findViewById(R.id.BotonEvento)
+        eventoTXT = findViewById(R.id.EventoTXT)
 
     }
 
@@ -104,6 +133,27 @@ class EventoAgregarActivity : AppCompatActivity() {
         imagenAgregarEvento.setOnClickListener {
             seleccionarImagenDeGaleria()
         }
+
+        //Evento del boton publicar
+        botonEvento.setOnClickListener {
+
+            //Validar los campos
+            if (etValidado()) {
+                //Revisar si el boton es para actualizar o para publicar
+                if(botonEvento.text == "Publicar"){
+                    RegistrarEvento()
+                }else {
+                    ActualizarEvento()
+                }
+            } else {
+                Toast.makeText(this, "Revisar campos vacios", Toast.LENGTH_SHORT).show()
+            }
+
+        }
+    }
+
+    private fun ActualizarEvento() {
+        Toast.makeText(this, "Actualizar Evento", Toast.LENGTH_SHORT).show()
     }
 
     private fun seleccionarImagenDeGaleria() {
@@ -142,7 +192,11 @@ class EventoAgregarActivity : AppCompatActivity() {
         //Los meses se indexan desde 0 hasta 11, donde 0 representa enero y 11 representa diciembre.
         val month = month + 1
 
-        fechaEvento.setText("$day de $mes del $year")
+        // Formatear la fecha en el formato deseado "dd-MM-yyyy"
+        val formattedDate = String.format(Locale.getDefault(), "%02d-%02d-%04d", day, month, year)
+
+        // Establecer la fecha formateada en el EditText
+        fechaEvento.setText(formattedDate)
     }
 
 
@@ -175,7 +229,23 @@ class EventoAgregarActivity : AppCompatActivity() {
 
     //Setea la hora seleccionada en el editext
     private fun onTimeSelect(time: String) {
-        horaEvento.setText("$time")
+
+        // Parsear la hora en formato "HH:mm" a una instancia de Date
+        val inputFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
+
+        try {
+            val parsedTime = inputFormat.parse(time)
+            val formattedTime = outputFormat.format(parsedTime)
+
+            // Establecer la hora formateada en el EditText
+            horaEvento.setText(formattedTime)
+
+        } catch (e: ParseException) {
+            // Manejar errores de formato de hora aquí
+            Toast.makeText(this, "Error al formatear la hora error-->$e", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     //Validacion de los campos
@@ -207,16 +277,18 @@ class EventoAgregarActivity : AppCompatActivity() {
     //Metodo para registrar evento
     private fun RegistrarEvento() {
 
-        val titulo = tituloEvento.text.toString()
+        //INICIALIZAR INSTANCIA BASEDATOS
+        firebaseAuth = FirebaseAuth.getInstance()
+        currentUser = firebaseAuth.currentUser
 
-        if (titulo.isEmpty() || RutaArchivoUri == null) {
-            Toast.makeText(this, "LLenar todos los campos ", Toast.LENGTH_SHORT).show()
+        if (RutaArchivoUri == null) {
+            Toast.makeText(this, "Seleciona una imagen para el Evento ", Toast.LENGTH_SHORT).show()
         } else {
             //Muestra el progressdialog
             loadingDialog.starLoading()
             //Se sube la imagen al StorageFirebase
 
-            val storageReference = FirebaseStorage.getInstance().reference.child(rutaSubida + "/imagen_" + System.currentTimeMillis())
+            val storageReference = FirebaseStorage.getInstance().reference.child(rutaSubida + "/im_" + System.currentTimeMillis())
 
             //Se guarda la imagen en el storege de firebase
             storageReference.putFile(RutaArchivoUri!!).addOnSuccessListener {
@@ -235,13 +307,15 @@ class EventoAgregarActivity : AppCompatActivity() {
                     nuevoEvento = Evento() // Esto inicializa eventoData
 
                     //Seteo de campos
+                    nuevoEvento.id = eventoID.toString()
                     nuevoEvento.titulo = tituloEvento.text.toString()
                     nuevoEvento.descripcion = descripcionEvento.text.toString()
                     nuevoEvento.fecha = fechaEvento.text.toString()
                     nuevoEvento.hora = horaEvento.text.toString()
                     nuevoEvento.lugar = lugarEvento.text.toString()
                     nuevoEvento.imagen = downloadUrl
-                    nuevoEvento.uid = "xyz" // Asumiendo que UID debería ser una cadena vacía aquí
+                    nuevoEvento.uid = currentUser?.email
+
 
 
                     reference.child(eventoID!!).setValue(nuevoEvento).addOnCompleteListener { task ->
@@ -288,3 +362,4 @@ class EventoAgregarActivity : AppCompatActivity() {
         return super.onSupportNavigateUp()
     }
 }
+
