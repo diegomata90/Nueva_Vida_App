@@ -35,124 +35,9 @@ class EventoaActivity : AppCompatActivity() {
 
     }
 
-    //Es metodo cuando selecion la opcion 0 modificar el opcion evento
-    fun onUpdateEventoClick(evento: Evento) {
-        // Maneja el clic en el evento aquí
-        // Opción "Actualizar" seleccionada
-
-        val context = this
-
-        //Abre una activity y le envia los datos para actualizacion.
-        val intent = Intent(context,EventoAgregarActivity::class.java)
-        intent.putExtra("eventoId",evento.id)
-        intent.putExtra("eventoTitulo",evento.titulo)
-        intent.putExtra("eventoDescrip",evento.descripcion)
-        intent.putExtra("eventoFecha",evento.fecha)
-        intent.putExtra("eventoLugar",evento.lugar)
-        intent.putExtra("eventoHora",evento.hora)
-        intent.putExtra("eventoImagen",evento.imagen)
-
-        context.startActivity(intent)
-        finish()
-    }
-
-    //Es metodo cuando selecion la opcion 1 eliminar el opcion evento
-    fun onEliminarEventoClick(evento: Evento) {
-
-        // Maneja la eliminación del evento aquí
-        val idEvento = evento.id
-
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Eliminar")
-        builder.setMessage("¿Estás seguro que quieres eliminar este evento ${evento.titulo} ?")
-            .setPositiveButton("SI") { dialog, _ ->
-                // Realiza eliminacion de la imagen
-                eliminarImagen(idEvento!!, evento.imagen!!)
-
-                /* ELIMANAR IMAGEN DE LA BD */
-
-                /* ELIMANAR IMAGEN DE LA BD */
-                val query: Query =
-                    databaseReference.orderByChild("id").equalTo(idEvento) // atributo de la basedatos peliculas
-
-                query.addListenerForSingleValueEvent(object : ValueEventListener {
-                    // Estar al pendiente de la iliminacion de la imagen
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        //Recorre toda la base datos Musica y elimina el nombre elegido
-                        for (ds in snapshot.children) {
-                            ds.ref.removeValue()
-                        }
-                        Toast.makeText(
-                            this@EventoaActivity,
-                            "Datos borrador",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {
-                        Toast.makeText(this@EventoaActivity, error.message, Toast.LENGTH_SHORT).show()
-                    }
-                })
-                /* ELIMANAR IMAGEN DEl STORAGE de la carpeta Pelicula_Subida*/
-                val storageRef = FirebaseStorage.getInstance().reference
-                storageRef.child("Eventos_Subidos/").child(evento.imagen!!).delete()
-                    .addOnSuccessListener {
-                        Toast.makeText(
-                            this@EventoaActivity,
-                            "Eliminado",
-                            Toast.LENGTH_SHORT
-                        ).show() }
-                    .addOnFailureListener {e ->
-                        Toast.makeText(
-                            this@EventoaActivity,
-                            "No se pudo eliminar -->$e",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-
-
-
-
-                // Puedes realizar cualquier otro manejo necesario aquí, como actualizar la lista
-                dialog.dismiss()
-            }
-            .setNegativeButton("NO") { dialog, _ ->
-                dialog.dismiss()
-            }
-        builder.create().show()
-    }
-
-
-
-    private fun eliminarImagen(idEvento: String, imagen: String) {
-        val storage = FirebaseStorage.getInstance()
-        val storageRef = storage.reference
-        val ref = storageRef.child(imagen)
-        ref.delete().addOnSuccessListener {
-            Toast.makeText(this, "Imagen eliminada", Toast.LENGTH_SHORT).show()
-            eliminarDatos(idEvento)
-        }.addOnFailureListener {e ->
-            Toast.makeText(this, "No se pudo eliminar la imagen FFF-->$e", Toast.LENGTH_SHORT).show()
-
-        }
-    }
-
-    private fun eliminarDatos(idEvento: String) {
-        databaseReference.child("EVENTOS").child(idEvento).removeValue().addOnSuccessListener {
-            Toast.makeText(this, "Evento eliminado", Toast.LENGTH_SHORT).show()
-            finish()
-        }.addOnFailureListener {e ->
-            Toast.makeText(this, "No se pudo eliminar el evento -->$e", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-
-
-
     private fun initComponent() {
         rvEventoA = findViewById(R.id.rvEventosA)
         databaseReference = FirebaseDatabase.getInstance().getReference("EVENTOS")
-
 
     }
 
@@ -189,6 +74,84 @@ class EventoaActivity : AppCompatActivity() {
         })
     }
 
+    //Es metodo cuando selecion la opcion 0 modificar el opcion evento
+    fun onUpdateEventoClick(evento: Evento) {
+        // Maneja el clic en el evento aquí
+        // Opción "Actualizar" seleccionada
+
+        val context = this
+
+        //Abre una activity y le envia los datos para actualizacion.
+        val intent = Intent(context,EventoAgregarActivity::class.java)
+        intent.putExtra("eventoId",evento.id)
+        intent.putExtra("eventoTitulo",evento.titulo)
+        intent.putExtra("eventoDescrip",evento.descripcion)
+        intent.putExtra("eventoFecha",evento.fecha)
+        intent.putExtra("eventoLugar",evento.lugar)
+        intent.putExtra("eventoHora",evento.hora)
+        intent.putExtra("eventoImagen",evento.imagen)
+
+        context.startActivity(intent)
+        finish()
+    }
+
+    //Es metodo cuando selecion la opcion 1 eliminar el opcion evento
+    fun onEliminarEventoClick(evento: Evento) {
+
+        // Maneja la eliminación del evento aquí
+        val idEvento = evento.id
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Eliminar")
+        builder.setMessage("¿Estás seguro que quieres eliminar este evento ${evento.titulo} ?")
+            .setPositiveButton("SI") { dialog, _ ->
+
+                /* ELIMANAR IMAGEN DE LA BD */
+                val query: Query = databaseReference.orderByChild("id").equalTo(idEvento) // atributo de la basedatos
+
+                query.addListenerForSingleValueEvent(object : ValueEventListener {
+                    // Estar al pendiente de la iliminacion de la imagen
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        //Recorre toda la base datos Evento y elimina el id elegido
+                        for (ds in snapshot.children) {
+                            ds.ref.removeValue()
+                        }
+                        Toast.makeText(
+                            this@EventoaActivity,
+                            "Datos del evento borrador",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    override fun onCancelled(error: DatabaseError) {
+                        Toast.makeText(this@EventoaActivity, "No se puedo eliminar el evento -->${error.message}", Toast.LENGTH_SHORT).show()
+                    }
+                })
+                /* ELIMANAR IMAGEN DEl STORAGE de la carpeta Eventos_Subido  */
+                val ImagenSeleccionada = FirebaseStorage.getInstance().getReferenceFromUrl(evento.imagen!!)
+                ImagenSeleccionada.delete()
+                    .addOnSuccessListener {
+                        Toast.makeText(
+                            this@EventoaActivity,
+                            "Eliminado la imagen del evento",
+                            Toast.LENGTH_SHORT
+                        ).show() }
+                    .addOnFailureListener {e ->
+                        Toast.makeText(
+                            this@EventoaActivity,
+                            "No se pudo eliminar la imagen error --> $e",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                // Puedes realizar cualquier otro manejo necesario aquí, como actualizar la lista
+                dialog.dismiss()
+            }
+            .setNegativeButton("NO") { dialog, _ ->
+                dialog.dismiss()
+            }
+        builder.create().show()
+    }
+
 
 
     //Agregarmo el menu
@@ -207,7 +170,7 @@ class EventoaActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.agregar -> {
                 startActivity(Intent(this@EventoaActivity, EventoAgregarActivity::class.java))
-                //finish()
+                finish()
             }
         }
         return super.onOptionsItemSelected(item)
