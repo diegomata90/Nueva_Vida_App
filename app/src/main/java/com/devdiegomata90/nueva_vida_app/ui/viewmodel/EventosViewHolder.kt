@@ -1,23 +1,17 @@
 package com.devdiegomata90.nueva_vida_app.ui.viewmodel
 
 import android.app.AlertDialog
-import android.content.Context
-import android.content.Intent
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.data.model.Evento
-import com.devdiegomata90.nueva_vida_app.ui.view.EventoA.EventoAgregarActivity
 import com.devdiegomata90.nueva_vida_app.ui.view.EventoA.EventoaActivity
 import com.squareup.picasso.Picasso
 
 
-
-class EventosViewHolder(view:View):RecyclerView.ViewHolder(view) {
+class EventosViewHolder(view: View):RecyclerView.ViewHolder(view) {
 
     //Pintamos las vista
     private var tituloEvento:TextView = view.findViewById(R.id.TituloEvento)
@@ -28,50 +22,32 @@ class EventosViewHolder(view:View):RecyclerView.ViewHolder(view) {
 
     private lateinit var eventoArray:Evento
 
+    //METODO PARA ALMANCENAR LA ACCION DEL ADMINISTRADOR
+
+    interface EventoClickListener {
+        fun onEventoClick(evento: Evento)
+        fun onEliminarEventoClick(evento: Evento)
+    }
+
 
     // Agregar un listener para la presión una vez
+
     init {
-        view.setOnClickListener {
-            // Maneja la acción de presión una vez aquí
-            Toast.makeText(view.context,"Has presionado click corto --> ${eventoArray.titulo}",Toast.LENGTH_SHORT).show()
-        }
-
-        // Agregar un listener para la presión larga
         view.setOnLongClickListener {
+            val opciones = arrayOf("Actualizar", "Eliminar")
 
-            //Ventana emergente
+            val builder = AlertDialog.Builder(view.context)
 
-            val context = view.context
-            val opciones = arrayOf("Actualizar", "Eliminar") //opciones del menu
-
-            val builder = AlertDialog.Builder(context)
-
-            builder.setTitle("Seleccion la accion")
-                .setItems(opciones){_, which ->
-                    when (which){
-                        0 ->{
-                            // Opción "Actualizar" seleccionada
-                            Toast.makeText(context,"Has presionado click Actualizar --> ${eventoArray.titulo}",Toast.LENGTH_SHORT).show()
-
-                            //Abre una activity y le envia los datos para actualizacion.
-                            val intent = Intent(context,EventoAgregarActivity::class.java)
-                            intent.putExtra("eventoId",eventoArray.id)
-                            intent.putExtra("eventoTitulo",eventoArray.titulo)
-                            intent.putExtra("eventoDescrip",eventoArray.descripcion)
-                            intent.putExtra("eventoFecha",eventoArray.fecha)
-                            intent.putExtra("eventoLugar",eventoArray.lugar)
-                            intent.putExtra("eventoHora",eventoArray.hora)
-                            intent.putExtra("eventoImagen",eventoArray.imagen)
-
-                            context.startActivity(intent)
+            builder.setTitle("Selecciona la acción")
+                .setItems(opciones) { _, which ->
+                    when (which) {
+                        0 -> {
+                            (view.context as? EventoaActivity)?.onUpdateEventoClick(eventoArray)
                         }
-                        1 ->{
-                            // Opción "Eliminar" seleccionada
-                            Toast.makeText(context,"Has presionado click Eliminar --> ${eventoArray.titulo}",Toast.LENGTH_SHORT).show()
+                        1 -> {
+                            (view.context as? EventoaActivity)?.onEliminarEventoClick(eventoArray)
                         }
                     }
-
-
                 }
                 .setNegativeButton("Cancelar") { dialog, _ ->
                     dialog.dismiss()
@@ -79,7 +55,7 @@ class EventosViewHolder(view:View):RecyclerView.ViewHolder(view) {
             val alertDialog = builder.create()
             alertDialog.show()
 
-            true // Devuelve true para indicar que la acción fue manejada
+            true
         }
     }
 
@@ -142,7 +118,11 @@ class EventosViewHolder(view:View):RecyclerView.ViewHolder(view) {
         // Formatear la fecha en el nuevo formato
         return "$dia de $mesTexto del $anio"
 
-}}
+}
+
+
+}
+
 
 
 

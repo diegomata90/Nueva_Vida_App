@@ -5,9 +5,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.data.model.Evento
+import com.devdiegomata90.nueva_vida_app.ui.view.EventoA.EventoaActivity
+
 
 class EventosAdapter(private val eventos: List<Evento>) :
     RecyclerView.Adapter<EventosViewHolder>() {
+    var eventoClickListener: EventoaActivity? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventosViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_evento, parent, false)
@@ -15,8 +18,14 @@ class EventosAdapter(private val eventos: List<Evento>) :
     }
 
     override fun onBindViewHolder(holder: EventosViewHolder, position: Int) {
-        holder.render(eventos[position])
+        val evento = eventos[position]
+        holder.render(evento)
+
+        holder.itemView.setOnClickListener {
+            eventoClickListener?.onUpdateEventoClick(evento)
+        }
     }
+
 
     override fun getItemCount()=eventos.size
 

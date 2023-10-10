@@ -2,8 +2,11 @@ package com.devdiegomata90.nueva_vida_app.ui.view.EventoA
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.webkit.MimeTypeMap
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -19,9 +22,14 @@ import com.devdiegomata90.nueva_vida_app.util.LoadingDialog
 import com.devdiegomata90.nueva_vida_app.util.TimePickerFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.squareup.picasso.Picasso
+import java.io.ByteArrayOutputStream
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -42,60 +50,28 @@ class EventoAgregarActivity : AppCompatActivity() {
     private lateinit var actualizarEvento: Evento
     private lateinit var eventoTXT: TextView
 
-    private var rutaSubida: String = "Eventos_Subidos"
+    private var rutaImagSubida: String = "Eventos_Subidos/"
     private var rutaBaseDatos: String = "EVENTOS"
     private var RutaArchivoUri: Uri? = null
-    private lateinit var mStorageReference: StorageReference
+
 
     private lateinit var firebaseAuth: FirebaseAuth
     var currentUser: FirebaseUser? = null
+    var mStorageReference: StorageReference? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_evento_agregar)
         initComponent()
         initUI()
-        evento()
+        eventos()
 
         //Se agregar el actionBar personalizado
         actionBarpersonalizado("Nuevo Evento")
 
-        //Se recibir los valores que viene de Viewholder para parsearlos al evento
-        //RECUPERAR DATOS RECIBIDOS
-        val intent = intent.extras
+        //Recibir los datos del intent
+        recibirEvento()
 
-        //se inicializar el contenedor de los campos del intent a recibir
-        actualizarEvento = Evento()
-
-        if (intent!= null) {
-
-            //Se cambia el titulo del Actionbar personalizado
-            supportActionBar!!.title = "Actualizar Evento"
-
-            //Se cambiar el titulo de la activity
-            eventoTXT.text = "Actualizar Evento"
-
-            //Cambiar el nombre al boton
-            botonEvento.text = "Actualizar"
-
-
-            //Cargar datos en el contenedor de los campos recibido del intent
-            actualizarEvento.id = intent.getString("eventoTitulo");
-            actualizarEvento.titulo = intent.getString("eventoTitulo");
-            actualizarEvento.descripcion = intent.getString("eventoDescrip");
-            actualizarEvento.fecha = intent.getString("eventoFecha")
-            actualizarEvento.lugar = intent.getString("eventoLugar");
-            actualizarEvento.hora = intent.getString("eventoHora");
-            actualizarEvento.imagen = intent.getString("eventoImagen");
-
-            //Seteo de valores recibidos en los EditText
-            tituloEvento.setText(actualizarEvento.titulo)
-            descripcionEvento.setText(actualizarEvento.descripcion)
-            fechaEvento.setText(actualizarEvento.fecha)
-            lugarEvento.setText(actualizarEvento.lugar)
-            horaEvento.setText(actualizarEvento.hora)
-
-        }
 
     }
 
@@ -123,7 +99,7 @@ class EventoAgregarActivity : AppCompatActivity() {
     }
 
     //Agrega evento
-    private fun evento() {
+    private fun eventos() {
 
         //Crear un evento
         fechaEvento.setOnClickListener { showDatePickerDialog() }
@@ -139,11 +115,11 @@ class EventoAgregarActivity : AppCompatActivity() {
 
             //Validar los campos
             if (etValidado()) {
-                //Revisar si el boton es para actualizar o para publicar
+                //Revisar si el boton es para actualizar o para publicar nuevo evento
                 if(botonEvento.text == "Publicar"){
                     RegistrarEvento()
                 }else {
-                    ActualizarEvento()
+                    iniciarActualizarEvento()
                 }
             } else {
                 Toast.makeText(this, "Revisar campos vacios", Toast.LENGTH_SHORT).show()
@@ -152,9 +128,6 @@ class EventoAgregarActivity : AppCompatActivity() {
         }
     }
 
-    private fun ActualizarEvento() {
-        Toast.makeText(this, "Actualizar Evento", Toast.LENGTH_SHORT).show()
-    }
 
     private fun seleccionarImagenDeGaleria() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
@@ -288,7 +261,7 @@ class EventoAgregarActivity : AppCompatActivity() {
             loadingDialog.starLoading()
             //Se sube la imagen al StorageFirebase
 
-            val storageReference = FirebaseStorage.getInstance().reference.child(rutaSubida + "/im_" + System.currentTimeMillis())
+            val storageReference = FirebaseStorage.getInstance().reference.child(rutaImagSubida + "/im_" + System.currentTimeMillis()+"."+ obtenerExtension(RutaArchivoUri!!))
 
             //Se guarda la imagen en el storege de firebase
             storageReference.putFile(RutaArchivoUri!!).addOnSuccessListener {
@@ -345,6 +318,87 @@ class EventoAgregarActivity : AppCompatActivity() {
 
 
     }}
+
+    private fun obtenerExtension(rutaArchivoUri: Uri): Any? {
+
+        // Obtener el nombre del archivo
+        val extension = MimeTypeMap.getSingleton().getExtensionFromMimeType(contentResolver.getType(RutaArchivoUri!!))
+        return extension
+    }
+
+    //Metodo para recibir y setear datos recibidos del intent para actualizar eventos
+    private fun recibirEvento(){
+        //Se recibir los valores que viene de Viewholder para parsearlos al evento
+        //RECUPERAR DATOS RECIBIDOS
+        val intent = intent.extras
+
+        //se inicializar el contenedor de los campos del intent a recibir
+        actualizarEvento = Evento()
+
+        if (intent!= null) {
+
+            //Se cambia el titulo del Actionbar personalizado
+            supportActionBar!!.title = "Actualizar Evento"
+
+            //Se cambiar el titulo de la activity
+            eventoTXT.text = "Actualizar Evento"
+
+            //Cambiar el nombre al boton
+            botonEvento.text = "Actualizar"
+
+
+            //Cargar datos en el contenedor de los campos recibido del intent
+            actualizarEvento.id = intent.getString("eventoId");
+            actualizarEvento.titulo = intent.getString("eventoTitulo");
+            actualizarEvento.descripcion = intent.getString("eventoDescrip");
+            actualizarEvento.fecha = intent.getString("eventoFecha")
+            actualizarEvento.lugar = intent.getString("eventoLugar");
+            actualizarEvento.hora = intent.getString("eventoHora");
+            actualizarEvento.imagen = intent.getString("eventoImagen");
+
+            //Seteo de valores recibidos en los EditText
+            tituloEvento.setText(actualizarEvento.titulo)
+            descripcionEvento.setText(actualizarEvento.descripcion)
+            fechaEvento.setText(actualizarEvento.fecha)
+            lugarEvento.setText(actualizarEvento.lugar)
+            horaEvento.setText(actualizarEvento.hora)
+
+            //Seteo de imagen
+            Picasso.get().load(actualizarEvento.imagen).into(imagenAgregarEvento)
+
+        }
+    }
+
+    //Metodo para actualizar evento
+    private fun iniciarActualizarEvento() {
+
+        loadingDialog.starLoading()
+        eliminarImagen()
+
+    }
+
+    private fun eliminarImagen() {
+
+        val Imagen = FirebaseStorage.getInstance().getReferenceFromUrl(actualizarEvento.imagen!!)
+
+        Imagen.delete().addOnSuccessListener {
+            loadingDialog.isDismiss()
+            Toast.makeText(this, "Imagen eliminada", Toast.LENGTH_SHORT).show()
+            //subirNuevaImagen()
+        }.addOnFailureListener { error ->
+            loadingDialog.isDismiss()
+            Toast.makeText(
+                this,
+                "Error al eliminar la imagen: " + error.message,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+
+    }
+
+
+
 
 
     //Metodo para modificar el action bar
