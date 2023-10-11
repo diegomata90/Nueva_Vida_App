@@ -2,7 +2,7 @@ package com.devdiegomata90.nueva_vida_app.ui.view.EventoA
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
+import android.graphics.Bitmap.CompressFormat.*
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
@@ -28,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.google.firebase.storage.UploadTask
 import com.squareup.picasso.Picasso
 import java.io.ByteArrayOutputStream
 import java.text.ParseException
@@ -50,14 +51,13 @@ class EventoAgregarActivity : AppCompatActivity() {
     private lateinit var actualizarEvento: Evento
     private lateinit var eventoTXT: TextView
 
-    private var rutaImagSubida: String = "Eventos_Subidos/"
+    private var rutaImageSubida: String = "Eventos_Subidos/"
     private var rutaBaseDatos: String = "EVENTOS"
     private var RutaArchivoUri: Uri? = null
 
-
     private lateinit var firebaseAuth: FirebaseAuth
     var currentUser: FirebaseUser? = null
-    var mStorageReference: StorageReference? = null
+    private lateinit var mStorageReference: StorageReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,7 +69,7 @@ class EventoAgregarActivity : AppCompatActivity() {
         //Se agregar el actionBar personalizado
         actionBarpersonalizado("Nuevo Evento")
 
-        //Recibir los datos del intent
+        //Recibir los datos del intent para modificar evento
         recibirEvento()
 
 
@@ -225,18 +225,18 @@ class EventoAgregarActivity : AppCompatActivity() {
     private fun etValidado(): Boolean {
 
         //Seteo de valores
-        val _tituloEvento = tituloEvento.text.toString()
-        val _descripcionEvento = descripcionEvento.text.toString()
-        val _lugarEvento = lugarEvento.text.toString()
-        val _fechaEvento = fechaEvento.text.toString()
-        val _horaEvento = horaEvento.text.toString()
+        val tituloEvento = tituloEvento.text.toString()
+        val descripcionEvento = descripcionEvento.text.toString()
+        val lugarEvento = lugarEvento.text.toString()
+        val fechaEvento = fechaEvento.text.toString()
+        val horaEvento = horaEvento.text.toString()
 
         return if (
-            _lugarEvento.isEmpty() || _lugarEvento.isBlank() ||
-            _tituloEvento.isEmpty() || _tituloEvento.isBlank() ||
-            _descripcionEvento.isEmpty() || _descripcionEvento.isBlank() ||
-            _fechaEvento.isEmpty() || _fechaEvento.isBlank() ||
-            _horaEvento.isEmpty() || _horaEvento.isBlank()
+            lugarEvento.isEmpty() || lugarEvento.isBlank() ||
+            tituloEvento.isEmpty() || tituloEvento.isBlank() ||
+            descripcionEvento.isEmpty() || descripcionEvento.isBlank() ||
+            fechaEvento.isEmpty() || fechaEvento.isBlank() ||
+            horaEvento.isEmpty() || horaEvento.isBlank()
 
         ) {
             Toast.makeText(this, "Campos Vacios", Toast.LENGTH_SHORT).show()
@@ -255,13 +255,14 @@ class EventoAgregarActivity : AppCompatActivity() {
         currentUser = firebaseAuth.currentUser
 
         if (RutaArchivoUri == null) {
-            Toast.makeText(this, "Seleciona una imagen para el Evento ", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Seleciona una imagen para el Evento", Toast.LENGTH_SHORT).show()
         } else {
             //Muestra el progressdialog
             loadingDialog.starLoading()
             //Se sube la imagen al StorageFirebase
 
-            val storageReference = FirebaseStorage.getInstance().reference.child(rutaImagSubida + "/im_" + System.currentTimeMillis()+"."+ obtenerExtension(RutaArchivoUri!!))
+            val storageReference = FirebaseStorage.getInstance().reference.child(rutaImageSubida + "/im_" + System.currentTimeMillis()+"."+ obtenerExtension(RutaArchivoUri!!))
+
 
             //Se guarda la imagen en el storege de firebase
             storageReference.putFile(RutaArchivoUri!!).addOnSuccessListener {
@@ -364,7 +365,13 @@ class EventoAgregarActivity : AppCompatActivity() {
             horaEvento.setText(actualizarEvento.hora)
 
             //Seteo de imagen
-            Picasso.get().load(actualizarEvento.imagen).into(imagenAgregarEvento)
+            try {
+                Picasso.get().load(actualizarEvento.imagen).into(imagenAgregarEvento)
+            } catch (e: Exception){
+                Toast.makeText(this, "Error al cargar la imagen: " + e.message, Toast.LENGTH_SHORT).show()
+                Picasso.get().load(R.drawable.categoria).into(imagenAgregarEvento)
+            }
+
 
         }
     }
@@ -373,32 +380,107 @@ class EventoAgregarActivity : AppCompatActivity() {
     private fun iniciarActualizarEvento() {
 
         loadingDialog.starLoading()
-        eliminarImagen()
+        eliminarImagenAnterior()
 
     }
 
-    private fun eliminarImagen() {
+    private fun eliminarImagenAnterior() {
 
-        val Imagen = FirebaseStorage.getInstance().getReferenceFromUrl(actualizarEvento.imagen!!)
+       val imagen = FirebaseStorage.getInstance().getReferenceFromUrl(actualizarEvento.imagen!!)
 
-        Imagen.delete().addOnSuccessListener {
+        imagen.delete()
+            .addOnSuccessListener{
+                Toast.makeText(this, "Imagen eliminada", Toast.LENGTH_SHORT).show()
+                subirNuevaImagen()
+            }
+            .addOnFailureListener{ e ->
+                Toast.makeText(this, "Error al eliminar imagen:${e.message}", Toast.LENGTH_SHORT).show()
+                loadingDialog.isDismiss()
+            }
+
+
+    }
+
+    private fun subirNuevaImagen() {
+        //Declaramos la nueva imagagen
+        val nuevaImagen = "im_"+System.currentTimeMillis().toString() + ".png"
+
+        //Referencia de almacenamiento, para que la nueva imagen se pueda guardar en esa carpeta
+        val imageStorage = FirebaseStorage.getInstance().reference.child(rutaImageSubida + nuevaImagen)
+
+        //Obtener mapa de bits de la nueva imagen seleccionada
+        val bitmapStorage = (imagenAgregarEvento.drawable as BitmapDrawable).bitmap
+
+        //Convetir bitmap a byte array
+        val byteArray = ByteArrayOutputStream()
+        //comprimir imagen
+        bitmapStorage.compress(PNG, 100, byteArray) // Convierte el bitmap a un byte array or del byteArray
+
+        //Se almacena la imagaen en una variable
+        val data = byteArray.toByteArray()
+
+        //Se almacena la imagen en el storage
+        imageStorage.putBytes(data).addOnSuccessListener {}
+
+        val uploadTask: UploadTask = imageStorage.putBytes(data)
+        uploadTask.addOnSuccessListener { taskSnapshot ->
+            Toast.makeText(this@EventoAgregarActivity, "Nueva Imagen Cargada", Toast.LENGTH_SHORT).show()
+            //obtener la URL de la imagen recien cargada
+            val uriTask = taskSnapshot.storage.downloadUrl
+            while (!uriTask.isSuccessful);
+            val downloadUri = uriTask.result
+            //actualizar la base de datos con nuevos datos
+            ActualizarImagenBD(downloadUri.toString())
+        }.addOnFailureListener { e ->
+            Toast.makeText(this@EventoAgregarActivity, "Error al subir la imagen: " + e.message, Toast.LENGTH_SHORT).show()
             loadingDialog.isDismiss()
-            Toast.makeText(this, "Imagen eliminada", Toast.LENGTH_SHORT).show()
-            //subirNuevaImagen()
-        }.addOnFailureListener { error ->
-            loadingDialog.isDismiss()
-            Toast.makeText(
-                this,
-                "Error al eliminar la imagen: " + error.message,
-                Toast.LENGTH_SHORT
-            ).show()
         }
 
 
     }
 
+    private fun ActualizarImagenBD(Uri: String) {
+        // Capturar los datos del evento y guardarlos en la base datos
+        val database = FirebaseDatabase.getInstance()
+        val reference = database.getReference(rutaBaseDatos)
 
+        //Setear los valores de los campos en la clase Evento
+        val eventoTxt = Evento()
+        eventoTxt.id = actualizarEvento.id
+        eventoTxt.titulo = tituloEvento.text.toString()
+        eventoTxt.descripcion = descripcionEvento.text.toString()
+        eventoTxt.fecha = fechaEvento.text.toString()
+        eventoTxt.hora = horaEvento.text.toString()
+        eventoTxt.lugar = lugarEvento.text.toString()
+        eventoTxt.uid = currentUser?.email
 
+        //Consuta query
+        val query = reference.orderByChild("id").equalTo(eventoTxt.id)
+
+        //Seteo de datas en la base datos
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for( ds in snapshot.children){
+                    ds.ref.child("titulo").setValue(eventoTxt.titulo)
+                    ds.ref.child("descripcion").setValue(eventoTxt.descripcion)
+                    ds.ref.child("fecha").setValue(eventoTxt.fecha)
+                    ds.ref.child("hora").setValue(eventoTxt.hora)
+                    ds.ref.child("lugar").setValue(eventoTxt.lugar)
+                    ds.ref.child("uid").setValue(eventoTxt.uid)
+                    ds.ref.child("imagen").setValue(Uri)
+                }
+                loadingDialog.isDismiss()
+                Toast.makeText(this@EventoAgregarActivity, "Evento actualizado", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(this@EventoAgregarActivity, EventoaActivity::class.java))
+                finish()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+
+    }
 
 
     //Metodo para modificar el action bar
