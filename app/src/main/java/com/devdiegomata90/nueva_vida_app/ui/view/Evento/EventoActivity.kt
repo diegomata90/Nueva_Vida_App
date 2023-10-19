@@ -56,7 +56,7 @@ class EventoActivity : AppCompatActivity() {
                 }
 
                 //Parte 1 Apartador : Conecta toda la informacion con reciclyView
-               eventosAdapter = EventosAdapter(eventoList)
+               eventosAdapter = EventosAdapter(eventoList,false)
                 rvEvento.layoutManager =
                     LinearLayoutManager(this@EventoActivity, LinearLayoutManager.VERTICAL, false)
                 rvEvento.adapter = eventosAdapter
@@ -90,4 +90,5 @@ class EventoActivity : AppCompatActivity() {
         onBackPressed()
         return super.onSupportNavigateUp()
     }
+
 }

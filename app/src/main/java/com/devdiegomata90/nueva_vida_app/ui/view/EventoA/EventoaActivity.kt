@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.data.model.Evento
 import com.devdiegomata90.nueva_vida_app.ui.viewmodel.EventosAdapter
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 
@@ -56,8 +57,12 @@ class EventoaActivity : AppCompatActivity() {
                     }
                 }
 
-                //Parte 1 Apartador : Conecta toda la informacion con reciclyView
-                eventosAdapter = EventosAdapter(eventoList)
+                // Realiza la verificación de autenticación
+                val isUserAuthenticated =  FirebaseAuth.getInstance().currentUser != null /* verifica la autenticación aquí */
+
+
+                    //Parte 1 Apartador : Conecta toda la informacion con reciclyView
+                eventosAdapter = EventosAdapter(eventoList,isUserAuthenticated)
                 rvEventoA.layoutManager =
                     LinearLayoutManager(this@EventoaActivity, LinearLayoutManager.VERTICAL, false)
                 rvEventoA.adapter = eventosAdapter
@@ -153,7 +158,6 @@ class EventoaActivity : AppCompatActivity() {
     }
 
 
-
     //Agregarmo el menu
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val menuInflater = menuInflater // CREO OBJETO TIPO MenuInflater
@@ -189,5 +193,10 @@ class EventoaActivity : AppCompatActivity() {
         onBackPressed()
         return super.onSupportNavigateUp()
     }
+
+    fun onEventoClick(evento: Evento) {
+
+    }
+
 
 }

@@ -1,17 +1,20 @@
 package com.devdiegomata90.nueva_vida_app.ui.viewmodel
 
 import android.app.AlertDialog
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.data.model.Evento
+import com.devdiegomata90.nueva_vida_app.ui.view.Evento.EventoActivity
 import com.devdiegomata90.nueva_vida_app.ui.view.EventoA.EventoaActivity
 import com.squareup.picasso.Picasso
 
 
-class EventosViewHolder(view: View):RecyclerView.ViewHolder(view) {
+class EventosViewHolder(private val view: View):RecyclerView.ViewHolder(view) {
 
     //Pintamos las vista
     private var tituloEvento:TextView = view.findViewById(R.id.TituloEvento)
@@ -19,8 +22,7 @@ class EventosViewHolder(view: View):RecyclerView.ViewHolder(view) {
     private val lugarEvento:TextView = view.findViewById(R.id.LugarEvento)
     private val horaEvento:TextView = view.findViewById(R.id.HoraEvento)
     private val imageEvento:ImageView =view.findViewById(R.id.imageEvento)
-
-    private lateinit var eventoArray:Evento
+    val VIEW = view
 
     //METODO PARA ALMANCENAR LA ACCION DEL ADMINISTRADOR
 
@@ -29,10 +31,66 @@ class EventosViewHolder(view: View):RecyclerView.ViewHolder(view) {
         fun onEliminarEventoClick(evento: Evento)
     }
 
+    fun bind(evento: Evento, isUserAuthenticated: Boolean) {
 
-    // Agregar un listener para la presión una vez
+        //Pintamos los datos
+        render(evento)
 
-    init {
+        //Damos un click al evento
+        // Agregar un OnClickListener a la vista
+        VIEW.setOnClickListener {
+            // Llamar al método onEventoClick() de la actividad
+            (VIEW.context as? EventoaActivity)?.onEventoClick(evento)
+
+            // Mostrar un mensaje cuando se hace clic
+            Toast.makeText(VIEW.context, "Has hecho clic en el evento ${evento.titulo}", Toast.LENGTH_SHORT).show()
+
+            // Agregar una línea de registro para ver si se llega a este punto
+            Log.d("Click", "Se hizo clic en un elemento del RecyclerView")
+            //true
+        }
+
+        // Verifica la autenticación antes de mostrar las opciones del onLongClick
+       view.setOnLongClickListener {
+            if (isUserAuthenticated) {
+                // Agregar una línea de registro para ver si se llega a este punto
+                Log.d("LongClick", "Se hizo LongClic en un elemento del RecyclerView")
+
+                // Mostrar las opciones
+                val opciones = arrayOf("Actualizar", "Eliminar")
+
+                val builder = AlertDialog.Builder(view.context)
+
+                builder.setTitle("Selecciona la acción")
+                    .setItems(opciones) { _, which ->
+                        when (which) {
+                            0 -> {
+                                (view.context as? EventoaActivity)?.onUpdateEventoClick(evento)
+                            }
+                            1 -> {
+                                (view.context as? EventoaActivity)?.onEliminarEventoClick(evento)
+                            }
+                        }
+                    }
+                    .setNegativeButton("Cancelar") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                val alertDialog = builder.create()
+                alertDialog.show()
+            }
+            else {
+                Toast.makeText(view.context, "Evento: ${evento.titulo}", Toast.LENGTH_SHORT).show()
+
+                // Agregar una línea de registro para ver si se llega a este punto
+                Log.d("ClienteClick", "Se hizo ClienteLogClic en un elemento del RecyclerView")
+            }
+
+            true
+        }
+
+    }
+
+  /*  init {
         view.setOnLongClickListener {
             val opciones = arrayOf("Actualizar", "Eliminar")
 
@@ -59,9 +117,9 @@ class EventosViewHolder(view: View):RecyclerView.ViewHolder(view) {
         }
     }
 
-    fun render(eventos: Evento){
+   */
 
-        eventoArray = eventos
+    fun render(eventos: Evento){
 
         //Asigna texto de basedatos al textView
         tituloEvento.text = eventos.titulo
@@ -122,6 +180,7 @@ class EventosViewHolder(view: View):RecyclerView.ViewHolder(view) {
 
 
 }
+
 
 
 

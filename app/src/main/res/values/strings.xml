@@ -49,6 +49,7 @@
     <string name="LugarEvento">Lugar</string>
     <string name="FechaEvento">Fecha del evento</string>
     <string name="HoraEvento">Hora del evento</string>
+    <string name="checkboxEnviarNotificacion">Enviar notificación</string>
     <string name="PublicarEvento">Publicar</string>
 
     <!-- Agregar Eventos A-->

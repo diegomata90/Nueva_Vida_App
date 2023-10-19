@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="5dp"
     android:layout_marginVertical="5dp"
+    android:clickable="true"
     tool:cardBackgroundColor="@color/backgroud_RV"
     tool:cardCornerRadius="16dp">
 
@@ -58,7 +59,7 @@
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:textColor="@color/black"
-                tools:text="@string/LugarEvento"/>
+                tools:text="@string/LugarEvento" />
 
             <TextView
                 android:id="@+id/HoraEvento"

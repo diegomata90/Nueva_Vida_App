@@ -1,24 +1,24 @@
 package com.devdiegomata90.nueva_vida_app.ui.view.EventoA
 
 import android.app.Activity
+import android.app.PendingIntent
 import android.content.Intent
 import android.graphics.Bitmap.CompressFormat.*
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.webkit.MimeTypeMap
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.data.model.Evento
+import com.devdiegomata90.nueva_vida_app.ui.view.Evento.EventoActivity
 import com.devdiegomata90.nueva_vida_app.util.DataPickerFragment
 import com.devdiegomata90.nueva_vida_app.util.LoadingDialog
+import com.devdiegomata90.nueva_vida_app.util.NotificationBuilder
 import com.devdiegomata90.nueva_vida_app.util.TimePickerFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -36,7 +36,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-@Suppress("DEPRECATION")
+
 class EventoAgregarActivity : AppCompatActivity() {
 
     private lateinit var loadingDialog: LoadingDialog
@@ -50,6 +50,8 @@ class EventoAgregarActivity : AppCompatActivity() {
     private lateinit var nuevoEvento: Evento
     private lateinit var actualizarEvento: Evento
     private lateinit var eventoTXT: TextView
+    private lateinit var switchEnviarNotificacion: Switch
+
 
     private var rutaImageSubida: String = "Eventos_Subidos/"
     private var rutaBaseDatos: String = "EVENTOS"
@@ -87,6 +89,7 @@ class EventoAgregarActivity : AppCompatActivity() {
         imagenAgregarEvento = findViewById(R.id.imagenAgregarEvento)
         botonEvento = findViewById(R.id.BotonEvento)
         eventoTXT = findViewById(R.id.EventoTXT)
+        switchEnviarNotificacion = findViewById(R.id.switchEnviarNotificacion)
 
     }
 
@@ -116,9 +119,9 @@ class EventoAgregarActivity : AppCompatActivity() {
             //Validar los campos
             if (etValidado()) {
                 //Revisar si el boton es para actualizar o para publicar nuevo evento
-                if(botonEvento.text == "Publicar"){
+                if (botonEvento.text == "Publicar") {
                     RegistrarEvento()
-                }else {
+                } else {
                     iniciarActualizarEvento()
                 }
             } else {
@@ -250,6 +253,9 @@ class EventoAgregarActivity : AppCompatActivity() {
     //Metodo para registrar evento
     private fun RegistrarEvento() {
 
+        // Obtener el estado del Switch
+        val enviarNotificacion = switchEnviarNotificacion.isChecked
+
         //INICIALIZAR INSTANCIA BASEDATOS
         firebaseAuth = FirebaseAuth.getInstance()
         currentUser = firebaseAuth.currentUser
@@ -261,7 +267,11 @@ class EventoAgregarActivity : AppCompatActivity() {
             loadingDialog.starLoading()
             //Se sube la imagen al StorageFirebase
 
-            val storageReference = FirebaseStorage.getInstance().reference.child(rutaImageSubida + "/im_" + System.currentTimeMillis()+"."+ obtenerExtension(RutaArchivoUri!!))
+            val storageReference = FirebaseStorage.getInstance().reference.child(
+                rutaImageSubida + "/im_" + System.currentTimeMillis() + "." + obtenerExtension(
+                    RutaArchivoUri!!
+                )
+            )
 
 
             //Se guarda la imagen en el storege de firebase
@@ -292,43 +302,59 @@ class EventoAgregarActivity : AppCompatActivity() {
 
 
 
-                    reference.child(eventoID!!).setValue(nuevoEvento).addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            loadingDialog.isDismiss()
-                            Toast.makeText(this, "Éxito al agregar el evento", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this, EventoaActivity::class.java))
-                            finish()
-                        } else {
-                            loadingDialog.isDismiss()
-                            Toast.makeText(
-                                this,
-                                "Error al agregar el evento: " + task.exception?.message,
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }.addOnFailureListener { e ->
+                    reference.child(eventoID!!).setValue(nuevoEvento)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                loadingDialog.isDismiss()
+                                Toast.makeText(
+                                    this,
+                                    "Éxito al agregar el evento",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                // Verifica si la casilla de notificación está marcada
+                                if (switchEnviarNotificacion.isChecked) {
+                                    envioNotificacion(nuevoEvento.titulo.toString(),nuevoEvento.descripcion.toString())
+                                }
+                                startActivity(Intent(this, EventoaActivity::class.java))
+                                finish()
+                            } else {
+                                loadingDialog.isDismiss()
+                                Toast.makeText(
+                                    this,
+                                    "Error al agregar el evento: " + task.exception?.message,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }.addOnFailureListener { e ->
                         loadingDialog.isDismiss()
-                        Toast.makeText(this, "Error al agregar el evento: " + e.message, Toast.LENGTH_SHORT)
+                        Toast.makeText(
+                            this,
+                            "Error al agregar el evento: " + e.message,
+                            Toast.LENGTH_SHORT
+                        )
                             .show()
                     }
                 }
             }.addOnFailureListener { e ->
                 loadingDialog.isDismiss()
-                Toast.makeText(this, "Error al agregar la imagen: " + e.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Error al agregar la imagen: " + e.message, Toast.LENGTH_SHORT)
+                    .show()
             }
 
 
-    }}
+        }
+    }
 
     private fun obtenerExtension(rutaArchivoUri: Uri): Any? {
 
         // Obtener el nombre del archivo
-        val extension = MimeTypeMap.getSingleton().getExtensionFromMimeType(contentResolver.getType(RutaArchivoUri!!))
+        val extension = MimeTypeMap.getSingleton()
+            .getExtensionFromMimeType(contentResolver.getType(RutaArchivoUri!!))
         return extension
     }
 
     //Metodo para recibir y setear datos recibidos del intent para actualizar eventos
-    private fun recibirEvento(){
+    private fun recibirEvento() {
         //Se recibir los valores que viene de Viewholder para parsearlos al evento
         //RECUPERAR DATOS RECIBIDOS
         val intent = intent.extras
@@ -336,7 +362,7 @@ class EventoAgregarActivity : AppCompatActivity() {
         //se inicializar el contenedor de los campos del intent a recibir
         actualizarEvento = Evento()
 
-        if (intent!= null) {
+        if (intent != null) {
 
             //Se cambia el titulo del Actionbar personalizado
             supportActionBar!!.title = "Actualizar Evento"
@@ -367,8 +393,9 @@ class EventoAgregarActivity : AppCompatActivity() {
             //Seteo de imagen
             try {
                 Picasso.get().load(actualizarEvento.imagen).into(imagenAgregarEvento)
-            } catch (e: Exception){
-                Toast.makeText(this, "Error al cargar la imagen: " + e.message, Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                Toast.makeText(this, "Error al cargar la imagen: " + e.message, Toast.LENGTH_SHORT)
+                    .show()
                 Picasso.get().load(R.drawable.categoria).into(imagenAgregarEvento)
             }
 
@@ -386,15 +413,16 @@ class EventoAgregarActivity : AppCompatActivity() {
 
     private fun eliminarImagenAnterior() {
 
-       val imagen = FirebaseStorage.getInstance().getReferenceFromUrl(actualizarEvento.imagen!!)
+        val imagen = FirebaseStorage.getInstance().getReferenceFromUrl(actualizarEvento.imagen!!)
 
         imagen.delete()
-            .addOnSuccessListener{
+            .addOnSuccessListener {
                 Toast.makeText(this, "Imagen eliminada", Toast.LENGTH_SHORT).show()
                 subirNuevaImagen()
             }
-            .addOnFailureListener{ e ->
-                Toast.makeText(this, "Error al eliminar imagen:${e.message}", Toast.LENGTH_SHORT).show()
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Error al eliminar imagen:${e.message}", Toast.LENGTH_SHORT)
+                    .show()
                 loadingDialog.isDismiss()
             }
 
@@ -403,10 +431,11 @@ class EventoAgregarActivity : AppCompatActivity() {
 
     private fun subirNuevaImagen() {
         //Declaramos la nueva imagagen
-        val nuevaImagen = "im_"+System.currentTimeMillis().toString() + ".png"
+        val nuevaImagen = "im_" + System.currentTimeMillis().toString() + ".png"
 
         //Referencia de almacenamiento, para que la nueva imagen se pueda guardar en esa carpeta
-        val imageStorage = FirebaseStorage.getInstance().reference.child(rutaImageSubida + nuevaImagen)
+        val imageStorage =
+            FirebaseStorage.getInstance().reference.child(rutaImageSubida + nuevaImagen)
 
         //Obtener mapa de bits de la nueva imagen seleccionada
         val bitmapStorage = (imagenAgregarEvento.drawable as BitmapDrawable).bitmap
@@ -414,7 +443,11 @@ class EventoAgregarActivity : AppCompatActivity() {
         //Convetir bitmap a byte array
         val byteArray = ByteArrayOutputStream()
         //comprimir imagen
-        bitmapStorage.compress(PNG, 100, byteArray) // Convierte el bitmap a un byte array or del byteArray
+        bitmapStorage.compress(
+            PNG,
+            100,
+            byteArray
+        ) // Convierte el bitmap a un byte array or del byteArray
 
         //Se almacena la imagaen en una variable
         val data = byteArray.toByteArray()
@@ -424,7 +457,8 @@ class EventoAgregarActivity : AppCompatActivity() {
 
         val uploadTask: UploadTask = imageStorage.putBytes(data)
         uploadTask.addOnSuccessListener { taskSnapshot ->
-            Toast.makeText(this@EventoAgregarActivity, "Nueva Imagen Cargada", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@EventoAgregarActivity, "Nueva Imagen Cargada", Toast.LENGTH_SHORT)
+                .show()
             //obtener la URL de la imagen recien cargada
             val uriTask = taskSnapshot.storage.downloadUrl
             while (!uriTask.isSuccessful);
@@ -432,7 +466,11 @@ class EventoAgregarActivity : AppCompatActivity() {
             //actualizar la base de datos con nuevos datos
             ActualizarImagenBD(downloadUri.toString())
         }.addOnFailureListener { e ->
-            Toast.makeText(this@EventoAgregarActivity, "Error al subir la imagen: " + e.message, Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this@EventoAgregarActivity,
+                "Error al subir la imagen: " + e.message,
+                Toast.LENGTH_SHORT
+            ).show()
             loadingDialog.isDismiss()
         }
 
@@ -460,7 +498,7 @@ class EventoAgregarActivity : AppCompatActivity() {
         //Seteo de datas en la base datos
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                for( ds in snapshot.children){
+                for (ds in snapshot.children) {
                     ds.ref.child("titulo").setValue(eventoTxt.titulo)
                     ds.ref.child("descripcion").setValue(eventoTxt.descripcion)
                     ds.ref.child("fecha").setValue(eventoTxt.fecha)
@@ -470,7 +508,8 @@ class EventoAgregarActivity : AppCompatActivity() {
                     ds.ref.child("imagen").setValue(Uri)
                 }
                 loadingDialog.isDismiss()
-                Toast.makeText(this@EventoAgregarActivity, "Evento actualizado", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@EventoAgregarActivity, "Evento actualizado", Toast.LENGTH_SHORT)
+                    .show()
                 startActivity(Intent(this@EventoAgregarActivity, EventoaActivity::class.java))
                 finish()
             }
@@ -480,6 +519,24 @@ class EventoAgregarActivity : AppCompatActivity() {
             }
         })
 
+    }
+
+    //Metodo para la validad si envio o notificacion
+    private fun envioNotificacion(title: String, message: String) {
+
+        // Crea un objeto NotificationBuilder
+        val notificationBuilder = NotificationBuilder(this, "my_channel")
+
+        // Crea una notificación
+        val notification = notificationBuilder.createNotification(
+            title = title,
+            message = message,
+            smallIcon = R.drawable.info_ico,
+            action = PendingIntent.getActivity(this, 0, Intent(this, EventoActivity::class.java), 0)
+        )
+
+        // Envia la notificación
+        notificationBuilder.notify(notification)
     }
 
 
@@ -498,4 +555,8 @@ class EventoAgregarActivity : AppCompatActivity() {
         return super.onSupportNavigateUp()
     }
 }
+
+
+
+
 

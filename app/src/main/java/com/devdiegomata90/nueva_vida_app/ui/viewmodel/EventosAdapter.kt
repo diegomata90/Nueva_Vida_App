@@ -8,7 +8,10 @@ import com.devdiegomata90.nueva_vida_app.data.model.Evento
 import com.devdiegomata90.nueva_vida_app.ui.view.EventoA.EventoaActivity
 
 
-class EventosAdapter(private val eventos: List<Evento>) :
+class EventosAdapter(
+    private val eventos: List<Evento>,
+    private val isUserAuthenticated: Boolean
+    ) :
     RecyclerView.Adapter<EventosViewHolder>() {
     var eventoClickListener: EventoaActivity? = null
 
@@ -19,7 +22,7 @@ class EventosAdapter(private val eventos: List<Evento>) :
 
     override fun onBindViewHolder(holder: EventosViewHolder, position: Int) {
         val evento = eventos[position]
-        holder.render(evento)
+        holder.bind(evento,isUserAuthenticated)
 
         holder.itemView.setOnClickListener {
             eventoClickListener?.onUpdateEventoClick(evento)

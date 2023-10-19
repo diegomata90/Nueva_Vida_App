@@ -50,6 +50,7 @@
                     android:id="@+id/TituloEvento"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:inputType="textCapWords|textAutoCorrect"
                     android:drawableStart="@drawable/title_et"
                     android:drawablePadding="10dp"
                     android:hint="@string/TituloEvento" />
@@ -69,7 +70,7 @@
                     android:drawableStart="@drawable/descrip_et"
                     android:drawablePadding="10dp"
                     android:hint="@string/DescripcionEvento"
-                    android:inputType="textMultiLine" />
+                    android:inputType="textCapWords|textAutoCorrect" />
 
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -86,7 +87,8 @@
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/location_et"
                     android:drawablePadding="10dp"
-                    android:hint="@string/LugarEvento" />
+                    android:hint="@string/LugarEvento"
+                    android:inputType="textCapWords|textAutoCorrect"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -125,6 +127,15 @@
                     android:hint="@string/HoraEvento" />
 
             </com.google.android.material.textfield.TextInputLayout>
+            <Switch
+                android:id="@+id/switchEnviarNotificacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/checkboxEnviarNotificacion" />
+
+
+
 
             <!--ICONO PARA ABRIR LA GALERIA-->
             <androidx.appcompat.widget.AppCompatImageView
@@ -143,6 +154,7 @@
                 android:background="@drawable/btn_personalizado"
                 android:text="@string/PublicarEvento"
                 android:textColor="@color/white"/>
+
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
