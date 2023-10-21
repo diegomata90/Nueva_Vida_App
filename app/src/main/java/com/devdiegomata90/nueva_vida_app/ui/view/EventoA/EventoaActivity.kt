@@ -11,16 +11,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.data.model.Evento
 import com.devdiegomata90.nueva_vida_app.ui.viewmodel.EventosAdapter
+import com.devdiegomata90.nueva_vida_app.ui.viewmodel.EventosViewHolder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 
 
-class EventoaActivity : AppCompatActivity() {
+class EventoaActivity : AppCompatActivity(), EventosViewHolder.onItemClickListener {
 
     private lateinit var rvEventoA: RecyclerView
     private lateinit var eventosAdapter: EventosAdapter
     private lateinit var databaseReference: DatabaseReference
+    private var eventoList: List<Evento> = emptyList() // Definición de la lista
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,11 +60,12 @@ class EventoaActivity : AppCompatActivity() {
                 }
 
                 // Realiza la verificación de autenticación
-                val isUserAuthenticated =  FirebaseAuth.getInstance().currentUser != null /* verifica la autenticación aquí */
+                val isUserAuthenticated =
+                    FirebaseAuth.getInstance().currentUser != null /* verifica la autenticación aquí */
 
 
-                    //Parte 1 Apartador : Conecta toda la informacion con reciclyView
-                eventosAdapter = EventosAdapter(eventoList,isUserAuthenticated)
+                //Parte 1 Apartador : Conecta toda la informacion con reciclyView
+                eventosAdapter = EventosAdapter(eventoList,this@EventoaActivity)
                 rvEventoA.layoutManager =
                     LinearLayoutManager(this@EventoaActivity, LinearLayoutManager.VERTICAL, false)
                 rvEventoA.adapter = eventosAdapter
@@ -77,6 +80,7 @@ class EventoaActivity : AppCompatActivity() {
                 ).show()
             }
         })
+
     }
 
     //Es metodo cuando selecion la opcion 0 modificar el opcion evento
@@ -87,14 +91,14 @@ class EventoaActivity : AppCompatActivity() {
         val context = this
 
         //Abre una activity y le envia los datos para actualizacion.
-        val intent = Intent(context,EventoAgregarActivity::class.java)
-        intent.putExtra("eventoId",evento.id)
-        intent.putExtra("eventoTitulo",evento.titulo)
-        intent.putExtra("eventoDescrip",evento.descripcion)
-        intent.putExtra("eventoFecha",evento.fecha)
-        intent.putExtra("eventoLugar",evento.lugar)
-        intent.putExtra("eventoHora",evento.hora)
-        intent.putExtra("eventoImagen",evento.imagen)
+        val intent = Intent(context, EventoAgregarActivity::class.java)
+        intent.putExtra("eventoId", evento.id)
+        intent.putExtra("eventoTitulo", evento.titulo)
+        intent.putExtra("eventoDescrip", evento.descripcion)
+        intent.putExtra("eventoFecha", evento.fecha)
+        intent.putExtra("eventoLugar", evento.lugar)
+        intent.putExtra("eventoHora", evento.hora)
+        intent.putExtra("eventoImagen", evento.imagen)
 
         context.startActivity(intent)
         finish()
@@ -112,7 +116,8 @@ class EventoaActivity : AppCompatActivity() {
             .setPositiveButton("SI") { dialog, _ ->
 
                 /* ELIMANAR IMAGEN DE LA BD */
-                val query: Query = databaseReference.orderByChild("id").equalTo(idEvento) // atributo de la basedatos
+                val query: Query = databaseReference.orderByChild("id")
+                    .equalTo(idEvento) // atributo de la basedatos
 
                 query.addListenerForSingleValueEvent(object : ValueEventListener {
                     // Estar al pendiente de la iliminacion de la imagen
@@ -127,20 +132,27 @@ class EventoaActivity : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
+
                     override fun onCancelled(error: DatabaseError) {
-                        Toast.makeText(this@EventoaActivity, "No se puedo eliminar el evento -->${error.message}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@EventoaActivity,
+                            "No se puedo eliminar el evento -->${error.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 })
                 /* ELIMANAR IMAGEN DEl STORAGE de la carpeta Eventos_Subido  */
-                val ImagenSeleccionada = FirebaseStorage.getInstance().getReferenceFromUrl(evento.imagen!!)
+                val ImagenSeleccionada =
+                    FirebaseStorage.getInstance().getReferenceFromUrl(evento.imagen!!)
                 ImagenSeleccionada.delete()
                     .addOnSuccessListener {
                         Toast.makeText(
                             this@EventoaActivity,
                             "Eliminado la imagen del evento",
                             Toast.LENGTH_SHORT
-                        ).show() }
-                    .addOnFailureListener {e ->
+                        ).show()
+                    }
+                    .addOnFailureListener { e ->
                         Toast.makeText(
                             this@EventoaActivity,
                             "No se pudo eliminar la imagen error --> $e",
@@ -194,9 +206,39 @@ class EventoaActivity : AppCompatActivity() {
         return super.onSupportNavigateUp()
     }
 
-    fun onEventoClick(evento: Evento) {
+    override fun onClick(position: Int) {
+        Toast.makeText(this, "OnClick ${position.toString()}", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onLongClick(evento: Evento) {
+
+        // Mostrar las opciones
+        val opciones = arrayOf("Actualizar", "Eliminar")
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Selecciona la acción")
+            .setItems(opciones) { _, which ->
+                when (which) {
+                    0 -> {
+                       // Toast.makeText(this,"Selecionando: Actualizar",Toast.LENGTH_SHORT).show()
+                        onUpdateEventoClick(evento)
+                    }
+                    1 -> {
+                        //(view.context as? EventoaActivity)?.onEliminarEventoClick(evento)
+                        //Toast.makeText(this,"Selecionando: Eliminar",Toast.LENGTH_SHORT).show()
+                        onEliminarEventoClick(evento)
+                    }
+                }
+            }
+            .setNegativeButton("Cancelar") { dialog, _ ->
+                dialog.dismiss()
+            }
+        val alertDialog = builder.create()
+        alertDialog.show()
 
     }
+
+
 
 
 }

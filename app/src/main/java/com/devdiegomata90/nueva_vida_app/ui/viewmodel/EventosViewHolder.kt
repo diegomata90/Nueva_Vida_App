@@ -1,20 +1,15 @@
 package com.devdiegomata90.nueva_vida_app.ui.viewmodel
 
-import android.app.AlertDialog
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.data.model.Evento
-import com.devdiegomata90.nueva_vida_app.ui.view.Evento.EventoActivity
-import com.devdiegomata90.nueva_vida_app.ui.view.EventoA.EventoaActivity
 import com.squareup.picasso.Picasso
 
 
-class EventosViewHolder(private val view: View):RecyclerView.ViewHolder(view) {
+class EventosViewHolder(private val view: View, onItemClickListener: onItemClickListener):RecyclerView.ViewHolder(view) {
 
     //Pintamos las vista
     private var tituloEvento:TextView = view.findViewById(R.id.TituloEvento)
@@ -22,115 +17,42 @@ class EventosViewHolder(private val view: View):RecyclerView.ViewHolder(view) {
     private val lugarEvento:TextView = view.findViewById(R.id.LugarEvento)
     private val horaEvento:TextView = view.findViewById(R.id.HoraEvento)
     private val imageEvento:ImageView =view.findViewById(R.id.imageEvento)
-    val VIEW = view
+    lateinit var EventoArray:Evento
+
 
     //METODO PARA ALMANCENAR LA ACCION DEL ADMINISTRADOR
+    interface onItemClickListener {
+        fun onClick(position: Int)
+        fun onLongClick(evento:Evento)
 
-    interface EventoClickListener {
-        fun onEventoClick(evento: Evento)
-        fun onEliminarEventoClick(evento: Evento)
     }
 
-    fun bind(evento: Evento, isUserAuthenticated: Boolean) {
-
-        //Pintamos los datos
-        render(evento)
-
-        //Damos un click al evento
-        // Agregar un OnClickListener a la vista
-        VIEW.setOnClickListener {
-            // Llamar al método onEventoClick() de la actividad
-            (VIEW.context as? EventoaActivity)?.onEventoClick(evento)
-
-            // Mostrar un mensaje cuando se hace clic
-            Toast.makeText(VIEW.context, "Has hecho clic en el evento ${evento.titulo}", Toast.LENGTH_SHORT).show()
-
-            // Agregar una línea de registro para ver si se llega a este punto
-            Log.d("Click", "Se hizo clic en un elemento del RecyclerView")
-            //true
-        }
-
-        // Verifica la autenticación antes de mostrar las opciones del onLongClick
-       view.setOnLongClickListener {
-            if (isUserAuthenticated) {
-                // Agregar una línea de registro para ver si se llega a este punto
-                Log.d("LongClick", "Se hizo LongClic en un elemento del RecyclerView")
-
-                // Mostrar las opciones
-                val opciones = arrayOf("Actualizar", "Eliminar")
-
-                val builder = AlertDialog.Builder(view.context)
-
-                builder.setTitle("Selecciona la acción")
-                    .setItems(opciones) { _, which ->
-                        when (which) {
-                            0 -> {
-                                (view.context as? EventoaActivity)?.onUpdateEventoClick(evento)
-                            }
-                            1 -> {
-                                (view.context as? EventoaActivity)?.onEliminarEventoClick(evento)
-                            }
-                        }
-                    }
-                    .setNegativeButton("Cancelar") { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                val alertDialog = builder.create()
-                alertDialog.show()
+    init {
+            view.setOnClickListener {
+                onItemClickListener.onClick(adapterPosition)
             }
-            else {
-                Toast.makeText(view.context, "Evento: ${evento.titulo}", Toast.LENGTH_SHORT).show()
-
-                // Agregar una línea de registro para ver si se llega a este punto
-                Log.d("ClienteClick", "Se hizo ClienteLogClic en un elemento del RecyclerView")
-            }
-
-            true
-        }
-
-    }
-
-  /*  init {
-        view.setOnLongClickListener {
-            val opciones = arrayOf("Actualizar", "Eliminar")
-
-            val builder = AlertDialog.Builder(view.context)
-
-            builder.setTitle("Selecciona la acción")
-                .setItems(opciones) { _, which ->
-                    when (which) {
-                        0 -> {
-                            (view.context as? EventoaActivity)?.onUpdateEventoClick(eventoArray)
-                        }
-                        1 -> {
-                            (view.context as? EventoaActivity)?.onEliminarEventoClick(eventoArray)
-                        }
-                    }
-                }
-                .setNegativeButton("Cancelar") { dialog, _ ->
-                    dialog.dismiss()
-                }
-            val alertDialog = builder.create()
-            alertDialog.show()
-
-            true
+            view.setOnLongClickListener {
+                onItemClickListener.onLongClick(EventoArray)
+                return@setOnLongClickListener true
         }
     }
 
-   */
 
-    fun render(eventos: Evento){
+    fun bind(evento: Evento){
+
+        //Asignamos los datos
+        EventoArray = evento
 
         //Asigna texto de basedatos al textView
-        tituloEvento.text = eventos.titulo
-        fechaEvento.text = eventos.fecha
-        lugarEvento.text = eventos.lugar
-        horaEvento.text = eventos.hora
-        val imagen = eventos.imagen
+        tituloEvento.text = evento.titulo
+        fechaEvento.text = evento.fecha
+        lugarEvento.text = evento.lugar
+        horaEvento.text = evento.hora
+        val imagen = evento.imagen
 
 
         // Dar formato a la fecha "05 de octubre del 2023"
-        val fechaSinFormato = eventos.fecha.toString()
+        val fechaSinFormato = evento.fecha.toString()
         val fechaFormateada = formatFecha(fechaSinFormato)
         fechaEvento.text = fechaFormateada
 
@@ -149,7 +71,7 @@ class EventosViewHolder(private val view: View):RecyclerView.ViewHolder(view) {
         
     }
 
-      private fun formatFecha(fechaSinFormato: String): String {
+    private fun formatFecha(fechaSinFormato: String): String {
         // Dividir la fecha en sus componentes
         val partes = fechaSinFormato.split("-")
         if (partes.size != 3) {
@@ -180,6 +102,9 @@ class EventosViewHolder(private val view: View):RecyclerView.ViewHolder(view) {
 
 
 }
+
+
+
 
 
 

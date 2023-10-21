@@ -1,8 +1,5 @@
 package com.devdiegomata90.nueva_vida_app.ui.view.Evento
 
-import android.content.Intent
-import android.media.metrics.Event
-
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -11,12 +8,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.data.model.Evento
-import com.devdiegomata90.nueva_vida_app.ui.view.EventoA.EventoAgregarActivity
 import com.devdiegomata90.nueva_vida_app.ui.viewmodel.EventosAdapter
+import com.devdiegomata90.nueva_vida_app.ui.viewmodel.EventosViewHolder
 import com.google.firebase.database.*
 
 
-class EventoActivity : AppCompatActivity() {
+class EventoActivity : AppCompatActivity(), EventosViewHolder.onItemClickListener  {
     private lateinit var crearEvento:Button
 
     private lateinit var rvEvento:RecyclerView
@@ -56,7 +53,7 @@ class EventoActivity : AppCompatActivity() {
                 }
 
                 //Parte 1 Apartador : Conecta toda la informacion con reciclyView
-               eventosAdapter = EventosAdapter(eventoList,false)
+               eventosAdapter = EventosAdapter(eventoList,this@EventoActivity)
                 rvEvento.layoutManager =
                     LinearLayoutManager(this@EventoActivity, LinearLayoutManager.VERTICAL, false)
                 rvEvento.adapter = eventosAdapter
@@ -89,6 +86,14 @@ class EventoActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return super.onSupportNavigateUp()
+    }
+
+    override fun onClick(position: Int) {
+        Toast.makeText(this, "OnClick CLIENTE de la vista #${position.toString()}", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onLongClick(evento: Evento) {
+        Toast.makeText(this, "OnLongClick CLIENTE del Evento: ${evento.titulo}", Toast.LENGTH_SHORT).show()
     }
 
 }
