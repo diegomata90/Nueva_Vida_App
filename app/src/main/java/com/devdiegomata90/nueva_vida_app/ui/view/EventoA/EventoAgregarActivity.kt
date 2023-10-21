@@ -207,15 +207,15 @@ class EventoAgregarActivity : AppCompatActivity() {
     private fun onTimeSelect(time: String) {
 
         // Parsear la hora en formato "HH:mm" a una instancia de Date
-        val inputFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
-        val outputFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
+        //val inputFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+        //val outputFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
 
         try {
-            val parsedTime = inputFormat.parse(time)
-            val formattedTime = outputFormat.format(parsedTime)
+            //val parsedTime = inputFormat.parse(time)
+            //val formattedTime = outputFormat.format(parsedTime)
 
             // Establecer la hora formateada en el EditText
-            horaEvento.setText(formattedTime)
+            horaEvento.setText(time)
 
         } catch (e: ParseException) {
             // Manejar errores de formato de hora aquí

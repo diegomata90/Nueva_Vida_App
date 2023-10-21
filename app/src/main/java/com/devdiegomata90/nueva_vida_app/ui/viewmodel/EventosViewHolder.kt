@@ -3,10 +3,14 @@ package com.devdiegomata90.nueva_vida_app.ui.viewmodel
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.data.model.Evento
 import com.squareup.picasso.Picasso
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class EventosViewHolder(private val view: View, onItemClickListener: onItemClickListener):RecyclerView.ViewHolder(view) {
@@ -22,6 +26,7 @@ class EventosViewHolder(private val view: View, onItemClickListener: onItemClick
 
     //METODO PARA ALMANCENAR LA ACCION DEL ADMINISTRADOR
     interface onItemClickListener {
+
         fun onClick(position: Int)
         fun onLongClick(evento:Evento)
 
@@ -47,7 +52,6 @@ class EventosViewHolder(private val view: View, onItemClickListener: onItemClick
         tituloEvento.text = evento.titulo
         fechaEvento.text = evento.fecha
         lugarEvento.text = evento.lugar
-        horaEvento.text = evento.hora
         val imagen = evento.imagen
 
 
@@ -56,6 +60,10 @@ class EventosViewHolder(private val view: View, onItemClickListener: onItemClick
         val fechaFormateada = formatFecha(fechaSinFormato)
         fechaEvento.text = fechaFormateada
 
+        // Dar formato a la hora de "10:10 a.m"
+        val horasinFormato = evento.hora.toString()
+        val horaFormateada = formatHora(horasinFormato)
+        horaEvento.text = horaFormateada
 
 
         ///Capturar la imagen con libreria Picaso
@@ -100,6 +108,26 @@ class EventosViewHolder(private val view: View, onItemClickListener: onItemClick
 
 }
 
+    private fun formatHora(hora:String):String {
+
+        // Parsear la hora en formato "HH:mm" a una instancia de Date
+        val inputFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
+        val outputFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
+
+        return try {
+            val parsedTime = inputFormat.parse(hora)
+            val formattedTime = outputFormat.format(parsedTime)
+
+            // retorna la hora formateada
+            formattedTime.toString()
+
+        } catch (e: ParseException) {
+            // Manejar errores de formato de hora aquí
+
+            hora
+        }
+
+    }
 
 }
 

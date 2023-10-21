@@ -1,5 +1,7 @@
 package com.devdiegomata90.nueva_vida_app.ui.view.Evento
 
+
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -12,6 +14,10 @@ import com.devdiegomata90.nueva_vida_app.ui.viewmodel.EventosAdapter
 import com.devdiegomata90.nueva_vida_app.ui.viewmodel.EventosViewHolder
 import com.google.firebase.database.*
 
+
+import java.text.SimpleDateFormat
+import java.util.*
+import android.util.Log
 
 class EventoActivity : AppCompatActivity(), EventosViewHolder.onItemClickListener  {
     private lateinit var crearEvento:Button
@@ -37,10 +43,15 @@ class EventoActivity : AppCompatActivity(), EventosViewHolder.onItemClickListene
         databaseReference = FirebaseDatabase.getInstance().getReference("EVENTOS")
     }
 
+
     private fun initUi() {
         val query =
             databaseReference.orderByChild("titulo") // Ordenar por el campo "titulo" si es necesario
         val eventoList = ArrayList<Evento>()
+
+        // Obtenemos la fecha de hoy
+        val currentDate = Date()
+
 
         query.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -48,7 +59,24 @@ class EventoActivity : AppCompatActivity(), EventosViewHolder.onItemClickListene
                 for (snapshot in dataSnapshot.children) {
                     val evento = snapshot.getValue(Evento::class.java)
                     if (evento != null) {
-                        eventoList.add(evento)
+                        //Convierte la fecha formato de string a Date
+                        val eventDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                            .parse(evento.fecha) // Parsea la fecha de la base de datos
+
+                        val eventTime = SimpleDateFormat("HH:mm", Locale.getDefault())
+                            .parse(evento.hora) // Parsea la hora de la base de datos
+
+                        if(eventDate != null && eventTime != null) {
+                            // Combina la fecha y la hora en un objeto de tipo Date
+                            val eventDateTime = Date(eventDate.time + eventTime.time)
+
+                            // Variables para obtener la fecha de hoy
+                            if (eventDateTime >= currentDate)  {
+                                eventoList.add(evento)
+                                Log.i("Current date", "Fecha Evento ${evento.titulo}: " + eventDateTime.toString() + " Fecha actual: " +currentDate )
+                            }
+                        }
+
                     }
                 }
 
@@ -88,12 +116,16 @@ class EventoActivity : AppCompatActivity(), EventosViewHolder.onItemClickListene
         return super.onSupportNavigateUp()
     }
 
+    //Cuando se le da un click al evento
     override fun onClick(position: Int) {
         Toast.makeText(this, "OnClick CLIENTE de la vista #${position.toString()}", Toast.LENGTH_SHORT).show()
+
     }
 
+    //Cuando se deja precionado el evento
     override fun onLongClick(evento: Evento) {
         Toast.makeText(this, "OnLongClick CLIENTE del Evento: ${evento.titulo}", Toast.LENGTH_SHORT).show()
     }
 
 }
+

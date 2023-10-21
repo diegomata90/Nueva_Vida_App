@@ -220,12 +220,11 @@ class EventoaActivity : AppCompatActivity(), EventosViewHolder.onItemClickListen
             .setItems(opciones) { _, which ->
                 when (which) {
                     0 -> {
-                       // Toast.makeText(this,"Selecionando: Actualizar",Toast.LENGTH_SHORT).show()
+                       // "Selecionando: Actualizar"
                         onUpdateEventoClick(evento)
                     }
                     1 -> {
-                        //(view.context as? EventoaActivity)?.onEliminarEventoClick(evento)
-                        //Toast.makeText(this,"Selecionando: Eliminar",Toast.LENGTH_SHORT).show()
+                        //"Selecionando: Eliminar"
                         onEliminarEventoClick(evento)
                     }
                 }
