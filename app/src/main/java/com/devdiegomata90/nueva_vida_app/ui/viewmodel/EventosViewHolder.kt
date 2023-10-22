@@ -24,7 +24,7 @@ class EventosViewHolder(private val view: View, onItemClickListener: onItemClick
     lateinit var EventoArray:Evento
 
 
-    //METODO PARA ALMANCENAR LA ACCION DEL ADMINISTRADOR
+    //METODO PARA LA ACCION DEL ADMINISTRADOR
     interface onItemClickListener {
 
         fun onClick(position: Int)
@@ -43,6 +43,7 @@ class EventosViewHolder(private val view: View, onItemClickListener: onItemClick
     }
 
 
+    //Metodo para setear los valores de la vista
     fun bind(evento: Evento){
 
         //Asignamos los datos
@@ -123,7 +124,6 @@ class EventosViewHolder(private val view: View, onItemClickListener: onItemClick
 
         } catch (e: ParseException) {
             // Manejar errores de formato de hora aquí
-
             hora
         }
 

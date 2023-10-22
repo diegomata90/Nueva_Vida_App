@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.data.model.Categoria
+import com.devdiegomata90.nueva_vida_app.ui.view.Audio.AudioActivity
 import com.devdiegomata90.nueva_vida_app.ui.view.Evento.EventoActivity
 import com.devdiegomata90.nueva_vida_app.ui.view.MainActivityAdmin
 import com.devdiegomata90.nueva_vida_app.ui.viewmodel.CategoriasAdapter
@@ -127,7 +128,7 @@ class InicioCliente : Fragment() {
             Toast.makeText(requireContext(),"Ya casi esta listo la BIBLIA, porfavor esperar",Toast.LENGTH_SHORT).show()
         }
         cardAudio.setOnClickListener {
-            Toast.makeText(requireContext(),"Ya casi esta listo los AUDIO, porfavor esperar",Toast.LENGTH_SHORT).show()
+            startActivity(Intent(requireContext(), AudioActivity::class.java))
         }
         cardVideo.setOnClickListener {
             Toast.makeText(requireContext(),"Ya casi esta listo los VIDEO, porfavor esperar",Toast.LENGTH_SHORT).show()

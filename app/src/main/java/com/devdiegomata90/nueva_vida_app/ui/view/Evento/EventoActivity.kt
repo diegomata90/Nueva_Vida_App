@@ -20,8 +20,8 @@ import java.util.*
 import android.util.Log
 
 class EventoActivity : AppCompatActivity(), EventosViewHolder.onItemClickListener  {
-    private lateinit var crearEvento:Button
 
+    //Variable de la XML
     private lateinit var rvEvento:RecyclerView
     private lateinit var eventosAdapter: EventosAdapter
     private lateinit var databaseReference: DatabaseReference

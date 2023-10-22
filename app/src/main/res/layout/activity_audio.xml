@@ -4,16 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.view.Evento.EventoActivity">
+    tools:context=".ui.view.Audio.AudioActivity">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- Recycleview Evento  -->
+
+        <!-- Recycleview Audio  -->
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvEventos"
+            android:id="@+id/rvAudio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

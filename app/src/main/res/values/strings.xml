@@ -55,6 +55,12 @@
     <!-- Agregar Eventos A-->
     <string name="EventoA">Evento Administrador</string>
 
+    <!-- Agregar Audio-->
+    <string name="AudioTXT">Agregar Audio</string>
+    <string name="TituloAudio">Título</string>
+    <string name="DescripcionAudio">Descripción</string>
+    <string name="FechaAudio">Fecha del audio</string>
+    <string name="PlayAudio">Play</string>
 
 
 </resources>
