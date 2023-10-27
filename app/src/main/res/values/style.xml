@@ -22,5 +22,15 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <!-- Stylo para que las letras de las canciones se muevan -->
+    <style name="MarqueeText" parent="TextAppearance.AppCompat">
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:marqueeRepeatLimit">marquee_forever</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
+        <item name="android:freezesText">true</item>
+    </style>
 
 </resources>

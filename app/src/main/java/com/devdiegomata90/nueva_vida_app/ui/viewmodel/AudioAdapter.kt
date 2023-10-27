@@ -1,6 +1,7 @@
 package com.devdiegomata90.nueva_vida_app.ui.viewmodel
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
@@ -8,6 +9,7 @@ import com.devdiegomata90.nueva_vida_app.data.model.Audio
 
 class AudioAdapter(
     private val audios: List<Audio>,
+    private val onClickListener: (Audio) -> Unit
 ) : RecyclerView.Adapter<AudioViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AudioViewHolder {
@@ -17,7 +19,7 @@ class AudioAdapter(
 
     override fun onBindViewHolder(holder: AudioViewHolder, position: Int) {
         val audio = audios[position]
-        holder.bind(audio)
+        holder.bind(audio, onClickListener)
     }
 
     override fun getItemCount() = audios.size

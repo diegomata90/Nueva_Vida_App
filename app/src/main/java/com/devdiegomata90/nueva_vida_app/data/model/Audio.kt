@@ -1,5 +1,7 @@
 package com.devdiegomata90.nueva_vida_app.data.model
 
+import android.graphics.Bitmap
+
 class Audio {
     var id: String? = null
     var titulo: String? = null
@@ -18,14 +20,15 @@ class Audio {
         url: String?,
         fecha: String?,
         uid: String?,
-        descripcion: String?,
+        descripcion: String?
     ) {
         this.id = id
         this.titulo = titulo
-        this.fecha = fecha
         this.imagen = imagen
         this.url = url
+        this.fecha = fecha
         this.uid = uid
         this.descripcion = descripcion
     }
+
 }

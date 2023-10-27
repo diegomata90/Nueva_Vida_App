@@ -1,6 +1,7 @@
 package com.devdiegomata90.nueva_vida_app.ui.viewmodel
 
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -9,23 +10,26 @@ import com.devdiegomata90.nueva_vida_app.data.model.Audio
 import com.squareup.picasso.Picasso
 
 
-class AudioViewHolder(private val view: View) : RecyclerView.ViewHolder(view){
+class AudioViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
     //Pintamos las vista
     private val audioTitulo: TextView = view.findViewById(R.id.TituloAudio)
     private val descripcionAudio: TextView = view.findViewById(R.id.DescripcionAudio)
     private val fechaAudio: TextView = view.findViewById(R.id.FechaAudio)
-    private val imageAudio: ImageView =view.findViewById(R.id.imageAudio)
+    private val imageAudio: ImageView = view.findViewById(R.id.imageAudio)
+    private val botonPlay: Button = view.findViewById(R.id.PlayAudio)
 
 
     //Metodo para setear los valores de la vista
-    fun bind(audio: Audio){
+    fun bind(audio: Audio, onClickListener: (Audio) -> Unit) {
 
         //Asigna texto de basedatos al textView
         audioTitulo.text = audio.titulo
         descripcionAudio.text = audio.descripcion
         fechaAudio.text = audio.fecha
         val imagen = audio.imagen
+
+        botonPlay.setOnClickListener {onClickListener(audio)}
 
 
         ///Capturar la imagen con libreria Picaso
