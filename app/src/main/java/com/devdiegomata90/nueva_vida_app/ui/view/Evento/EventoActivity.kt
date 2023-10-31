@@ -36,6 +36,7 @@ class EventoActivity : AppCompatActivity(), EventosViewHolder.onItemClickListene
 
         initComponent()
         initUi()
+
     }
 
     private fun initComponent() {

@@ -1,12 +1,13 @@
 package com.devdiegomata90.nueva_vida_app.ui.viewmodel
 
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.data.model.Audio
+import com.devdiegomata90.nueva_vida_app.util.TypefaceUtil
 import com.squareup.picasso.Picasso
 
 
@@ -17,7 +18,7 @@ class AudioViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
     private val descripcionAudio: TextView = view.findViewById(R.id.DescripcionAudio)
     private val fechaAudio: TextView = view.findViewById(R.id.FechaAudio)
     private val imageAudio: ImageView = view.findViewById(R.id.imageAudio)
-    private val botonPlay: Button = view.findViewById(R.id.PlayAudio)
+    private val botonPlay: AppCompatImageView = view.findViewById(R.id.PlayAudio)
 
 
     //Metodo para setear los valores de la vista
@@ -41,6 +42,16 @@ class AudioViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
             //Si la imagen no fue traida exitosamente
             Picasso.get().load(R.drawable.album).into(imageAudio)
         }
+
+        // Asigna Tipo Letra de Ubuntu a los texView (funcion Disenada para usar en cualquier activity)
+        TypefaceUtil.asignarTipoLetra(itemView.context,
+            null,
+            audioTitulo,
+            descripcionAudio,
+            fechaAudio,
+            botonPlay
+        )
+
 
     }
 

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.data.model.Audio
 import com.devdiegomata90.nueva_vida_app.ui.viewmodel.AudioListAdapter
+import com.devdiegomata90.nueva_vida_app.util.TypefaceUtil
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.*
@@ -33,6 +34,7 @@ class AudioDetalleActivity() : AppCompatActivity() {
     private lateinit var tituloAudioReproduct: TextView
     private lateinit var audioTimeStart: TextView
     private lateinit var audioTimeEnd: TextView
+    private lateinit var audioListaTXT: TextView
     private var isPlaying: Boolean = false
     private val uiScope = CoroutineScope(Dispatchers.Main)
     private lateinit var audioRecibido: Audio
@@ -52,6 +54,15 @@ class AudioDetalleActivity() : AppCompatActivity() {
 
         //Recibir los datos del intent para reproducir el audio
         obtenerAudio()
+
+        // Asigna Tipo Letra de Ubuntu a los texView (funcion Disenada para usar en cualquier activity)
+        TypefaceUtil.asignarTipoLetra(this,
+            null,
+            tituloAudioReproduct,
+            audioTimeStart,
+            audioTimeEnd,
+            audioListaTXT
+        )
     }
 
     private fun initUID() {
@@ -64,7 +75,7 @@ class AudioDetalleActivity() : AppCompatActivity() {
         tituloAudioReproduct = findViewById(R.id.TituloAudioReproduct)
         audioTimeStart = findViewById(R.id.audio_time_start)
         audioTimeEnd = findViewById(R.id.audio_time_end)
-
+        audioListaTXT = findViewById(R.id.AudioListaTXT)
 
     }
 

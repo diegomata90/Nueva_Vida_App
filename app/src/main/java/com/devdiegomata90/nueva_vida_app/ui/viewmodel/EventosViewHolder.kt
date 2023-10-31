@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.data.model.Evento
+import com.devdiegomata90.nueva_vida_app.util.TypefaceUtil
 import com.squareup.picasso.Picasso
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -76,8 +77,17 @@ class EventosViewHolder(private val view: View, onItemClickListener: onItemClick
             //Si la imagen no fue traida exitosamente
             Picasso.get().load(R.drawable.categoria).into(imageEvento)
         }
-        
-        
+
+        // Asigna Tipo Letra de Ubuntu a los texView (funcion Disenada para usar en cualquier activity)
+        TypefaceUtil.asignarTipoLetra(itemView.context,
+            null,
+            tituloEvento,
+            fechaEvento,
+            lugarEvento,
+            horaEvento
+        )
+
+
     }
 
     private fun formatFecha(fechaSinFormato: String): String {

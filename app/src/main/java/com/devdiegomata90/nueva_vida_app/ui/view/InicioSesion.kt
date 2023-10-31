@@ -6,20 +6,23 @@ import android.os.Bundle
 import android.util.Patterns
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.util.LoadingDialog
+import com.devdiegomata90.nueva_vida_app.util.TypefaceUtil
 import com.google.firebase.auth.FirebaseAuth
 
 
 class InicioSesion : AppCompatActivity() {
 
-    lateinit var btnAceder:Button
-    lateinit var Correo:EditText
-    lateinit var Password:EditText
+    lateinit var btnAceder: Button
+    lateinit var Correo: EditText
+    lateinit var Password: EditText
     lateinit var firebaseAuth: FirebaseAuth
-    lateinit var loadinDialog : LoadingDialog
+    lateinit var loadinDialog: LoadingDialog
+    lateinit var inicioSession: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,14 +34,15 @@ class InicioSesion : AppCompatActivity() {
         // INICIALIZAR LAS VARIABLES
         Correo = findViewById(R.id.Correo)
         Password = findViewById(R.id.Password)
-        btnAceder= findViewById(R.id.btnAcceder)
+        btnAceder = findViewById(R.id.btnAcceder)
+        inicioSession = findViewById(R.id.inicioSession)
 
         //INICIALIZA FIREBASE
         firebaseAuth = FirebaseAuth.getInstance()
 
         //INICIALIZO PROGRESS DIALIGO PERSONALIZADO
         loadinDialog = LoadingDialog(this)
-       // loadinDialog.setCancelable = true
+        // loadinDialog.setCancelable = true
         loadinDialog.mensaje = "Ingresando espere por favor"
 
 
@@ -48,24 +52,33 @@ class InicioSesion : AppCompatActivity() {
             //Seteo de edit text a string
             val correoStr = Correo.text.toString()
             val passStr = Password.text.toString()
-            
+
             //Validar los campos
-            if(!Patterns.EMAIL_ADDRESS.matcher(correoStr).matches()){
+            if (!Patterns.EMAIL_ADDRESS.matcher(correoStr).matches()) {
                 Correo.error = "Correo Inválido"
-                Correo.isFocusable =true
-                
-            }else if(passStr.length<6){
+                Correo.isFocusable = true
+
+            } else if (passStr.length < 6) {
                 Password.error = "Contraseña Ingresada es menor igual a 6"
-                Password.isFocusable=true
-            }else{
-                LogueAdministradores(correoStr,passStr)
+                Password.isFocusable = true
+            } else {
+                LogueAdministradores(correoStr, passStr)
             }
         }
+
+        // Asigna Tipo Letra de Ubuntu a los texView (funcion Disenada para usar en cualquier activity)
+        TypefaceUtil.asignarTipoLetra(this,
+            null,
+            btnAceder,
+            Correo,
+            Password,
+            inicioSession
+        )
     }
 
     private fun LogueAdministradores(correoStr: String, passStr: String) {
         loadinDialog.starLoading()
-        firebaseAuth.signInWithEmailAndPassword(correoStr,passStr)
+        firebaseAuth.signInWithEmailAndPassword(correoStr, passStr)
 
         firebaseAuth.signInWithEmailAndPassword(correoStr, passStr)
             .addOnCompleteListener(
@@ -104,7 +117,7 @@ class InicioSesion : AppCompatActivity() {
     }
 
     //Metodo para modificar el action bar
-    private fun actionBarpersonalizado(titulo: String){
+    private fun actionBarpersonalizado(titulo: String) {
         // AFIRMAMOS QUE EL ACTIONBAR NO SEA NULO
         val actionBar = supportActionBar!!          // CREAMOS EL ACTIONBAR
         actionBar.title = titulo                   // LE ASINAMOS UN TITULO

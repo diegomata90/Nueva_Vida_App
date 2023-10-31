@@ -17,6 +17,8 @@ import com.devdiegomata90.nueva_vida_app.R
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import android.graphics.Typeface
+import android.util.TypedValue
 
 
 class MainActivityAdmin : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -104,7 +106,11 @@ class MainActivityAdmin : AppCompatActivity(), NavigationView.OnNavigationItemSe
     private fun ComprabarInicioSession() {
         //Validar que exista el usuario
         if (currentUser != null) {
-            Toast.makeText(this, "Session iniciada con correo " + currentUser?.email, Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                this,
+                "Session iniciada con correo " + currentUser?.email,
+                Toast.LENGTH_LONG
+            ).show()
         } else {
             //Si no se ha inciado sesion, es porque el usuario es un cliente
             startActivity(Intent(this@MainActivityAdmin, MainActivity::class.java))
@@ -112,7 +118,7 @@ class MainActivityAdmin : AppCompatActivity(), NavigationView.OnNavigationItemSe
         }
     }
 
-    private fun CerraSession(){
+    private fun CerraSession() {
         firebaseAuth.signOut()
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
@@ -125,3 +131,4 @@ class MainActivityAdmin : AppCompatActivity(), NavigationView.OnNavigationItemSe
         ComprabarInicioSession()
     }
 }
+

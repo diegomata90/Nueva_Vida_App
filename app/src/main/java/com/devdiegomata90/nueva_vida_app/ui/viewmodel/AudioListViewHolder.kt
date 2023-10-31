@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.data.model.Audio
+import com.devdiegomata90.nueva_vida_app.util.TypefaceUtil
 import com.squareup.picasso.Picasso
 
 class AudioListViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
@@ -30,6 +31,13 @@ class AudioListViewHolder(private val view: View) : RecyclerView.ViewHolder(view
         }
 
         itemView.setOnClickListener { onClickListener(audio) }
+
+        // Asigna Tipo Letra de Ubuntu a los texView (funcion Disenada para usar en cualquier activity)
+        TypefaceUtil.asignarTipoLetra(itemView.context,
+            null,
+            audioTitle,
+            audioDescription
+        )
 
     }
 

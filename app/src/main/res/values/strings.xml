@@ -57,7 +57,7 @@
 
     <!-- Agregar Audio-->
     <string name="AudioTXT">Agregar Audio</string>
-    <string name="AudioLista">Lista de Audios</string>
+    <string name="AudioListaTXT">Lista de Audios</string>
     <string name="TituloAudio">Título</string>
     <string name="DescripcionAudio">Descripción</string>
     <string name="FechaAudio">Fecha del audio</string>

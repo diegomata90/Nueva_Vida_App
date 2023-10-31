@@ -1,15 +1,10 @@
 package com.devdiegomata90.nueva_vida_app.ui.viewmodel
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.data.model.Audio
-import com.squareup.picasso.Picasso
 import java.util.ArrayList
 
 
@@ -21,7 +16,7 @@ class AudioListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AudioListViewHolder {
 
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_audio2, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_audio_list, parent, false)
         return AudioListViewHolder(view)
     }
 
