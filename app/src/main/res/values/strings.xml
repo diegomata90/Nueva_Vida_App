@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Nueva Vida App</string>
-    <string name="desarrollador">Desarrollado por : Diego Mata M.</string>
 
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
@@ -42,6 +41,10 @@
     <string name="Audio">Audio</string>
     <string name="Video">Video</string>
 
+    <!-- Informacion de Iglesia-->
+    <string name="PastorTXT">Pastor: Samuel Morera</string>
+    <string name="DireccionTXT">Dirección: San Gabriel, Aserrí, CR</string>
+
     <!-- Agregar Eventos-->
     <string name="EventoTXT">Agregar Evento</string>
     <string name="TituloEvento">Título</string>
@@ -63,5 +66,19 @@
     <string name="FechaAudio">Fecha del audio</string>
     <string name="PlayAudio">Play</string>
 
+
+    <!-- ACERCA DE APLICACION-->
+    <string name="desarrollador">Desarrollado por : Diego Mata M.</string>
+    <string name="AcercaDeApp">Acerca De </string>
+    <string name="InfoCorreo">Correo : DevDiegomata90@gmail.com</string>
+    <string name="InfoVersion">Versión: 1.0</string>
+    <string name="InfoRedes">Redes Sociales</string>
+    <string name="InfoContact">Contactame en:</string>
+    <string name="Ir_website">Página Web</string>
+    <string name="Ir_linkedin">LinkedIn</string>
+    <string name="Ir_telegram">Telegram</string>
+    <string name="Ir_youtube">YouTube</string>
+    <string name="Ir_Github">GitHub</string>
+    <string name="Ir_correo">Correo</string>
 
 </resources>
