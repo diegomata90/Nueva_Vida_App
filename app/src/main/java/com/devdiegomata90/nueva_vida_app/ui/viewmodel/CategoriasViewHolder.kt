@@ -6,6 +6,7 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.data.model.Categoria
+import com.devdiegomata90.nueva_vida_app.util.TypefaceUtil
 
 
 class CategoriasViewHolder(view: View):RecyclerView.ViewHolder(view) {
@@ -19,5 +20,8 @@ class CategoriasViewHolder(view: View):RecyclerView.ViewHolder(view) {
 
         //mostrar la imagen
         //imgCategoria.
+
+        //Aplicando el tipo de letra a los elementos
+        TypefaceUtil.asignarTipoLetra(itemView.context,null, tvCategoriaName)
     }
 }

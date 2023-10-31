@@ -9,24 +9,25 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.data.model.Audio
+import com.squareup.picasso.Picasso
 import java.util.ArrayList
 
 
 class AudioListAdapter(
     private var audioList: List<Audio>,
-    private val onClickListener: (Audio) -> Unit
-) : RecyclerView.Adapter<AudioListAdapter.ViewHolder>() {
+    private val onClickListener: (Audio) -> Unit,
+) : RecyclerView.Adapter<AudioListViewHolder>() {
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_audio2, parent, false)
-        )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AudioListViewHolder {
+
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_audio2, parent, false)
+        return AudioListViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val audio = audioList[position]
+    override fun onBindViewHolder(holder: AudioListViewHolder, position: Int) {
 
+        val audio = audioList[position]
         holder.bind(audio, onClickListener)
 
     }
@@ -41,23 +42,4 @@ class AudioListAdapter(
     }
 
 
-
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val audioTitle: TextView = itemView.findViewById(R.id.audio_title)
-        val btn_Play: Button = itemView.findViewById(R.id.btn_Play)
-        //val audioPreview: ImageView = itemView.findViewById(R.id.audio_preview)
-
-
-        fun bind(audio: Audio, onClickListener: (Audio) -> Unit){
-
-            audioTitle.text = audio.titulo
-            //audioPreview.setImageBitmap(audio.audioPrevious)
-
-            btn_Play.setOnClickListener{onClickListener(audio)}
-
-        }
-
-
-
-    }
 }

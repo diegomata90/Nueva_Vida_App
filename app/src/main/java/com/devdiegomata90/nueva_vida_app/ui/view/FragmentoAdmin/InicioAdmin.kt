@@ -14,6 +14,7 @@ import androidx.cardview.widget.CardView
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.ui.view.Evento.EventoActivity
 import com.devdiegomata90.nueva_vida_app.ui.view.EventoA.EventoaActivity
+import com.devdiegomata90.nueva_vida_app.util.TypefaceUtil
 import com.google.firebase.database.FirebaseDatabase
 
 class InicioAdmin : Fragment() {
@@ -30,7 +31,7 @@ class InicioAdmin : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         Log.d("InicioAdminFragment", "onCreateView called")
         // Inflate the layout for this fragment
@@ -40,15 +41,31 @@ class InicioAdmin : Fragment() {
         initUi(view)
         eventos()
 
-        // Crear tipo letra personalizado (Ubuntu)
-        val typefaceUbuntu = Typeface.createFromAsset(requireContext().assets, "fons/Ubuntu.ttf")
+        // Asigna Tipo Letra de Ubuntu a los texView (funcion Disena para usar en cualquier activity)
+        TypefaceUtil.asignarTipoLetra(
+            view.context,
+            null,
+            CategoriasTXT,
+            Evento,
+            Biblia,
+            Audio,
+            Video
+        )
 
-        // Aplicar la fuente Ubuntu a los elementos de texto
-        CategoriasTXT.typeface = typefaceUbuntu
-        Evento.typeface = typefaceUbuntu
-        Biblia.typeface = typefaceUbuntu
-        Audio.typeface = typefaceUbuntu
-        Video.typeface = typefaceUbuntu
+            /*
+            ///Forma convencional para asignar tipo letra a los elementos de texto
+
+            // Crear tipo letra personalizado (Ubuntu)
+            val typefaceUbuntu = Typeface.createFromAsset(requireContext().assets, "fons/Ubuntu.ttf")
+
+            // Aplicar la fuente Ubuntu a los elementos de texto
+            CategoriasTXT.typeface = typefaceUbuntu
+            Evento.typeface = typefaceUbuntu
+            Biblia.typeface = typefaceUbuntu
+            Audio.typeface = typefaceUbuntu
+            Video.typeface = typefaceUbuntu
+
+             */
 
         return view
     }
@@ -71,17 +88,29 @@ class InicioAdmin : Fragment() {
     }
 
     private fun eventos() {
-        cardEvento.setOnClickListener{
+        cardEvento.setOnClickListener {
             startActivity(Intent(requireContext(), EventoaActivity::class.java))
         }
         cardBiblia.setOnClickListener {
-            Toast.makeText(requireContext(),"Ya casi esta listo la BIBLIA, porfavor esperar", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                "Ya casi esta listo la BIBLIA, porfavor esperar",
+                Toast.LENGTH_SHORT
+            ).show()
         }
         cardAudio.setOnClickListener {
-            Toast.makeText(requireContext(),"Ya casi esta listo los AUDIO, porfavor esperar", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                "Ya casi esta listo los AUDIO, porfavor esperar",
+                Toast.LENGTH_SHORT
+            ).show()
         }
         cardVideo.setOnClickListener {
-            Toast.makeText(requireContext(),"Ya casi esta listo los VIDEO, porfavor esperar", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                "Ya casi esta listo los VIDEO, porfavor esperar",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 

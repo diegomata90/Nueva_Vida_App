@@ -100,8 +100,6 @@ class EventoActivity : AppCompatActivity(), EventosViewHolder.onItemClickListene
 
 
 
-
-
     //Metodo para modificar el action bar
     private fun actionBarpersonalizado(titulo: String){
         // AFIRMAMOS QUE EL ACTIONBAR NO SEA NULO

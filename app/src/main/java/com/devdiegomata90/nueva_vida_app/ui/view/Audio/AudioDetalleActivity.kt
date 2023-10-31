@@ -3,7 +3,7 @@ package com.devdiegomata90.nueva_vida_app.ui.view.Audio
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
@@ -14,11 +14,8 @@ import com.devdiegomata90.nueva_vida_app.data.model.Audio
 import com.devdiegomata90.nueva_vida_app.ui.viewmodel.AudioListAdapter
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
-import java.util.ArrayList
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import java.util.*
 
 
 class AudioDetalleActivity() : AppCompatActivity() {
@@ -36,8 +33,9 @@ class AudioDetalleActivity() : AppCompatActivity() {
     private lateinit var tituloAudioReproduct: TextView
     private lateinit var audioTimeStart: TextView
     private lateinit var audioTimeEnd: TextView
-    private var isPlaying: Boolean = false // Variable de estado
+    private var isPlaying: Boolean = false
     private val uiScope = CoroutineScope(Dispatchers.Main)
+    private lateinit var audioRecibido: Audio
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,11 +45,14 @@ class AudioDetalleActivity() : AppCompatActivity() {
         //Se agregar el actionBar personalizado
         actionBarpersonalizado("Lista Reproducción")
 
+
         initUID() //Inicator de la intenfance
         initComponent() // Vincular los componentes
-        eventosBotones()
-    }
+        eventosBotones() //Eventos de los botones
 
+        //Recibir los datos del intent para reproducir el audio
+        obtenerAudio()
+    }
 
     private fun initUID() {
         rvAudiolist = findViewById(R.id.audio_list_recycler_view)
@@ -64,6 +65,7 @@ class AudioDetalleActivity() : AppCompatActivity() {
         audioTimeStart = findViewById(R.id.audio_time_start)
         audioTimeEnd = findViewById(R.id.audio_time_end)
 
+
     }
 
     private fun eventosBotones() {
@@ -73,11 +75,11 @@ class AudioDetalleActivity() : AppCompatActivity() {
             // Start playing the audio
             audioPlayer.start()
             isPlaying = true
-            // Asegúrate de estar en una coroutine al llamar a la función suspendida
+            // Coroutine para llamar a la función suspendida
             uiScope.launch {
                 updateSeekBar()
             }
-
+            // Metodo para cambiar el boton play a pause y viseversa
             adminBoton()
         }
 
@@ -86,26 +88,24 @@ class AudioDetalleActivity() : AppCompatActivity() {
             // Pause the audio
             audioPlayer.pause()
             isPlaying = false
-
+            // Metodo para cambiar el boton play a pause y viseversa
             adminBoton()
 
         }
 
-        // Configurar el control de volumen
-        volumeSeekBar.max = 100
-        volumeSeekBar.progress = 60
-
         // Vincular los eventos del control de volumen al reproductor de audio
         volumeSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if (fromUser) {
-                    audioPlayer.setVolume(progress.toFloat(), progress.toFloat())
+                if (fromUser) { // Si el usuario cambia el valor del SeekBar
+                    val maxVolume = 100 // Valor máximo del volumen
+                    val volume = progress.toFloat() / maxVolume // Normalizar el valor del volumen
+                    audioPlayer.setVolume(volume, volume) // Establecer el volumen
                 }
             }
 
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStartTrackingTouch(seekBar: SeekBar?) { }
 
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {}
+            override fun onStopTrackingTouch(seekBar: SeekBar?) { }
         })
 
         // Vincular los eventos del control de progreso al reproductor de audio
@@ -128,6 +128,8 @@ class AudioDetalleActivity() : AppCompatActivity() {
                 uiScope.launch {
                     updateSeekBar()
                 }
+
+
             }
         })
 
@@ -143,11 +145,23 @@ class AudioDetalleActivity() : AppCompatActivity() {
         // Configurar el reproductor de audio
         audioPlayer = MediaPlayer()
 
+        // Comprobar si la variable audioPlayer es nula
+        audioPlayer = if (audioPlayer == null) {
+            // Inicializar la variable audioPlayer
+            MediaPlayer.create(this, R.raw.audio_muestra)
+        } else {
+            audioPlayer
+        }
+
+
+        // Configurar el adaptador de la lista
         rvAudiolist = findViewById(R.id.audio_list_recycler_view)
         audioAdapter = AudioListAdapter(
             audioList = audioList,
             onClickListener = { audio -> playAudio(audio) }
         )
+
+        // Configurar el RecyclerView
         rvAudiolist.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rvAudiolist.adapter = audioAdapter
 
@@ -155,9 +169,35 @@ class AudioDetalleActivity() : AppCompatActivity() {
         progressSeekBar.max = audioPlayer.duration
 
 
+        // Configurar el control de volumen
+        volumeSeekBar.max = 100
+        volumeSeekBar.progress = 70
+
+
     }
 
+    private fun obtenerAudio() {
+        //validar si y setearlo audio que recibo del intent
+        val intent = intent.extras
 
+        //se inicializar el contenedor de los campos del intent a recibir
+        audioRecibido = Audio()
+
+        //Valida si el intent no es nulo
+        if (intent != null) {
+            audioRecibido.id = intent.getString("id")
+            audioRecibido.titulo = intent.getString("titulo")
+            audioRecibido.imagen = intent.getString("imagen")
+            audioRecibido.url = intent.getString("url")
+            audioRecibido.descripcion = intent.getString("descripcion")
+            audioRecibido.fecha = intent.getString("fecha")
+
+            //Reproducir el audio selecionado
+            playAudio(audioRecibido)
+        }
+    }
+
+    // Metodo para obtener la lista de archivos de audio
     private fun getAudioList(): List<Audio> {
         val query =
             databaseReference.orderByChild("titulo")// Ordenar por el campo "titulo" si es necesario
@@ -190,6 +230,7 @@ class AudioDetalleActivity() : AppCompatActivity() {
         return audioList
     }
 
+    //Metodo para reproducir el audio
     private fun playAudio(audio: Audio) {
         // Detener la reproducción si ya está en curso
         if (isPlaying) {
@@ -201,9 +242,12 @@ class AudioDetalleActivity() : AppCompatActivity() {
         // Establecer el nuevo archivo de audio
         audioPlayer.setDataSource(audio.url)
 
+        // Restablecer el máximo y la posición del SeekBar
+        progressSeekBar.max = 0
+        progressSeekBar.progress = 0
+
         // Establecer audioTimeStart en cero
         audioTimeStart.text = "00:00"
-
 
         // Setear los titulos y tiempo del audio en reproduccion
         tituloAudioReproduct.text = audio.titulo
@@ -212,7 +256,7 @@ class AudioDetalleActivity() : AppCompatActivity() {
         try {
             Picasso.get().load(audio.imagen).into(imagenCovered)
         } catch (e: Exception) {
-            Picasso.get().load(R.drawable.categoria).into(imagenCovered)
+            Picasso.get().load(R.drawable.album).into(imagenCovered)
         }
 
         audioPlayer.prepare()
@@ -224,43 +268,61 @@ class AudioDetalleActivity() : AppCompatActivity() {
 
         // Establecer audioTimeEnd en total
         val totalDuration = audioPlayer.duration
-        val remainingMinutes = totalDuration / 1000 / 60
-        val remainingSeconds = totalDuration / 1000 % 60
+        val totalHours = totalDuration / 1000 / 3600
+        val totalMinutes = totalDuration / 1000 / 60 % 60
+        val totalSeconds = totalDuration / 1000 % 60
 
-        audioTimeEnd.text = String.format("%02d:%02d", remainingMinutes, remainingSeconds)
+        val formatoTime = if (totalHours > 0){
+            String.format("%02d:%02d:%02d", totalHours,totalMinutes, totalSeconds)
+        }else{
+            String.format("%02d:%02d", totalMinutes, totalSeconds)
+        }
 
-        // Start the Coroutine to update the SeekBar
+        audioTimeEnd.text = formatoTime
+
+        // Iniciar la actualización del SeekBar
         uiScope.launch {
             updateSeekBar()
         }
+
         adminBoton()
     }
 
+    //Metodo que actualiza el SeekBar
     private suspend fun updateSeekBar() {
-        val totalDuration = audioPlayer.duration
         while (audioPlayer.isPlaying) {
-            val currentPosition = audioPlayer.currentPosition
-            val currentMinutes = currentPosition / 1000 / 60
-            val currentSeconds = currentPosition / 1000 % 60
+                    val currentPosition = audioPlayer.currentPosition
+                    val currentHours = currentPosition / 1000 / 3600
+                    val currentMinutes = currentPosition / 1000 / 60 % 60
+                    val currentSeconds = currentPosition / 1000 % 60
 
-            runOnUiThread {
-                progressSeekBar.max = totalDuration
-                progressSeekBar.progress = currentPosition
-                audioTimeStart.text = String.format("%02d:%02d", currentMinutes, currentSeconds)
-            }
+                    runOnUiThread {
+                        var formatoTiempo = if (currentHours > 0) {
+                            String.format("%02d:%02d:%02d", currentHours, currentMinutes, currentSeconds)
+                        } else {
+                            String.format("%02d:%02d", currentMinutes, currentSeconds)
+                        }
+
+                        progressSeekBar.progress = currentPosition
+                        audioTimeStart.text = formatoTiempo
+
+                        // Actualiza el estado de los botones play y pause según el estado actual del reproductor de audio
+                        adminBoton()
+                    }
             delay(1000) // Delay for 1 second
         }
     }
 
+
     //Metodo que muestra oculta los botones de play y pause
     private fun adminBoton() {
 
-        if (isPlaying) {
-            pauseButton.visibility = android.view.View.VISIBLE
-            playButton.visibility = android.view.View.GONE
+        if (audioPlayer.isPlaying) {
+            playButton.visibility = View.GONE
+            pauseButton.visibility = View.VISIBLE
         } else {
-            playButton.visibility = android.view.View.VISIBLE
-            pauseButton.visibility = android.view.View.GONE
+            playButton.visibility = View.VISIBLE
+            pauseButton.visibility = View.GONE
         }
 
     }
@@ -280,19 +342,17 @@ class AudioDetalleActivity() : AppCompatActivity() {
         return super.onSupportNavigateUp()
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+    }
+
     override fun onPause() {
         super.onPause()
-        if (audioPlayer.isPlaying) {
-            audioPlayer.stop()
-        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        if (audioPlayer.isPlaying) {
-            audioPlayer.stop()
-        }
-        audioPlayer.release()
+        audioPlayer.stop()
     }
 
 }

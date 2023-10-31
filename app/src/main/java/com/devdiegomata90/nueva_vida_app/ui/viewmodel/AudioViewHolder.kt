@@ -36,10 +36,10 @@ class AudioViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         ///Controlar posibles errores
         try {
             //Si la imagen fue traida exitosamente
-            Picasso.get().load(imagen).placeholder(R.drawable.categoria).into(imageAudio)
+            Picasso.get().load(imagen).placeholder(R.drawable.album).into(imageAudio)
         } catch (e: Exception) {
             //Si la imagen no fue traida exitosamente
-            Picasso.get().load(R.drawable.categoria).into(imageAudio)
+            Picasso.get().load(R.drawable.album).into(imageAudio)
         }
 
     }
