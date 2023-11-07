@@ -40,6 +40,10 @@
     <string name="Biblia">Biblia</string>
     <string name="Audio">Audio</string>
     <string name="Video">Video</string>
+    <string name="VersiculoTXT">Versículo del día</string>
+    <string name="libro">Libro</string>
+    <string name="capitulo">1:1</string>
+
 
     <!-- Informacion de Iglesia-->
     <string name="PastorTXT">Pastor: Samuel Morera</string>
@@ -80,5 +84,6 @@
     <string name="Ir_youtube">YouTube</string>
     <string name="Ir_Github">GitHub</string>
     <string name="Ir_correo">Correo</string>
+
 
 </resources>

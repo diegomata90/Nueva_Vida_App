@@ -1,25 +1,32 @@
 package com.devdiegomata90.nueva_vida_app.ui.view.FragmentoCliente
 
 import android.content.Intent
-import android.graphics.Typeface
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.data.model.Categoria
+import com.devdiegomata90.nueva_vida_app.retrofit2.VersiculoResponse
+import com.devdiegomata90.nueva_vida_app.retrofit2.dailyVersesApiServicio
 import com.devdiegomata90.nueva_vida_app.ui.view.Audio.AudioActivity
 import com.devdiegomata90.nueva_vida_app.ui.view.Evento.EventoActivity
-import com.devdiegomata90.nueva_vida_app.ui.view.MainActivityAdmin
 import com.devdiegomata90.nueva_vida_app.ui.viewmodel.CategoriasAdapter
 import com.devdiegomata90.nueva_vida_app.util.TypefaceUtil
 import com.google.firebase.database.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import android.os.Handler
+import com.devdiegomata90.nueva_vida_app.ui.view.Biblia.BibliaActivity
 
 class InicioCliente : Fragment() {
 
@@ -28,18 +35,22 @@ class InicioCliente : Fragment() {
     private lateinit var databaseReference: DatabaseReference
     private lateinit var CategoriasTXT: TextView
     private lateinit var OtrasCategoriasTXT: TextView
-    private lateinit var Evento:TextView
-    private lateinit var Biblia:TextView
-    private lateinit var Audio:TextView
-    private lateinit var Video:TextView
-    private lateinit var cardEvento:CardView
-    private lateinit var cardBiblia:CardView
-    private lateinit var cardAudio:CardView
-    private lateinit var cardVideo:CardView
+    private lateinit var Evento: TextView
+    private lateinit var Biblia: TextView
+    private lateinit var Audio: TextView
+    private lateinit var Video: TextView
+    private lateinit var cardEvento: CardView
+    private lateinit var cardBiblia: CardView
+    private lateinit var cardAudio: CardView
+    private lateinit var cardVideo: CardView
+    private lateinit var versiculodiaTXT: TextView
+    private lateinit var versiculodia: TextView
+    private lateinit var libro: TextView
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         //inflar la vista
         val view = inflater.inflate(R.layout.fragment_inicio_cliente, container, false)
@@ -49,7 +60,20 @@ class InicioCliente : Fragment() {
         eventos()
 
         // Asigna Tipo Letra de Ubuntu a los texView (funcion Disena para usar en cualquier activity)
-        TypefaceUtil.asignarTipoLetra(view.context,null, CategoriasTXT, OtrasCategoriasTXT, Evento, Biblia, Audio, Video)
+        TypefaceUtil.asignarTipoLetra(
+            view.context,
+            null,
+            CategoriasTXT, OtrasCategoriasTXT,
+            Evento, Biblia, Audio, Video,
+            versiculodiaTXT,
+        )
+
+        TypefaceUtil.asignarTipoLetra(
+            view.context,
+            "fons/Caveat-Medium.ttf",
+            libro,
+            versiculodia
+        )
 
         /*
          ///Forma convencional para asignar tipo letra a los elementos de texto
@@ -86,6 +110,9 @@ class InicioCliente : Fragment() {
         cardBiblia = view.findViewById(R.id.cardBiblia)
         cardAudio = view.findViewById(R.id.cardAudio)
         cardVideo = view.findViewById(R.id.cardVideo)
+        versiculodiaTXT = view.findViewById(R.id.versiculodiaTXT)
+        libro = view.findViewById(R.id.libro)
+        versiculodia = view.findViewById(R.id.versiculodia)
 
     }
 
@@ -122,24 +149,75 @@ class InicioCliente : Fragment() {
             }
         })
 
+        searbyVerso("Gen","1:1")
     }
 
     private fun eventos() {
 
-        cardEvento.setOnClickListener{
+        cardEvento.setOnClickListener {
             startActivity(Intent(requireContext(), EventoActivity::class.java))
         }
         cardBiblia.setOnClickListener {
-            Toast.makeText(requireContext(),"Ya casi esta listo la BIBLIA, porfavor esperar",Toast.LENGTH_SHORT).show()
+            startActivity(Intent(requireContext(), BibliaActivity::class.java))
         }
         cardAudio.setOnClickListener {
             startActivity(Intent(requireContext(), AudioActivity::class.java))
         }
         cardVideo.setOnClickListener {
-            Toast.makeText(requireContext(),"Ya casi esta listo los VIDEO, porfavor esperar",Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                "Ya casi esta listo los VIDEO, porfavor esperar",
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
     }
 
+    // Metodo para crea la llama al retrofit
+    private fun getRetrofit(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl("https://ajphchgh0i.execute-api.us-west-2.amazonaws.com/dev/api/books/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    //Metodo con la corrutina
+    private fun searbyVerso(book:String ,capver:String){
+        val endpoint = "spa-RVR1960:$book/verses/$capver"
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val baseUrl = "https://ajphchgh0i.execute-api.us-west-2.amazonaws.com/dev/api/books/"
+            val fullUrl = baseUrl+endpoint
+
+            val call = getRetrofit().create(dailyVersesApiServicio::class.java).getDailyVerses("$fullUrl")
+            val versiculos: List<VersiculoResponse>? = call.body()
+
+            //Regresar el hilo principal
+            Handler(requireContext().mainLooper).post{
+                if(call.isSuccessful){
+                    val primerVersiculo = versiculos?.firstOrNull() // Obtén el primer versículo de la lista
+
+                    if (primerVersiculo != null) {
+                        libro.text = primerVersiculo.capitulo ?: ""
+                        versiculodia.text = primerVersiculo.cleanText ?: ""
+                    } else {
+                        showError()
+                    }
+                }
+                else{
+                    //error llamado
+                    showError()
+                }
+            }
+        }
+    }
+
+    private fun showError() {
+        Toast.makeText(requireContext(), "Error mostrar versiculo", Toast.LENGTH_LONG).show()
+    }
+
 
 }
+
+
+

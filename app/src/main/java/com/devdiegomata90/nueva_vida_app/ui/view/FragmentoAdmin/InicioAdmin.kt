@@ -12,6 +12,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import com.devdiegomata90.nueva_vida_app.R
+import com.devdiegomata90.nueva_vida_app.ui.view.Biblia.BibliaActivity
 import com.devdiegomata90.nueva_vida_app.ui.view.Evento.EventoActivity
 import com.devdiegomata90.nueva_vida_app.ui.view.EventoA.EventoaActivity
 import com.devdiegomata90.nueva_vida_app.util.TypefaceUtil
@@ -52,20 +53,20 @@ class InicioAdmin : Fragment() {
             Video
         )
 
-            /*
-            ///Forma convencional para asignar tipo letra a los elementos de texto
+        /*
+        ///Forma convencional para asignar tipo letra a los elementos de texto
 
-            // Crear tipo letra personalizado (Ubuntu)
-            val typefaceUbuntu = Typeface.createFromAsset(requireContext().assets, "fons/Ubuntu.ttf")
+        // Crear tipo letra personalizado (Ubuntu)
+        val typefaceUbuntu = Typeface.createFromAsset(requireContext().assets, "fons/Ubuntu.ttf")
 
-            // Aplicar la fuente Ubuntu a los elementos de texto
-            CategoriasTXT.typeface = typefaceUbuntu
-            Evento.typeface = typefaceUbuntu
-            Biblia.typeface = typefaceUbuntu
-            Audio.typeface = typefaceUbuntu
-            Video.typeface = typefaceUbuntu
+        // Aplicar la fuente Ubuntu a los elementos de texto
+        CategoriasTXT.typeface = typefaceUbuntu
+        Evento.typeface = typefaceUbuntu
+        Biblia.typeface = typefaceUbuntu
+        Audio.typeface = typefaceUbuntu
+        Video.typeface = typefaceUbuntu
 
-             */
+         */
 
         return view
     }
@@ -92,11 +93,7 @@ class InicioAdmin : Fragment() {
             startActivity(Intent(requireContext(), EventoaActivity::class.java))
         }
         cardBiblia.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                "Ya casi esta listo la BIBLIA, porfavor esperar",
-                Toast.LENGTH_SHORT
-            ).show()
+            startActivity(Intent(requireContext(), BibliaActivity::class.java))
         }
         cardAudio.setOnClickListener {
             Toast.makeText(
