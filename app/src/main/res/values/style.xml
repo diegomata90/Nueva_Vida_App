@@ -33,4 +33,11 @@
         <item name="android:freezesText">true</item>
     </style>
 
+    <style name="BibliaComponent" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <!-- Otros atributos de estilo -->
+        <item name="colorPrimary">@color/red_app</item>
+        <item name="colorPrimaryDark">@color/red2_app</item>
+        <item name="colorAccent">@color/red_app</item>
+    </style>
+
 </resources>

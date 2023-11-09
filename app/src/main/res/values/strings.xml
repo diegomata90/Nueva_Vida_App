@@ -85,5 +85,13 @@
     <string name="Ir_Github">GitHub</string>
     <string name="Ir_correo">Correo</string>
 
+    <!-- BIBLIA-->
+    <string name="LibroTXT">Libro</string>
+    <string name="CapituloTXT">Capítulo</string>
+    <string name="TestamentoTXT">Testamento</string>
+    <string name="SeleccionTXT">Seleccione</string>
+    <string name="itemTXT">item dropdown</string>
+
+
 
 </resources>
