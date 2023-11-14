@@ -1,22 +1,26 @@
 package com.devdiegomata90.nueva_vida_app.ui.view.Biblia
 
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
-import android.widget.Toast.*
 import androidx.core.widget.doOnTextChanged
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.retrofit2.BooksApiServe
 import com.devdiegomata90.nueva_vida_app.retrofit2.BooksResponse
+import com.devdiegomata90.nueva_vida_app.retrofit2.VersesApiServe
+import com.devdiegomata90.nueva_vida_app.retrofit2.VersiculoResponse
+import com.devdiegomata90.nueva_vida_app.ui.viewmodel.TextBiblicoAdapter
 import com.devdiegomata90.nueva_vida_app.util.TypefaceUtil
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-
 
 class BibliaActivity : AppCompatActivity() {
 
@@ -24,153 +28,237 @@ class BibliaActivity : AppCompatActivity() {
     private lateinit var chapterTV: AutoCompleteTextView
     private lateinit var inputBook: TextInputLayout
     private lateinit var inputChapter: TextInputLayout
-    private lateinit var libro:TextView
-    private lateinit var capitulo:TextView
-
+    private lateinit var libro: TextView
+    private lateinit var capitulo: TextView
+    private lateinit var rvVersiculo: RecyclerView
+    private lateinit var versiculoAdapter: TextBiblicoAdapter
+    private lateinit var versiculoList: List<VersiculoResponse>
+    private var IDBOOK:String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_biblia)
 
         //Se agregar el actionBar personalizado
-        actionBarpersonalizado("Biblia")
+        actionBarPersonalizado("Biblia")
 
+        initUI()
         initComponent()
-        initUi()
 
-        TypefaceUtil.asignarTipoLetra(this, null, booksTV, chapterTV, inputBook, inputChapter,libro,capitulo)
+        TypefaceUtil.asignarTipoLetra(
+            this, null,
+            booksTV,
+            chapterTV,
+            inputBook,
+            inputChapter,
+            libro,
+            capitulo
+        )
 
     }
 
-    private fun initComponent() {
+    private fun initUI() {
         booksTV = findViewById(R.id.BooksTV)
         chapterTV = findViewById(R.id.ChapterTV)
         inputBook = findViewById(R.id.InputBook)
         inputChapter = findViewById(R.id.InputChapter)
         libro = findViewById(R.id.Libro)
         capitulo = findViewById(R.id.Capitulo)
+        rvVersiculo = findViewById(R.id.rvVersiculo)
+
     }
 
-
-    private fun initUi() {
+    private fun initComponent() {
         showBook()
+        initRecyclerView()
+
+        //Escuchar los cambio en el lista de Capitulos
+        chapterTV.doOnTextChanged { _, _, _, _ ->
+            val selectedBook = booksTV.text.toString()
+            val selectedChapter = chapterTV.text.toString()
+
+            if (selectedBook.isNotEmpty() && selectedBook != getString(R.string.SeleccionTXT) && selectedChapter.isNotEmpty() && selectedChapter != getString(R.string.SeleccionTXT) ) {
+                //Llamar a la funcion para mostrar el texto
+                showVerse(selectedBook, selectedChapter, IDBOOK)
+            }
+        }
+
+        //Inicializar con Génesis =>Capitulo 1
+        showVerse("Génesis", "1", "spa-RVR1960:Gen")
+
+    }
+
+    private fun initRecyclerView() {
+        versiculoList = emptyList()
+
+        // Configurar el adaptador de la lista
+        versiculoAdapter = TextBiblicoAdapter(
+            versiculoList = versiculoList,
+            onClickListener = { versiculo -> getVersiculo(versiculo) }
+        )
+        rvVersiculo.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        rvVersiculo.adapter = versiculoAdapter
     }
 
 
-    //Metedo para crear el retrofit
+    //Metodo para crear el retrofit
     private fun getRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl("https://ajphchgh0i.execute-api.us-west-2.amazonaws.com/dev/api/")
-            .addConverterFactory(GsonConverterFactory.create()).build()
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
     }
 
-    //Metodo para mostrar el dropdown Libros
+    //Mostrar el libros
     private fun showBook() {
         val url = "https://ajphchgh0i.execute-api.us-west-2.amazonaws.com/dev/api/books/"
 
-
-        CoroutineScope(Dispatchers.IO).launch {
+        //Corutina para ejecutar en el hilo secundario
+        lifecycleScope.launch {
             val call = getRetrofit().create(BooksApiServe::class.java).getBooks("$url")
-            val books: List<BooksResponse>? = call.body()
 
-            runOnUiThread() {
+            try {
+
+                //Valida si la respuesta es exitosa
                 if (call.isSuccessful) {
+
+                    //almacena la respuesta
                     val books = call.body() ?: emptyList()
 
-                    // Ordena y devuelve el nombre del libro
-                    val booksName = books.sortedBy { it.order }.map { it.name }
+                    //ordena y devuelve el nombre del libro
+                    val bookName = books.sortedBy { it.order }.map{it.name}
 
-                    val adapterBooks = ArrayAdapter(
-                        this@BibliaActivity,
-                        R.layout.item_dropdown, // este item XML diseñado para el dropdown
-                        booksName // lista de los books del api
-                    )
-                    booksTV.apply {
+                    //Llena lista de desplegable
+                    val adapterBooks = ArrayAdapter( this@BibliaActivity, R.layout.item_dropdown,bookName)
+
+                    booksTV.apply{
                         setAdapter(adapterBooks)
 
-                        doOnTextChanged { selectedBooks, _, _, _ ->
+                        // Escucha cuando hay algun cambio el texto
+                        doOnTextChanged { selectedBook, _, _, _ ->
 
+                            //almacena libro seleccionado
+                            val bookSelected = books.filter{ it.name == selectedBook.toString() }
 
-                            val bookSelected = books.filter { it.name == selectedBooks.toString() }
+                            Log.i("BOOK SELECT", "${bookSelected.map { it.name }}")
 
-                            //Envia el total de los capitulos
+                            //llama funcion para mostrar los capitulos
                             showChapters(bookSelected)
-                            limpiarTextoBiblico()
+
+
                         }
                     }
-                } else {
-                    showError()
                 }
+
+            } catch (e: Exception) {
+                showError("showBook", e.message)
+            } catch (e: HttpException) {
+                showError("showBook", e.message)
+            } catch (e: Throwable) {
+                showError("showBook", e.message)
             }
-
         }
-
-
     }
 
-    //Muestra un error
-    private fun showError() {
-        makeText(this, "Error al ejecutar el api", LENGTH_SHORT).show()
-
-    }
-
-    //LLena la lista de Capitulos
     private fun showChapters(bookSelected: List<BooksResponse>) {
-        //Limpiar lista de capitulos
+
+        //Borar valores del listade capitulos
         chapterTV.setText("")
 
         var totalChapter: MutableList<String> = mutableListOf()
 
-        bookSelected
-            .flatMap { it.capitulos }
-            .mapTo(totalChapter) { it.n_chapter.toString() }
+        //almacena los caputlos del libro
+        bookSelected.flatMap { it.capitulos  }.mapTo(totalChapter) { it.n_chapter.toString() }
 
         //Mostrar los Capitulos
         val adapterChapter = ArrayAdapter(this@BibliaActivity, R.layout.item_dropdown, totalChapter)
 
+        IDBOOK = bookSelected.map { it.version_book }.first().toString()
+
+
         chapterTV.apply {
             setAdapter(adapterChapter)
+        }
+    }
 
-            doOnTextChanged { selectedChapter, _, _, _ ->
+    private fun showVerse(book: String, chapter: String, version: String) {
 
-                    //Muestra el versiculo en el textView
-                    showText(bookSelected, selectedChapter.toString())
-                    Log.i("capitulo", getString(R.string.SeleccionTXT))
+        val Url = "https://ajphchgh0i.execute-api.us-west-2.amazonaws.com/dev/api/books/"
+        val bookChapter = "$version/verses/$chapter"
+
+
+        // Utiliza Uri.Builder para construir la URL de manera segura
+        val fullUrlV = Uri.parse(Url).buildUpon()
+            .appendEncodedPath(bookChapter)
+            .build().toString()
+
+        // Log para verificar la URL antes de la llamada a la API
+        Log.i("showVerse URL2", "URL de la API: $fullUrlV")
+
+        //Corutina para mostrar Versiculo en el recicleView
+        lifecycleScope.launch() {
+            val call = getRetrofit().create(VersesApiServe::class.java).getVerse("$fullUrlV")
+
+            try {
+                val verses: List<VersiculoResponse>? = call.body()
+
+                if (call.isSuccessful) {
+
+                    //Mostra nombre libro y capitulo
+                    libro.text = book
+                    capitulo.text = chapter
+
+                    //ordena la lista
+                    val versesSort = verses?.sortedBy { it.codigo }
+
+                    // Log para verificar los datos recuperados antes de mostrarlos
+                    Log.i(
+                        "showVerse SORT", "Versículos recuperados: ${
+                            versesSort?.map { it.capitulo }?.first()
+                                .toString() + "  " + versesSort?.map { it.cleanText }
+                                ?.first()
+                                .toString()
+                        }"
+                    )
+
+                    versiculoList = versesSort ?: emptyList()
+
+                    // Actualiza los datos en el adaptador después de llenar la lista
+                    versiculoAdapter.updateData((versiculoList as List<VersiculoResponse>))
+
+                    Log.i(
+                        "showVerse Resultado",
+                        versiculoList.map { it.capitulo }.first()
+                            .toString() + "  " + versiculoList.map { it.cleanText }.first()
+                            .toString()
+                    )
+
+                } else {
+                    showError("showVerse", call.message())
+                }
+
+            } catch (e: Exception) {
+                showError("showVerse", e.message)
             }
         }
-
-       // Log.i("capitulos", listChapters.toString())
     }
 
-    //Metodo muestre el texto en la biblia
-    private fun showText(bookSelected: List<BooksResponse>, selectedChapter: String) {
-
-        //Mostra nombre libro y capitulo
-        libro.text = bookSelected.map{ it.name}.first().toString()
-        capitulo.text = selectedChapter
-
-        //Mostrar Texto biblico
-        showVersiculo()
-
+    //Metodo para compartir versiculo (Seleccionado del reciclerView)
+    private fun getVersiculo(versiculo: VersiculoResponse) {
+        Toast.makeText(this, "Versiculo ${versiculo.cleanText}", Toast.LENGTH_SHORT).show()
     }
 
-    //Mostrar Texto biblico
-    private fun showVersiculo() {
-
+    //Muestra un error en caso de que se produzca
+    private fun showError(method: String?, additionalMessage: String?) {
+        try {
+            throw RuntimeException("Error al ejecutar el API $method. Detalles: $additionalMessage")
+        } catch (e: RuntimeException) {
+            Log.e("Error ==>> ", e.message, e)
+            Toast.makeText(this, "Error inesperado en el metodo $method", Toast.LENGTH_SHORT).show()
+        }
     }
 
-
-    private fun limpiarTextoBiblico(){
-        //Limpiar lista de capitulos
-        libro.text = ""
-        capitulo.text = ""
-
-
-    }
-
-
-    //Metodo para modificar el action bar
-    private fun actionBarpersonalizado(titulo: String) {
+    private fun actionBarPersonalizado(titulo: String) {
         // AFIRMAMOS QUE EL ACTIONBAR NO SEA NULO
         val actionBar = supportActionBar!!          // CREAMOS EL ACTIONBAR
         actionBar.title = titulo                   // LE ASINAMOS UN TITULO
@@ -183,7 +271,4 @@ class BibliaActivity : AppCompatActivity() {
         return super.onSupportNavigateUp()
     }
 
-
 }
-
-

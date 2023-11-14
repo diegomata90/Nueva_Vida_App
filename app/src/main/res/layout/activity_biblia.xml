@@ -1,91 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:background="@color/white"
     tools:context=".ui.view.Biblia.BibliaActivity">
 
-    <!--  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"-->
-    <!-- Lista de Libro -->
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:id="@+id/InputBook"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
-        android:hint="@string/LibroTXT"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <AutoCompleteTextView
-            android:id="@+id/BooksTV"
-            android:textSize="20sp"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:inputType="none"
-            android:padding="10dp"
-            android:text="@string/SeleccionTXT" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- Lista de Capitulo -->
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:id="@+id/InputChapter"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="5dp"
-        android:hint="@string/CapituloTXT"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/InputBook"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <AutoCompleteTextView
-            android:id="@+id/ChapterTV"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:textSize="20sp"
-            android:inputType="none"
-            android:padding="10dp"
-            android:text="@string/SeleccionTXT" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <!-- Libro  -->
-    <TextView
-        android:id="@+id/Libro"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="5dp"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/InputBook"
-        tools:text="LIBRO" />
+        android:layout_height="match_parent">
 
-    <!-- Capitulo  -->
-    <TextView
-        android:id="@+id/Capitulo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginEnd="5dp"
-        android:gravity="center_horizontal"
-        android:textColor="@color/black"
-        android:textSize="60sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Libro"
-        tools:text="1" />
+        <!-- Contenedor principal-->
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+
+            <!-- Contenedor Selector de Libros y Capitulos-->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="4dp">
+
+                <!--  style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"-->
+                <!-- Lista de Libro -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/InputBook"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="10dp"
+                    android:hint="@string/LibroTXT">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/BooksTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:inputType="none"
+                        android:padding="10dp"
+                        android:text="@string/SeleccionTXT"
+                        android:textSize="20sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Lista de Capitulo -->
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/InputChapter"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="10dp"
+                    android:hint="@string/CapituloTXT">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/ChapterTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:inputType="none"
+                        android:padding="10dp"
+                        android:text="@string/SeleccionTXT"
+                        android:textSize="20sp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <!-- Contenedor Textos resultados busqueda-->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- Libro  -->
+                <TextView
+                    android:id="@+id/Libro"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:textColor="@color/black"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    tools:text="LIBRO" />
+
+                <!-- Capitulo  -->
+                <TextView
+                    android:id="@+id/Capitulo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:textColor="@color/black"
+                    android:textSize="60sp"
+                    android:textStyle="bold"
+                    tools:text="1" />
+
+                <!-- Muestra la lista de los versiculos  -->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvVersiculo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"/>
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    </RelativeLayout>
+
+</ScrollView>

@@ -14,18 +14,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.data.model.Categoria
 import com.devdiegomata90.nueva_vida_app.retrofit2.VersiculoResponse
-import com.devdiegomata90.nueva_vida_app.retrofit2.dailyVersesApiServicio
+
 import com.devdiegomata90.nueva_vida_app.ui.view.Audio.AudioActivity
 import com.devdiegomata90.nueva_vida_app.ui.view.Evento.EventoActivity
 import com.devdiegomata90.nueva_vida_app.ui.viewmodel.CategoriasAdapter
 import com.devdiegomata90.nueva_vida_app.util.TypefaceUtil
 import com.google.firebase.database.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import android.os.Handler
+import androidx.lifecycle.lifecycleScope
+import com.devdiegomata90.nueva_vida_app.retrofit2.VersesApiServe
 import com.devdiegomata90.nueva_vida_app.ui.view.Biblia.BibliaActivity
 
 class InicioCliente : Fragment() {
@@ -149,7 +149,7 @@ class InicioCliente : Fragment() {
             }
         })
 
-        searbyVerso("Gen","1:1")
+        searbyVerso("Gen","1:2")
     }
 
     private fun eventos() {
@@ -185,11 +185,11 @@ class InicioCliente : Fragment() {
     private fun searbyVerso(book:String ,capver:String){
         val endpoint = "spa-RVR1960:$book/verses/$capver"
 
-        CoroutineScope(Dispatchers.IO).launch {
+        lifecycleScope.launch {
             val baseUrl = "https://ajphchgh0i.execute-api.us-west-2.amazonaws.com/dev/api/books/"
             val fullUrl = baseUrl+endpoint
 
-            val call = getRetrofit().create(dailyVersesApiServicio::class.java).getDailyVerses("$fullUrl")
+            val call = getRetrofit().create(VersesApiServe::class.java).getVerse("$fullUrl")
             val versiculos: List<VersiculoResponse>? = call.body()
 
             //Regresar el hilo principal
@@ -198,8 +198,21 @@ class InicioCliente : Fragment() {
                     val primerVersiculo = versiculos?.firstOrNull() // Obtén el primer versículo de la lista
 
                     if (primerVersiculo != null) {
+
                         libro.text = primerVersiculo.capitulo ?: ""
-                        versiculodia.text = primerVersiculo.cleanText ?: ""
+
+                        // Utiliza una expresión regular para encontrar el número al inicio del texto
+                        val regex = Regex("^\\d+")
+                        val matchResult = regex.find(primerVersiculo.cleanText)
+
+                        if (matchResult != null) {
+                            // Extrae el número y el texto
+                            versiculodia.text = primerVersiculo.cleanText.substring(matchResult.value.length)
+                        }else{
+                            versiculodia.text = primerVersiculo.cleanText ?: ""
+                        }
+
+
                     } else {
                         showError()
                     }

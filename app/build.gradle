@@ -69,5 +69,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'           /* PARA retrofit api*/
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'     /* PARA convertir json*/
 
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1" /* PARA MANEJO DE LIFECYCLE*/
+
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
 
 }

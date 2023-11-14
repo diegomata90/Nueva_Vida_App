@@ -4,7 +4,7 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Url
 
-interface dailyVersesApiServicio {
+interface VersesApiServe {
     @GET()
-    suspend fun getDailyVerses(@Url url:String): Response<List<VersiculoResponse>>
+    suspend fun getVerse(@Url url:String): Response<List<VersiculoResponse>>
 }

@@ -91,7 +91,10 @@
     <string name="TestamentoTXT">Testamento</string>
     <string name="SeleccionTXT">Seleccione</string>
     <string name="itemTXT">item dropdown</string>
-
+    <string name="btnMostrar">B</string>
+    <string name="versiculoTXT">Versiculo</string>
+    <string name="nversiculo">1</string>
+    <string name="versiculo">En el principio creó Dios los cielos y la tierra</string>
 
 
 </resources>
