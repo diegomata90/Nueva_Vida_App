@@ -1,4 +1,4 @@
-package com.devdiegomata90.nueva_vida_app.retrofit2
+package com.devdiegomata90.nueva_vida_app.network
 
 import com.google.gson.annotations.SerializedName
 
@@ -9,7 +9,9 @@ data class BooksResponse(
     @SerializedName("order") val order: Int,
     @SerializedName("testament") val testament: String,
     @SerializedName("chapters") val capitulos: List<Chapter>
-)
+) {
+
+}
 
 data class Chapter(
     @SerializedName("chapter") val n_chapter: Int,

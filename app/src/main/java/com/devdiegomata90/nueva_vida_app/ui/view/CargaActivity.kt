@@ -44,7 +44,7 @@ class CargaActivity : AppCompatActivity() {
         val currentTheme = resources.configuration.uiMode
 
         if (currentTheme and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES){
-            ico_logoiglesia.setImageResource(R.drawable.logoiglesiaw)
+            ico_logoiglesia.setImageResource(R.drawable.logoiglesiaredondo)
         }else  {
             ico_logoiglesia.setImageResource(R.drawable.logoiglesia)
         }

@@ -9,9 +9,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
-import com.devdiegomata90.nueva_vida_app.data.model.Evento
-import com.devdiegomata90.nueva_vida_app.ui.viewmodel.EventosAdapter
-import com.devdiegomata90.nueva_vida_app.ui.viewmodel.EventosViewHolder
+import com.devdiegomata90.nueva_vida_app.model.Evento
+import com.devdiegomata90.nueva_vida_app.ui.adapter.EventosAdapter
+import com.devdiegomata90.nueva_vida_app.ui.viewholder.EventosViewHolder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage

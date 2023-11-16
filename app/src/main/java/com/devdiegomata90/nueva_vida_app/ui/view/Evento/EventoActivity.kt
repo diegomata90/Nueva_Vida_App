@@ -1,17 +1,15 @@
 package com.devdiegomata90.nueva_vida_app.ui.view.Evento
 
 
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
-import com.devdiegomata90.nueva_vida_app.data.model.Evento
-import com.devdiegomata90.nueva_vida_app.ui.viewmodel.EventosAdapter
-import com.devdiegomata90.nueva_vida_app.ui.viewmodel.EventosViewHolder
+import com.devdiegomata90.nueva_vida_app.model.Evento
+import com.devdiegomata90.nueva_vida_app.ui.adapter.EventosAdapter
+import com.devdiegomata90.nueva_vida_app.ui.viewholder.EventosViewHolder
 import com.google.firebase.database.*
 
 

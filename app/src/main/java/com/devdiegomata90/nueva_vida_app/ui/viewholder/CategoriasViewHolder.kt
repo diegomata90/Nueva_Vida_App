@@ -1,11 +1,11 @@
-package com.devdiegomata90.nueva_vida_app.ui.viewmodel
+package com.devdiegomata90.nueva_vida_app.ui.viewholder
 
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
-import com.devdiegomata90.nueva_vida_app.data.model.Categoria
+import com.devdiegomata90.nueva_vida_app.model.Categoria
 import com.devdiegomata90.nueva_vida_app.util.TypefaceUtil
 import com.squareup.picasso.Picasso
 

@@ -1,16 +1,17 @@
-package com.devdiegomata90.nueva_vida_app.ui.viewmodel
+package com.devdiegomata90.nueva_vida_app.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
-import com.devdiegomata90.nueva_vida_app.data.model.Evento
-
+import com.devdiegomata90.nueva_vida_app.model.Evento
+import com.devdiegomata90.nueva_vida_app.ui.viewholder.EventosViewHolder
 
 
 class EventosAdapter(
     private val eventos: List<Evento>,
-    val onItemClickListener: EventosViewHolder.onItemClickListener) :
+    val onItemClickListener: EventosViewHolder.onItemClickListener
+) :
     RecyclerView.Adapter<EventosViewHolder>() {
 
 

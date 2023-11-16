@@ -1,4 +1,4 @@
-package com.devdiegomata90.nueva_vida_app.ui.viewmodel
+package com.devdiegomata90.nueva_vida_app.ui.viewholder
 
 import android.view.View
 import android.widget.ImageView
@@ -6,7 +6,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
-import com.devdiegomata90.nueva_vida_app.data.model.Audio
+import com.devdiegomata90.nueva_vida_app.model.Audio
 import com.devdiegomata90.nueva_vida_app.util.TypefaceUtil
 import com.squareup.picasso.Picasso
 

@@ -12,12 +12,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
-import com.devdiegomata90.nueva_vida_app.data.model.Categoria
-import com.devdiegomata90.nueva_vida_app.retrofit2.VersiculoResponse
+import com.devdiegomata90.nueva_vida_app.model.Categoria
+import com.devdiegomata90.nueva_vida_app.network.VersesResponse
 
 import com.devdiegomata90.nueva_vida_app.ui.view.Audio.AudioActivity
 import com.devdiegomata90.nueva_vida_app.ui.view.Evento.EventoActivity
-import com.devdiegomata90.nueva_vida_app.ui.viewmodel.CategoriasAdapter
+import com.devdiegomata90.nueva_vida_app.ui.adapter.CategoriasAdapter
 import com.devdiegomata90.nueva_vida_app.util.TypefaceUtil
 import com.google.firebase.database.*
 import kotlinx.coroutines.launch
@@ -25,7 +25,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import android.os.Handler
 import androidx.lifecycle.lifecycleScope
-import com.devdiegomata90.nueva_vida_app.retrofit2.VersesApiServe
+import com.devdiegomata90.nueva_vida_app.api.VersesApiServe
 import com.devdiegomata90.nueva_vida_app.ui.view.Biblia.BibliaActivity
 
 class InicioCliente : Fragment() {
@@ -189,8 +189,8 @@ class InicioCliente : Fragment() {
             val baseUrl = "https://ajphchgh0i.execute-api.us-west-2.amazonaws.com/dev/api/books/"
             val fullUrl = baseUrl+endpoint
 
-            val call = getRetrofit().create(VersesApiServe::class.java).getVerse("$fullUrl")
-            val versiculos: List<VersiculoResponse>? = call.body()
+            val call = getRetrofit().create(VersesApiServe::class.java).getVerses("$fullUrl")
+            val versiculos: List<VersesResponse>? = call.body()
 
             //Regresar el hilo principal
             Handler(requireContext().mainLooper).post{

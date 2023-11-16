@@ -1,11 +1,11 @@
-package com.devdiegomata90.nueva_vida_app.ui.viewmodel
+package com.devdiegomata90.nueva_vida_app.ui.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
-import com.devdiegomata90.nueva_vida_app.data.model.Audio
+import com.devdiegomata90.nueva_vida_app.model.Audio
+import com.devdiegomata90.nueva_vida_app.ui.viewholder.AudioViewHolder
 
 class AudioAdapter(
     private val audios: List<Audio>,

@@ -1,10 +1,11 @@
-package com.devdiegomata90.nueva_vida_app.ui.viewmodel
+package com.devdiegomata90.nueva_vida_app.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
-import com.devdiegomata90.nueva_vida_app.data.model.Categoria
+import com.devdiegomata90.nueva_vida_app.model.Categoria
+import com.devdiegomata90.nueva_vida_app.ui.viewholder.CategoriasViewHolder
 
 
 class CategoriasAdapter(private val categorias: List<Categoria>):

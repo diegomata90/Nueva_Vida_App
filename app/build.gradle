@@ -71,6 +71,10 @@ dependencies {
 
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1" /* PARA MANEJO DE LIFECYCLE*/
 
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
+
+    // ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
+    // LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
 
 }

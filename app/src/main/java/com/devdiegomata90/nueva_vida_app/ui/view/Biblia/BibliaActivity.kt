@@ -10,11 +10,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
-import com.devdiegomata90.nueva_vida_app.retrofit2.BooksApiServe
-import com.devdiegomata90.nueva_vida_app.retrofit2.BooksResponse
-import com.devdiegomata90.nueva_vida_app.retrofit2.VersesApiServe
-import com.devdiegomata90.nueva_vida_app.retrofit2.VersiculoResponse
-import com.devdiegomata90.nueva_vida_app.ui.viewmodel.TextBiblicoAdapter
+import com.devdiegomata90.nueva_vida_app.api.BooksApiServe
+import com.devdiegomata90.nueva_vida_app.network.BooksResponse
+import com.devdiegomata90.nueva_vida_app.api.VersesApiServe
+import com.devdiegomata90.nueva_vida_app.network.VersesResponse
+import com.devdiegomata90.nueva_vida_app.ui.adapter.TextBiblicoAdapter
+import com.devdiegomata90.nueva_vida_app.util.LoadingDialog
 import com.devdiegomata90.nueva_vida_app.util.TypefaceUtil
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
@@ -32,8 +33,9 @@ class BibliaActivity : AppCompatActivity() {
     private lateinit var capitulo: TextView
     private lateinit var rvVersiculo: RecyclerView
     private lateinit var versiculoAdapter: TextBiblicoAdapter
-    private lateinit var versiculoList: List<VersiculoResponse>
+    private lateinit var versiculoList: List<VersesResponse>
     private var IDBOOK:String = ""
+    private lateinit var loadingDialog: LoadingDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +71,11 @@ class BibliaActivity : AppCompatActivity() {
     }
 
     private fun initComponent() {
+        //Inicializa el dialogo
+        loadingDialog = LoadingDialog(this)
+        loadingDialog.mensaje = "Cargando... "
+        loadingDialog.setCancelable = false
+
         showBook()
         initRecyclerView()
 
@@ -111,6 +118,8 @@ class BibliaActivity : AppCompatActivity() {
 
     //Mostrar el libros
     private fun showBook() {
+
+        loadingDialog.starLoading()
         val url = "https://ajphchgh0i.execute-api.us-west-2.amazonaws.com/dev/api/books/"
 
         //Corutina para ejecutar en el hilo secundario
@@ -121,6 +130,8 @@ class BibliaActivity : AppCompatActivity() {
 
                 //Valida si la respuesta es exitosa
                 if (call.isSuccessful) {
+
+                    loadingDialog.isDismiss()
 
                     //almacena la respuesta
                     val books = call.body() ?: emptyList()
@@ -197,10 +208,10 @@ class BibliaActivity : AppCompatActivity() {
 
         //Corutina para mostrar Versiculo en el recicleView
         lifecycleScope.launch() {
-            val call = getRetrofit().create(VersesApiServe::class.java).getVerse("$fullUrlV")
+            val call = getRetrofit().create(VersesApiServe::class.java).getVerses("$fullUrlV")
 
             try {
-                val verses: List<VersiculoResponse>? = call.body()
+                val verses: List<VersesResponse>? = call.body()
 
                 if (call.isSuccessful) {
 
@@ -224,7 +235,7 @@ class BibliaActivity : AppCompatActivity() {
                     versiculoList = versesSort ?: emptyList()
 
                     // Actualiza los datos en el adaptador después de llenar la lista
-                    versiculoAdapter.updateData((versiculoList as List<VersiculoResponse>))
+                    versiculoAdapter.updateData((versiculoList as List<VersesResponse>))
 
                     Log.i(
                         "showVerse Resultado",
@@ -244,7 +255,7 @@ class BibliaActivity : AppCompatActivity() {
     }
 
     //Metodo para compartir versiculo (Seleccionado del reciclerView)
-    private fun getVersiculo(versiculo: VersiculoResponse) {
+    private fun getVersiculo(versiculo: VersesResponse) {
         Toast.makeText(this, "Versiculo ${versiculo.cleanText}", Toast.LENGTH_SHORT).show()
     }
 

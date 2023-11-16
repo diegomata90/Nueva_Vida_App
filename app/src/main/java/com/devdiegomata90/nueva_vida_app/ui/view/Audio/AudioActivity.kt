@@ -7,8 +7,8 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
-import com.devdiegomata90.nueva_vida_app.data.model.Audio
-import com.devdiegomata90.nueva_vida_app.ui.viewmodel.AudioAdapter
+import com.devdiegomata90.nueva_vida_app.model.Audio
+import com.devdiegomata90.nueva_vida_app.ui.adapter.AudioAdapter
 import com.google.firebase.database.*
 import java.util.*
 

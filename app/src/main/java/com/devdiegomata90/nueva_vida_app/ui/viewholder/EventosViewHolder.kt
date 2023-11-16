@@ -1,12 +1,11 @@
-package com.devdiegomata90.nueva_vida_app.ui.viewmodel
+package com.devdiegomata90.nueva_vida_app.ui.viewholder
 
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
-import com.devdiegomata90.nueva_vida_app.data.model.Evento
+import com.devdiegomata90.nueva_vida_app.model.Evento
 import com.devdiegomata90.nueva_vida_app.util.TypefaceUtil
 import com.squareup.picasso.Picasso
 import java.text.ParseException
@@ -22,14 +21,14 @@ class EventosViewHolder(private val view: View, onItemClickListener: onItemClick
     private val lugarEvento:TextView = view.findViewById(R.id.LugarEvento)
     private val horaEvento:TextView = view.findViewById(R.id.HoraEvento)
     private val imageEvento:ImageView =view.findViewById(R.id.imageEvento)
-    lateinit var EventoArray:Evento
+    lateinit var EventoArray: Evento
 
 
     //METODO PARA LA ACCION DEL ADMINISTRADOR
     interface onItemClickListener {
 
         fun onClick(position: Int)
-        fun onLongClick(evento:Evento)
+        fun onLongClick(evento: Evento)
 
     }
 

@@ -1,4 +1,4 @@
-package com.devdiegomata90.nueva_vida_app.data.model
+package com.devdiegomata90.nueva_vida_app.model
 
 class Evento {
     var id:String? = null
