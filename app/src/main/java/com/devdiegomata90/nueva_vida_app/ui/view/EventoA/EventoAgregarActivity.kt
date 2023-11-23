@@ -14,12 +14,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import com.devdiegomata90.nueva_vida_app.R
-import com.devdiegomata90.nueva_vida_app.model.Evento
+import com.devdiegomata90.nueva_vida_app.data.model.Evento
 import com.devdiegomata90.nueva_vida_app.ui.view.Evento.EventoActivity
-import com.devdiegomata90.nueva_vida_app.util.DataPickerFragment
-import com.devdiegomata90.nueva_vida_app.util.LoadingDialog
-import com.devdiegomata90.nueva_vida_app.util.NotificationBuilder
-import com.devdiegomata90.nueva_vida_app.util.TimePickerFragment
+import com.devdiegomata90.nueva_vida_app.core.calendar.DataPickerFragment
+import com.devdiegomata90.nueva_vida_app.core.LoadingDialog
+import com.devdiegomata90.nueva_vida_app.core.notification.NotificationBuilder
+import com.devdiegomata90.nueva_vida_app.core.calendar.TimePickerFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -32,7 +32,6 @@ import com.google.firebase.storage.UploadTask
 import com.squareup.picasso.Picasso
 import java.io.ByteArrayOutputStream
 import java.text.ParseException
-import java.text.SimpleDateFormat
 import java.util.*
 
 

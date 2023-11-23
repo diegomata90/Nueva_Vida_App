@@ -10,8 +10,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.devdiegomata90.nueva_vida_app.R
-import com.devdiegomata90.nueva_vida_app.util.LoadingDialog
-import com.devdiegomata90.nueva_vida_app.util.TypefaceUtil
+import com.devdiegomata90.nueva_vida_app.core.LoadingDialog
+import com.devdiegomata90.nueva_vida_app.core.TypefaceUtil
 import com.google.firebase.auth.FirebaseAuth
 
 

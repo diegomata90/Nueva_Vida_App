@@ -12,21 +12,21 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
-import com.devdiegomata90.nueva_vida_app.model.Categoria
-import com.devdiegomata90.nueva_vida_app.network.VersesResponse
+import com.devdiegomata90.nueva_vida_app.data.model.Categoria
+import com.devdiegomata90.nueva_vida_app.data.network.response.VersesResponse
 
 import com.devdiegomata90.nueva_vida_app.ui.view.Audio.AudioActivity
 import com.devdiegomata90.nueva_vida_app.ui.view.Evento.EventoActivity
 import com.devdiegomata90.nueva_vida_app.ui.adapter.CategoriasAdapter
-import com.devdiegomata90.nueva_vida_app.util.TypefaceUtil
+import com.devdiegomata90.nueva_vida_app.core.TypefaceUtil
 import com.google.firebase.database.*
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import android.os.Handler
 import androidx.lifecycle.lifecycleScope
-import com.devdiegomata90.nueva_vida_app.api.VersesApiServe
-import com.devdiegomata90.nueva_vida_app.ui.view.Biblia.BibliaActivity
+import com.devdiegomata90.nueva_vida_app.data.network.VersesApiServe
+import com.devdiegomata90.nueva_vida_app.ui.view.Biblia.Biblia3Activity
 
 class InicioCliente : Fragment() {
 
@@ -158,7 +158,7 @@ class InicioCliente : Fragment() {
             startActivity(Intent(requireContext(), EventoActivity::class.java))
         }
         cardBiblia.setOnClickListener {
-            startActivity(Intent(requireContext(), BibliaActivity::class.java))
+            startActivity(Intent(requireContext(), Biblia3Activity::class.java))
         }
         cardAudio.setOnClickListener {
             startActivity(Intent(requireContext(), AudioActivity::class.java))

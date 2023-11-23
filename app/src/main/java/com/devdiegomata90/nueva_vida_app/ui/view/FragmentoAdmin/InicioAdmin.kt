@@ -13,7 +13,7 @@ import androidx.cardview.widget.CardView
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.ui.view.Biblia.BibliaActivity
 import com.devdiegomata90.nueva_vida_app.ui.view.EventoA.EventoaActivity
-import com.devdiegomata90.nueva_vida_app.util.TypefaceUtil
+import com.devdiegomata90.nueva_vida_app.core.TypefaceUtil
 
 class InicioAdmin : Fragment() {
 

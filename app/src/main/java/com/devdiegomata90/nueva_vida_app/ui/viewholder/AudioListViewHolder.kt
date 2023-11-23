@@ -5,8 +5,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
-import com.devdiegomata90.nueva_vida_app.model.Audio
-import com.devdiegomata90.nueva_vida_app.util.TypefaceUtil
+import com.devdiegomata90.nueva_vida_app.data.model.Audio
+import com.devdiegomata90.nueva_vida_app.core.TypefaceUtil
 import com.squareup.picasso.Picasso
 
 class AudioListViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {

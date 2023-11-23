@@ -10,9 +10,9 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
-import com.devdiegomata90.nueva_vida_app.model.Audio
+import com.devdiegomata90.nueva_vida_app.data.model.Audio
 import com.devdiegomata90.nueva_vida_app.ui.adapter.AudioListAdapter
-import com.devdiegomata90.nueva_vida_app.util.TypefaceUtil
+import com.devdiegomata90.nueva_vida_app.core.TypefaceUtil
 import com.google.firebase.database.*
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.*

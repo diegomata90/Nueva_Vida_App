@@ -16,7 +16,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.devdiegomata90.nueva_vida_app.ui.view.MainActivityAdmin
 import com.devdiegomata90.nueva_vida_app.R
-import com.devdiegomata90.nueva_vida_app.util.LoadingDialog
+import com.devdiegomata90.nueva_vida_app.core.LoadingDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import java.time.LocalDate
