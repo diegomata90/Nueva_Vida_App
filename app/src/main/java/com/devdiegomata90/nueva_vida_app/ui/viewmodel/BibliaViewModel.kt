@@ -1,7 +1,6 @@
 package com.devdiegomata90.nueva_vida_app.ui.viewmodel
 
 import androidx.lifecycle.*
-import com.devdiegomata90.nueva_vida_app.core.LoadingDialog
 import com.devdiegomata90.nueva_vida_app.data.model.BookAndChapter
 import com.devdiegomata90.nueva_vida_app.domain.GetBooksUseCase
 import com.devdiegomata90.nueva_vida_app.domain.GetChaptersUseCase
@@ -20,7 +19,7 @@ class BibliaViewModel() : ViewModel() {
     var bookAndChapter = MutableLiveData<BookAndChapter>()
 
     //LiveData para el isLoading
-    //var loading = MutableLiveData<Boolean>()
+    var loading = MutableLiveData<Boolean>().apply { value = false }
 
     //Llamamos al caso de uso que obtiene los libros
     var getBooksUseCase = GetBooksUseCase()
@@ -31,7 +30,7 @@ class BibliaViewModel() : ViewModel() {
     fun onCreate() {
 
         viewModelScope.launch {
-           // loading.postValue(true)
+           loading.postValue(true)
 
             val result = getBooksUseCase()
 
@@ -39,8 +38,8 @@ class BibliaViewModel() : ViewModel() {
                 //ordena la lista
                 val orderResult = result.sortedBy { it.order }
                 books.postValue(orderResult)
-            //    loading.postValue(false)
             }
+            loading.postValue(false)
         }
 
     }

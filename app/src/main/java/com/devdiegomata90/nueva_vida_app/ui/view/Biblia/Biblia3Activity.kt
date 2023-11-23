@@ -41,6 +41,8 @@ class Biblia3Activity : AppCompatActivity() {
 
         initComponent()
 
+
+
         bibliaViewModel.onCreate()
 
         //Suscriese al ViewModel
@@ -64,7 +66,7 @@ class Biblia3Activity : AppCompatActivity() {
 
         })
 
-    /*
+    //
      bibliaViewModel.loading.observe(this, Observer { loading ->
 
            if(loading){
@@ -73,12 +75,16 @@ class Biblia3Activity : AppCompatActivity() {
                 loadingDialog.isDismiss()
            }
        })
-    */
+    //
 
     }
 
-
     private fun initComponent() {
+
+        // Inicializa la instancia del LoadingDialog
+        loadingDialog = LoadingDialog(this)
+        loadingDialog.mensaje = "Cargando..."
+
 
         initRecyclerView()
 
