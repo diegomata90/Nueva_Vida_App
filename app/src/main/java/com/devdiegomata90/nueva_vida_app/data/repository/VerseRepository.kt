@@ -9,7 +9,7 @@ class VerseRepository {
 
     suspend fun getAllVerses(url: String): List<VersesResponse> {
 
-        val response = api.getVeses(url)
+        val response = api.getVerses(url)
 
         return response
     }

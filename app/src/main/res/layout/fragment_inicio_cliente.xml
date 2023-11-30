@@ -232,14 +232,25 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
+                <!-- Text libro  -->
                 <TextView
                     android:id="@+id/libro"
-                    android:textSize="25sp"
+                    android:textSize="35sp"
                     android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     tools:text="@string/libro" />
+
+                <!-- Text Capitulo y Versiculo  -->
+                <TextView
+                    android:id="@+id/Capitulo"
+                    android:textSize="35sp"
+                    android:textStyle="bold"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    tools:text="@string/capitulo" />
 
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -256,10 +267,27 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:textSize="18sp"
+                    android:textSize="22sp"
                     tools:text="@string/VersiculoTXT" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="end"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/btnCompartir"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/compartir_ico" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>

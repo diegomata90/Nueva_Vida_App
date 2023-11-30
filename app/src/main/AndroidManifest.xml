@@ -19,13 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Nueva_Vida_App"
         tools:targetApi="31" >
-        <activity
-            android:name=".Biblia4Activity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.view.Biblia.Biblia3Activity"
-            android:exported="false"
-            android:theme="@style/BibliaComponent" />
+
         <activity
             android:name=".ui.view.Biblia.BibliaActivity"
             android:exported="false"

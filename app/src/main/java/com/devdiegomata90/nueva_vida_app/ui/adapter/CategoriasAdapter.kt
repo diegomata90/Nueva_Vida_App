@@ -8,7 +8,7 @@ import com.devdiegomata90.nueva_vida_app.data.model.Categoria
 import com.devdiegomata90.nueva_vida_app.ui.viewholder.CategoriasViewHolder
 
 
-class CategoriasAdapter(private val categorias: List<Categoria>):
+class CategoriasAdapter(private var categorias: List<Categoria>):
     RecyclerView.Adapter<CategoriasViewHolder> (){
 
     //crea una vista visual, montar la vista para el metodo getItemcount pueda pasarle la informacion a pintar
@@ -24,6 +24,11 @@ class CategoriasAdapter(private val categorias: List<Categoria>):
 
     //Retorna el tamano del lista de items
     override fun getItemCount() = categorias.size
+
+    fun updateData(newListCategorias: List<Categoria>){
+        categorias = newListCategorias
+        notifyDataSetChanged()
+    }
 
 
 

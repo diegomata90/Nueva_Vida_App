@@ -11,9 +11,9 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import com.devdiegomata90.nueva_vida_app.R
-import com.devdiegomata90.nueva_vida_app.ui.view.Biblia.BibliaActivity
 import com.devdiegomata90.nueva_vida_app.ui.view.EventoA.EventoaActivity
 import com.devdiegomata90.nueva_vida_app.core.TypefaceUtil
+import com.devdiegomata90.nueva_vida_app.ui.view.Biblia.BibliaActivity
 
 class InicioAdmin : Fragment() {
 
@@ -36,7 +36,6 @@ class InicioAdmin : Fragment() {
         val view = inflater.inflate(R.layout.fragment_inicio_admin, container, false)
 
         initComponent(view)
-        initUi(view)
         eventos()
 
         // Asigna Tipo Letra de Ubuntu a los texView (funcion Disena para usar en cualquier activity)
@@ -81,9 +80,7 @@ class InicioAdmin : Fragment() {
         cardVideo = view.findViewById(R.id.cardVideo)
     }
 
-    private fun initUi(view: View) {
 
-    }
 
     private fun eventos() {
         cardEvento.setOnClickListener {

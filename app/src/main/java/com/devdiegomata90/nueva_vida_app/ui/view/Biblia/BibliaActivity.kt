@@ -1,97 +1,161 @@
 package com.devdiegomata90.nueva_vida_app.ui.view.Biblia
 
-import android.net.Uri
+import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.widget.*
+import android.widget.ArrayAdapter
+import androidx.activity.viewModels
 import androidx.core.widget.doOnTextChanged
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
-import com.devdiegomata90.nueva_vida_app.data.network.BooksApiServe
+import com.devdiegomata90.nueva_vida_app.core.LoadingDialog
+import com.devdiegomata90.nueva_vida_app.databinding.ActivityBibliaBinding
 import com.devdiegomata90.nueva_vida_app.data.network.response.BooksResponse
-import com.devdiegomata90.nueva_vida_app.data.network.VersesApiServe
 import com.devdiegomata90.nueva_vida_app.data.network.response.VersesResponse
 import com.devdiegomata90.nueva_vida_app.ui.adapter.TextBiblicoAdapter
-import com.devdiegomata90.nueva_vida_app.core.LoadingDialog
-import com.devdiegomata90.nueva_vida_app.core.TypefaceUtil
-import com.google.android.material.textfield.TextInputLayout
+import com.devdiegomata90.nueva_vida_app.ui.viewmodel.BibliaViewModel
 import kotlinx.coroutines.launch
-import retrofit2.HttpException
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+
 
 class BibliaActivity : AppCompatActivity() {
 
-    private lateinit var booksTV: AutoCompleteTextView
-    private lateinit var chapterTV: AutoCompleteTextView
-    private lateinit var inputBook: TextInputLayout
-    private lateinit var inputChapter: TextInputLayout
-    private lateinit var libro: TextView
-    private lateinit var capitulo: TextView
-    private lateinit var rvVersiculo: RecyclerView
-    private lateinit var versiculoAdapter: TextBiblicoAdapter
-    private lateinit var versiculoList: List<VersesResponse>
-    private var IDBOOK:String = ""
+
+    private lateinit var binding: ActivityBibliaBinding //declara el Binding
     private lateinit var loadingDialog: LoadingDialog
+    private val bibliaViewModel: BibliaViewModel by viewModels() //Inicializa el ViewModel
+    private lateinit var versiculoList: List<VersesResponse>
+    private lateinit var versiculoAdapter: TextBiblicoAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_biblia)
+        binding = ActivityBibliaBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         //Se agregar el actionBar personalizado
-        actionBarPersonalizado("Biblia")
+        actionBarPersonalizado("Biblia RVR1960")
 
-        initUI()
         initComponent()
 
-        TypefaceUtil.asignarTipoLetra(
-            this, null,
-            booksTV,
-            chapterTV,
-            inputBook,
-            inputChapter,
-            libro,
-            capitulo
-        )
 
-    }
+        bibliaViewModel.onCreate()
 
-    private fun initUI() {
-        booksTV = findViewById(R.id.BooksTV)
-        chapterTV = findViewById(R.id.ChapterTV)
-        inputBook = findViewById(R.id.InputBook)
-        inputChapter = findViewById(R.id.InputChapter)
-        libro = findViewById(R.id.Libro)
-        capitulo = findViewById(R.id.Capitulo)
-        rvVersiculo = findViewById(R.id.rvVersiculo)
+        //Suscribe la ViewModel
+        bibliaViewModel.books.observe(this, Observer { books ->
+            showBook(books)
+        })
+
+        bibliaViewModel.chapters.observe(this, Observer { chapters ->
+            showChapter(chapters)
+        })
+
+        bibliaViewModel.verses.observe(this, Observer { verses ->
+            showVerses(verses)
+        })
+
+        bibliaViewModel.bookAndChapter.observe(this, Observer { bookAndChapter ->
+
+            //Mostra nombre libro y capitulo
+            binding.Libro.text = bookAndChapter.bookName
+            binding.Capitulo.text = bookAndChapter.chapterNumber
+
+        })
+
+
+        bibliaViewModel.loading.observe(this, Observer { loading ->
+
+            if (loading) {
+                loadingDialog.starLoading()
+            } else {
+                loadingDialog.isDismiss()
+            }
+        })
 
     }
 
     private fun initComponent() {
-        //Inicializa el dialogo
+
+        // Inicializa la instancia del LoadingDialog
         loadingDialog = LoadingDialog(this)
-        loadingDialog.mensaje = "Cargando... "
+        loadingDialog.mensaje = "Cargando..."
         loadingDialog.setCancelable = false
 
-        showBook()
         initRecyclerView()
 
-        //Escuchar los cambio en el lista de Capitulos
-        chapterTV.doOnTextChanged { _, _, _, _ ->
-            val selectedBook = booksTV.text.toString()
-            val selectedChapter = chapterTV.text.toString()
+    }
 
-            if (selectedBook.isNotEmpty() && selectedBook != getString(R.string.SeleccionTXT) && selectedChapter.isNotEmpty() && selectedChapter != getString(R.string.SeleccionTXT) ) {
-                //Llamar a la funcion para mostrar el texto
-                showVerse(selectedBook, selectedChapter, IDBOOK)
+    private fun showBook(books: List<BooksResponse>?) {
+
+        //Validar si viene vacia
+        if (books != null) {
+
+            //ordena y devuelve solo el nombre del libro
+            val bookName = books.map { it.name }
+
+            //Crear el adaptador para lista desplegable
+            val adapter = ArrayAdapter(this@BibliaActivity, R.layout.item_dropdown, bookName)
+
+            //Asigna el adaptador
+            binding.BooksTV.apply {
+                setAdapter(adapter)
+
+                doOnTextChanged { bookSelected, _, _, _ ->
+                    //Llamar el metodo para mostrar los chapters
+                    lifecycleScope.launch {
+                        //llama a la funcion del viewmodel
+                        bibliaViewModel.showChapters(bookSelected = bookSelected.toString())
+                        binding.ChapterTV.setText("")
+                    }
+                }
             }
         }
+    }
 
-        //Inicializar con Génesis =>Capitulo 1
-        showVerse("Génesis", "1", "spa-RVR1960:Gen")
+    private fun showChapter(bookSelected: List<String>?) {
+
+        //Validar si viene vacia
+        if (bookSelected != null) {
+            //Borar valores del listade capitulos
+            //binding.ChapterTV.setText("")
+
+            //Crear el adaptador para lista desplegable
+            val adapter = ArrayAdapter(this@BibliaActivity, R.layout.item_dropdown, bookSelected)
+
+            //Asigna el adaptador
+            binding.ChapterTV.apply {
+                setAdapter(adapter)
+
+                doOnTextChanged() { chapterSelected, _, _, _ ->
+
+                    lifecycleScope.launch {
+                        //llama a la funcion del viewmodel
+                        bibliaViewModel.showVerse(
+                            bookSelected = binding.BooksTV.text.toString(),
+                            chapterSelected = chapterSelected.toString()
+
+                        )
+                    }
+
+                }
+
+            }
+        }
+    }
+
+    private fun showVerses(verses: List<VersesResponse>?) {
+
+        //Validar si viene vacia
+        if (verses != null) {
+
+            versiculoList = verses
+
+            // Actualiza los datos en el adaptador después de llenar la lista
+            versiculoAdapter.updateData((versiculoList))
+
+        }
 
     }
 
@@ -103,170 +167,30 @@ class BibliaActivity : AppCompatActivity() {
             versiculoList = versiculoList,
             onClickListener = { versiculo -> getVersiculo(versiculo) }
         )
-        rvVersiculo.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        rvVersiculo.adapter = versiculoAdapter
+        binding.rvVersiculo.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.rvVersiculo.adapter = versiculoAdapter
     }
 
-
-    //Metodo para crear el retrofit
-    private fun getRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl("https://ajphchgh0i.execute-api.us-west-2.amazonaws.com/dev/api/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
-    //Mostrar el libros
-    private fun showBook() {
-
-        loadingDialog.starLoading()
-        val url = "https://ajphchgh0i.execute-api.us-west-2.amazonaws.com/dev/api/books/"
-
-        //Corutina para ejecutar en el hilo secundario
-        lifecycleScope.launch {
-            val call = getRetrofit().create(BooksApiServe::class.java).getBooks("$url")
-
-            try {
-
-                //Valida si la respuesta es exitosa
-                if (call.isSuccessful) {
-
-                    loadingDialog.isDismiss()
-
-                    //almacena la respuesta
-                    val books = call.body() ?: emptyList()
-
-                    //ordena y devuelve el nombre del libro
-                    val bookName = books.sortedBy { it.order }.map{it.name}
-
-                    //Llena lista de desplegable
-                    val adapterBooks = ArrayAdapter( this@BibliaActivity, R.layout.item_dropdown,bookName)
-
-                    booksTV.apply{
-                        setAdapter(adapterBooks)
-
-                        // Escucha cuando hay algun cambio el texto
-                        doOnTextChanged { selectedBook, _, _, _ ->
-
-                            //almacena libro seleccionado
-                            val bookSelected = books.filter{ it.name == selectedBook.toString() }
-
-                            Log.i("BOOK SELECT", "${bookSelected.map { it.name }}")
-
-                            //llama funcion para mostrar los capitulos
-                            showChapters(bookSelected)
-
-
-                        }
-                    }
-                }
-
-            } catch (e: Exception) {
-                showError("showBook", e.message)
-            } catch (e: HttpException) {
-                showError("showBook", e.message)
-            } catch (e: Throwable) {
-                showError("showBook", e.message)
-            }
-        }
-    }
-
-    private fun showChapters(bookSelected: List<BooksResponse>) {
-
-        //Borar valores del listade capitulos
-        chapterTV.setText("")
-
-        var totalChapter: MutableList<String> = mutableListOf()
-
-        //almacena los caputlos del libro
-        bookSelected.flatMap { it.capitulos  }.mapTo(totalChapter) { it.n_chapter.toString() }
-
-        //Mostrar los Capitulos
-        val adapterChapter = ArrayAdapter(this@BibliaActivity, R.layout.item_dropdown, totalChapter)
-
-        IDBOOK = bookSelected.map { it.version_book }.first().toString()
-
-
-        chapterTV.apply {
-            setAdapter(adapterChapter)
-        }
-    }
-
-    private fun showVerse(book: String, chapter: String, version: String) {
-
-        val Url = "https://ajphchgh0i.execute-api.us-west-2.amazonaws.com/dev/api/books/"
-        val bookChapter = "$version/verses/$chapter"
-
-
-        // Utiliza Uri.Builder para construir la URL de manera segura
-        val fullUrlV = Uri.parse(Url).buildUpon()
-            .appendEncodedPath(bookChapter)
-            .build().toString()
-
-        // Log para verificar la URL antes de la llamada a la API
-        Log.i("showVerse URL2", "URL de la API: $fullUrlV")
-
-        //Corutina para mostrar Versiculo en el recicleView
-        lifecycleScope.launch() {
-            val call = getRetrofit().create(VersesApiServe::class.java).getVerses("$fullUrlV")
-
-            try {
-                val verses: List<VersesResponse>? = call.body()
-
-                if (call.isSuccessful) {
-
-                    //Mostra nombre libro y capitulo
-                    libro.text = book
-                    capitulo.text = chapter
-
-                    //ordena la lista
-                    val versesSort = verses?.sortedBy { it.codigo }
-
-                    // Log para verificar los datos recuperados antes de mostrarlos
-                    Log.i(
-                        "showVerse SORT", "Versículos recuperados: ${
-                            versesSort?.map { it.capitulo }?.first()
-                                .toString() + "  " + versesSort?.map { it.cleanText }
-                                ?.first()
-                                .toString()
-                        }"
-                    )
-
-                    versiculoList = versesSort ?: emptyList()
-
-                    // Actualiza los datos en el adaptador después de llenar la lista
-                    versiculoAdapter.updateData((versiculoList as List<VersesResponse>))
-
-                    Log.i(
-                        "showVerse Resultado",
-                        versiculoList.map { it.capitulo }.first()
-                            .toString() + "  " + versiculoList.map { it.cleanText }.first()
-                            .toString()
-                    )
-
-                } else {
-                    showError("showVerse", call.message())
-                }
-
-            } catch (e: Exception) {
-                showError("showVerse", e.message)
-            }
-        }
-    }
-
-    //Metodo para compartir versiculo (Seleccionado del reciclerView)
+    //Se crea un alert dialog para preguntar desea compartir el versiculo
     private fun getVersiculo(versiculo: VersesResponse) {
-        Toast.makeText(this, "Versiculo ${versiculo.cleanText}", Toast.LENGTH_SHORT).show()
-    }
 
-    //Muestra un error en caso de que se produzca
-    private fun showError(method: String?, additionalMessage: String?) {
-        try {
-            throw RuntimeException("Error al ejecutar el API $method. Detalles: $additionalMessage")
-        } catch (e: RuntimeException) {
-            Log.e("Error ==>> ", e.message, e)
-            Toast.makeText(this, "Error inesperado en el metodo $method", Toast.LENGTH_SHORT).show()
-        }
+        //se Crea un alert dialogo para con un boton para compartir
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Compartir ")
+        builder.setMessage("${versiculo.capitulo} RVR1960\n${versiculo.cleanText}")
+            .setPositiveButton("Compartir") { _, _ ->
+                val message =
+                    "${versiculo.capitulo} RVR1960\n${versiculo.cleanText}\n\n${getText(R.string.app_name)}"
+
+                //llama a la funcion del viewmodel
+                bibliaViewModel.shareText(this@BibliaActivity, message)
+            }
+            .setNegativeButton("Cancelar") { dialog, _ ->
+                dialog.dismiss()
+            }
+        builder.create().show()
+
     }
 
     private fun actionBarPersonalizado(titulo: String) {

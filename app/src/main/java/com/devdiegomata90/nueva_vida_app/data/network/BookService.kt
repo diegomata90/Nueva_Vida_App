@@ -1,8 +1,7 @@
 package com.devdiegomata90.nueva_vida_app.data.network
 
 
-import com.devdiegomata90.nueva_vida_app.core.RetrofitHelper
-import com.devdiegomata90.nueva_vida_app.data.model.Book
+import com.devdiegomata90.nueva_vida_app.core.RetrofitHelperBiblia
 import com.devdiegomata90.nueva_vida_app.data.network.response.BooksResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -10,7 +9,7 @@ import retrofit2.Response
 
 class BookService {
 
-    private val retrofit = RetrofitHelper.getretrofit()
+    private val retrofit = RetrofitHelperBiblia.getretrofit()
 
     suspend fun getBooks(): List<BooksResponse> {
 

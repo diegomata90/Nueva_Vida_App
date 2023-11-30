@@ -1,5 +1,7 @@
 package com.devdiegomata90.nueva_vida_app.ui.viewmodel
 
+import android.content.Context
+import android.content.Intent
 import androidx.lifecycle.*
 import com.devdiegomata90.nueva_vida_app.data.model.BookAndChapter
 import com.devdiegomata90.nueva_vida_app.domain.GetBooksUseCase
@@ -7,6 +9,7 @@ import com.devdiegomata90.nueva_vida_app.domain.GetChaptersUseCase
 import com.devdiegomata90.nueva_vida_app.domain.GetVersesUseCase
 import com.devdiegomata90.nueva_vida_app.data.network.response.BooksResponse
 import com.devdiegomata90.nueva_vida_app.data.network.response.VersesResponse
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
@@ -27,6 +30,7 @@ class BibliaViewModel() : ViewModel() {
     var getVersesUseCase = GetVersesUseCase()
 
 
+    //Funciones
     fun onCreate() {
 
         viewModelScope.launch {
@@ -38,7 +42,14 @@ class BibliaViewModel() : ViewModel() {
                 //ordena la lista
                 val orderResult = result.sortedBy { it.order }
                 books.postValue(orderResult)
+
+                //Mostrar libro Génesis 1 al inicial activity
+                showVerse("Génesis", "1")
+
+                //Demorar medio seconds
+                delay(500)
             }
+
             loading.postValue(false)
         }
 
@@ -71,6 +82,18 @@ class BibliaViewModel() : ViewModel() {
 
     }
 
+    fun shareText(context: Context, text: String) {
+
+        // Crear un Intent
+        val sendIntent = Intent().apply {
+            action = Intent.ACTION_SEND
+            putExtra(Intent.EXTRA_TEXT, text)
+            type = "text/plain"
+        }
+
+        // Iniciar la actividad de compartir
+        context.startActivity(Intent.createChooser(sendIntent, null))
+    }
 
 }
 

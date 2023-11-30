@@ -88,8 +88,9 @@
     <!-- BIBLIA-->
     <string name="LibroTXT">Libro</string>
     <string name="CapituloTXT">Capítulo</string>
+    <string name="VersiculoTXT2">Versiculo</string>
     <string name="TestamentoTXT">Testamento</string>
-    <string name="SeleccionTXT">Seleccione</string>
+    <string name="SeleccionTXT">Select</string>
     <string name="itemTXT">item dropdown</string>
     <string name="btnMostrar">B</string>
     <string name="versiculoTXT">Versiculo</string>

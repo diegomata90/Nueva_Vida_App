@@ -2,7 +2,6 @@ package com.devdiegomata90.nueva_vida_app.domain
 
 import com.devdiegomata90.nueva_vida_app.data.BookProvider
 import com.devdiegomata90.nueva_vida_app.data.model.BookAndChapter
-import com.devdiegomata90.nueva_vida_app.data.repository.BookRepository
 import com.devdiegomata90.nueva_vida_app.data.repository.VerseRepository
 import com.devdiegomata90.nueva_vida_app.data.network.response.VersesResponse
 
@@ -25,7 +24,7 @@ class GetVersesUseCase {
 
         if(!verses.isNullOrEmpty()){
             //ordena la lista
-            val orderVerses = verses.sortedBy{it.id}
+            val orderVerses = verses.sortedBy{it.codigo}
 
             //devuelve el libro y capitulo
             val bookAndChapter = BookAndChapter(bookSelected, chapterSelected)
