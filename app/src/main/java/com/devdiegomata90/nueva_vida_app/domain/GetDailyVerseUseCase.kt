@@ -1,6 +1,6 @@
 package com.devdiegomata90.nueva_vida_app.domain
 
-import com.devdiegomata90.nueva_vida_app.data.network.response.DailyVerseResponse
+import com.devdiegomata90.nueva_vida_app.data.model.DailyVerseResponse
 import com.devdiegomata90.nueva_vida_app.data.repository.DailyVerseRepository
 import java.util.*
 

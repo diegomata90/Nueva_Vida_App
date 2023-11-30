@@ -1,7 +1,7 @@
 package com.devdiegomata90.nueva_vida_app.data.network
 
 import com.devdiegomata90.nueva_vida_app.core.RetrofitHelperApp
-import com.devdiegomata90.nueva_vida_app.data.network.response.DailyVerseResponse
+import com.devdiegomata90.nueva_vida_app.data.model.DailyVerseResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Response

@@ -5,7 +5,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
 
-import com.devdiegomata90.nueva_vida_app.data.network.response.VersesResponse
+import com.devdiegomata90.nueva_vida_app.data.model.Verse
 import com.devdiegomata90.nueva_vida_app.core.TypefaceUtil
 
 
@@ -15,7 +15,7 @@ class TextBiblicoViewHolder(private val view: View): RecyclerView.ViewHolder(vie
     private val versiculoTexto: TextView = itemView.findViewById(R.id.versiculoTexto)
     private val nVersiculo: TextView = itemView.findViewById(R.id.nversiculo)
 
-    fun bind(versiculo: VersesResponse, onClickListener: (VersesResponse) -> Unit) {
+    fun bind(versiculo: Verse, onClickListener: (Verse) -> Unit) {
         // Limpia cualquier contenido previo en los TextViews
         nVersiculo.text = ""
         versiculoTexto.text = ""

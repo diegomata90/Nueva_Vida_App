@@ -11,9 +11,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.core.LoadingDialog
+import com.devdiegomata90.nueva_vida_app.data.model.Book
 import com.devdiegomata90.nueva_vida_app.databinding.ActivityBibliaBinding
-import com.devdiegomata90.nueva_vida_app.data.network.response.BooksResponse
-import com.devdiegomata90.nueva_vida_app.data.network.response.VersesResponse
+import com.devdiegomata90.nueva_vida_app.data.model.Verse
 import com.devdiegomata90.nueva_vida_app.ui.adapter.TextBiblicoAdapter
 import com.devdiegomata90.nueva_vida_app.ui.viewmodel.BibliaViewModel
 import kotlinx.coroutines.launch
@@ -25,7 +25,7 @@ class BibliaActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBibliaBinding //declara el Binding
     private lateinit var loadingDialog: LoadingDialog
     private val bibliaViewModel: BibliaViewModel by viewModels() //Inicializa el ViewModel
-    private lateinit var versiculoList: List<VersesResponse>
+    private lateinit var versiculoList: List<Verse>
     private lateinit var versiculoAdapter: TextBiblicoAdapter
 
 
@@ -87,7 +87,7 @@ class BibliaActivity : AppCompatActivity() {
 
     }
 
-    private fun showBook(books: List<BooksResponse>?) {
+    private fun showBook(books: List<Book>?) {
 
         //Validar si viene vacia
         if (books != null) {
@@ -145,7 +145,7 @@ class BibliaActivity : AppCompatActivity() {
         }
     }
 
-    private fun showVerses(verses: List<VersesResponse>?) {
+    private fun showVerses(verses: List<Verse>?) {
 
         //Validar si viene vacia
         if (verses != null) {
@@ -173,7 +173,7 @@ class BibliaActivity : AppCompatActivity() {
     }
 
     //Se crea un alert dialog para preguntar desea compartir el versiculo
-    private fun getVersiculo(versiculo: VersesResponse) {
+    private fun getVersiculo(versiculo: Verse) {
 
         //se Crea un alert dialogo para con un boton para compartir
         val builder = AlertDialog.Builder(this)

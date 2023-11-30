@@ -1,4 +1,4 @@
-package com.devdiegomata90.nueva_vida_app.data.network.response
+package com.devdiegomata90.nueva_vida_app.data.model
 
 import com.google.gson.annotations.SerializedName
 

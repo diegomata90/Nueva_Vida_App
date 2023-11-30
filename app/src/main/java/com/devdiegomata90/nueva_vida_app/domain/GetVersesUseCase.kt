@@ -3,13 +3,13 @@ package com.devdiegomata90.nueva_vida_app.domain
 import com.devdiegomata90.nueva_vida_app.data.BookProvider
 import com.devdiegomata90.nueva_vida_app.data.model.BookAndChapter
 import com.devdiegomata90.nueva_vida_app.data.repository.VerseRepository
-import com.devdiegomata90.nueva_vida_app.data.network.response.VersesResponse
+import com.devdiegomata90.nueva_vida_app.data.model.Verse
 
 class GetVersesUseCase {
 
     private val repository = VerseRepository()
 
-    suspend operator fun invoke(bookSelected:String, chapterSelected: String): Pair<BookAndChapter, List<VersesResponse>>? {
+    suspend operator fun invoke(bookSelected:String, chapterSelected: String): Pair<BookAndChapter, List<Verse>>? {
 
         //Recupera los libros de repositorio
         val books = BookProvider.books

@@ -3,12 +3,12 @@ package com.devdiegomata90.nueva_vida_app.ui.viewmodel
 import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.*
+import com.devdiegomata90.nueva_vida_app.data.model.Book
 import com.devdiegomata90.nueva_vida_app.data.model.BookAndChapter
 import com.devdiegomata90.nueva_vida_app.domain.GetBooksUseCase
 import com.devdiegomata90.nueva_vida_app.domain.GetChaptersUseCase
 import com.devdiegomata90.nueva_vida_app.domain.GetVersesUseCase
-import com.devdiegomata90.nueva_vida_app.data.network.response.BooksResponse
-import com.devdiegomata90.nueva_vida_app.data.network.response.VersesResponse
+import com.devdiegomata90.nueva_vida_app.data.model.Verse
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -16,9 +16,9 @@ import kotlinx.coroutines.launch
 class BibliaViewModel() : ViewModel() {
 
     // LiveData para la lista de libros
-    var books = MutableLiveData<List<BooksResponse>?>()
+    var books = MutableLiveData<List<Book>?>()
     var chapters = MutableLiveData<List<String>?>()
-    var verses = MutableLiveData<List<VersesResponse>?>()
+    var verses = MutableLiveData<List<Verse>?>()
     var bookAndChapter = MutableLiveData<BookAndChapter>()
 
     //LiveData para el isLoading

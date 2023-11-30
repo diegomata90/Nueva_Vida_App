@@ -6,7 +6,7 @@ data class Categoria(
     val imagen: String? = null
 ) {
     // Constructor sin argumentos necesario para Firebase
-    constructor() : this(null, null, null)
+    //constructor() : this(null, null, null)
 
 
 }

@@ -1,11 +1,14 @@
 package com.devdiegomata90.nueva_vida_app.data.model
 
+import com.google.gson.annotations.SerializedName
 
 data class Verse(
-    val codigo: String,
-    val capituloId: String,
-    val cleanText: String,
-    val id: String,
-    val capitulo: String,
-    val htmlText: String,
+    @SerializedName("_id") val codigo: String,
+    @SerializedName("chapterId") val capituloId: String,
+    @SerializedName("cleanText") val cleanText: String,
+    @SerializedName("id") val id: String,
+    @SerializedName("reference") val capitulo: String,
+    @SerializedName("text") val htmlText: String,
 )
+
+

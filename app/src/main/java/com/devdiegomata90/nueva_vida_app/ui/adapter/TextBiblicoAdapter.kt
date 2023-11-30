@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
-import com.devdiegomata90.nueva_vida_app.data.network.response.VersesResponse
+import com.devdiegomata90.nueva_vida_app.data.model.Verse
 import com.devdiegomata90.nueva_vida_app.ui.viewholder.TextBiblicoViewHolder
 
 class TextBiblicoAdapter(
-    private var versiculoList: List<VersesResponse>,
-    private val onClickListener: (VersesResponse) -> Unit,
+    private var versiculoList: List<Verse>,
+    private val onClickListener: (Verse) -> Unit,
 ) : RecyclerView.Adapter<TextBiblicoViewHolder>() {
 
 
@@ -30,7 +30,7 @@ class TextBiblicoAdapter(
         return versiculoList.size
     }
 
-    fun updateData(newVersiculoList: List<VersesResponse>) {
+    fun updateData(newVersiculoList: List<Verse>) {
         versiculoList = newVersiculoList
         notifyDataSetChanged()
     }

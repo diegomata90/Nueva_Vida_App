@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devdiegomata90.nueva_vida_app.data.model.Categoria
-import com.devdiegomata90.nueva_vida_app.data.network.response.DailyVerseResponse
+import com.devdiegomata90.nueva_vida_app.data.model.DailyVerseResponse
 import com.devdiegomata90.nueva_vida_app.domain.GetCategoriesUseCase
 import com.devdiegomata90.nueva_vida_app.domain.GetDailyVerseUseCase
 import kotlinx.coroutines.flow.MutableStateFlow

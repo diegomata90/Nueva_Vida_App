@@ -1,12 +1,13 @@
 package com.devdiegomata90.nueva_vida_app.data.model
 
-import com.devdiegomata90.nueva_vida_app.data.network.response.Chapter
+import com.google.gson.annotations.SerializedName
 
 data class Book(
-    val codigo: String,
-    val version_book: String,
-    val name: String,
-    val order: Int,
-    val testament: String,
-    val capitulos: List<Chapter>,
+    @SerializedName("_id") val codigo: String,
+    @SerializedName("id") val version_book: String,
+    @SerializedName("name") val name: String,
+    @SerializedName("order") val order: Int,
+    @SerializedName("testament") val testament: String,
+    @SerializedName("chapters") val capitulos: List<Chapter>
 )
+
