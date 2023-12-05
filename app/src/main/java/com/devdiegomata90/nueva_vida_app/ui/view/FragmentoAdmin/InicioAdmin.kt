@@ -13,6 +13,7 @@ import androidx.cardview.widget.CardView
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.ui.view.EventoA.EventoaActivity
 import com.devdiegomata90.nueva_vida_app.core.TypefaceUtil
+import com.devdiegomata90.nueva_vida_app.ui.view.AudioA.AudioaActivity
 import com.devdiegomata90.nueva_vida_app.ui.view.Biblia.BibliaActivity
 
 class InicioAdmin : Fragment() {
@@ -90,11 +91,7 @@ class InicioAdmin : Fragment() {
             startActivity(Intent(requireContext(), BibliaActivity::class.java))
         }
         cardAudio.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                "Ya casi esta listo los AUDIO, porfavor esperar",
-                Toast.LENGTH_SHORT
-            ).show()
+            startActivity(Intent(requireContext(), AudioaActivity::class.java))
         }
         cardVideo.setOnClickListener {
             Toast.makeText(
