@@ -21,8 +21,9 @@ class AudioViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
     private val botonPlay: AppCompatImageView = view.findViewById(R.id.PlayAudio)
 
 
+
     //Metodo para setear los valores de la vista
-    fun bind(audio: Audio, onClickListener: (Audio) -> Unit) {
+    fun bind(audio: Audio, onClickListener: (Audio) -> Unit, admin: Boolean) {
 
         //Asigna texto de basedatos al textView
         audioTitulo.text = audio.titulo
@@ -30,8 +31,15 @@ class AudioViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         fechaAudio.text = audio.fecha
         val imagen = audio.imagen
 
-        botonPlay.setOnClickListener {onClickListener(audio)}
-
+        //Si es administrador muestra el boton editar si el boton play
+        //De se le asigna el Evento a cada boton
+        if(admin){
+            botonPlay.visibility = View.GONE
+            itemView.setOnClickListener {onClickListener(audio)}
+        }else{
+            botonPlay.visibility = View.VISIBLE
+            botonPlay.setOnClickListener {onClickListener(audio)}
+        }
 
         ///Capturar la imagen con libreria Picaso
         ///Controlar posibles errores
@@ -48,8 +56,7 @@ class AudioViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
             null,
             audioTitulo,
             descripcionAudio,
-            fechaAudio,
-            botonPlay
+            fechaAudio
         )
 
 

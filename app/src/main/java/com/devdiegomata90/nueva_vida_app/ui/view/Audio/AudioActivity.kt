@@ -55,7 +55,7 @@ class AudioActivity : AppCompatActivity() {
 
                 //Parte 1 Apartador : Conecta toda la informacion con reciclyView
                 audioAdapter = AudioAdapter(
-                   audioList,
+                    audios = audioList,
                     onClickListener = { audio -> reproducir(audio)  }
                 )
 

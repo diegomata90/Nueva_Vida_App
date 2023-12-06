@@ -10,7 +10,8 @@ import com.devdiegomata90.nueva_vida_app.ui.viewholder.AudioViewHolder
 
 class AudioAdapter(
     private var audios: List<Audio>,
-    private val onClickListener: (Audio) -> Unit
+    private val onClickListener: (Audio) -> Unit,
+    private val admin: Boolean = false
 ) : RecyclerView.Adapter<AudioViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AudioViewHolder {
@@ -20,7 +21,7 @@ class AudioAdapter(
 
     override fun onBindViewHolder(holder: AudioViewHolder, position: Int) {
         val audio = audios[position]
-        holder.bind(audio, onClickListener)
+        holder.bind(audio, onClickListener, admin)
     }
 
     override fun getItemCount() = audios.size
