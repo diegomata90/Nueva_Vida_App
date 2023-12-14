@@ -267,7 +267,7 @@ class EventoAgregarActivity : AppCompatActivity() {
             //Se sube la imagen al StorageFirebase
 
             val storageReference = FirebaseStorage.getInstance().reference.child(
-                rutaImageSubida + "/im_" + System.currentTimeMillis() + "." + obtenerExtension(
+                rutaImageSubida + "/im_" + System.currentTimeMillis() + "." + this.obtenerExtension(
                     RutaArchivoUri!!
                 )
             )
@@ -514,7 +514,7 @@ class EventoAgregarActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
+
             }
         })
 

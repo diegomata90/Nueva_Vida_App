@@ -10,23 +10,27 @@ import kotlinx.coroutines.tasks.await
 class DeleteAudioRepository () {
 
     private val databaseReference: DatabaseReference = FirebaseDatabase.getInstance().getReference("AUDIOS")
+    private val dbReferenceStore = FirebaseStorage.getInstance()
 
     suspend fun deleteAudio(audio: Audio):Boolean {
 
         try{
             val IdAudio = audio.id.toString()
-            val Imagen = FirebaseStorage.getInstance().getReferenceFromUrl(audio.imagen!!)
-            val Audio = FirebaseStorage.getInstance().getReferenceFromUrl(audio.url!!)
-
+            val Imagen = audio.imagen.toString()
+            val Audio = audio.url.toString()
 
             //Elimina los datos de audio
             databaseReference.child(IdAudio).removeValue().await()
 
             //Elimina la imagen del storage
-            Imagen.delete().await()
+            if (!(Imagen == null || Imagen == "")){
+                dbReferenceStore.getReferenceFromUrl(Imagen).delete().await()
+            }
 
             //Elimina la audio del storage
-            Audio.delete().await()
+            if (!( Audio == null || Audio == "")){
+                dbReferenceStore.getReferenceFromUrl(Audio).delete().await()
+            }
 
 
             return true

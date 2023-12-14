@@ -1,9 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.view.AudioA.AudioAgregarActivity">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".ui.view.AudioA.AudioAgregarActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+<androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!--Nombre TXT Audio-->
+        <TextView
+            android:id="@+id/AudioTXT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/AudioTXT"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- Animacion de la pagina lottie        -->
+        <!-- Lottie: https://lottiefiles.com/ -->
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="audio_animacion.json"
+            app:lottie_imageAssetsFolder="assets"
+            app:lottie_loop="true" />
+
+        <!-- Titulo del Audio-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:id="@+id/TituloAudio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textCapWords|textAutoCorrect"
+                android:drawableStart="@drawable/title_et"
+                android:drawablePadding="10dp"
+                android:hint="@string/TituloAudio" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Descripcion del Audio-->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:id="@+id/DescripcionAudio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/descrip_et"
+                android:drawablePadding="10dp"
+                android:hint="@string/DescripcionAudio"
+                android:inputType="textCapWords|textAutoCorrect" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <!--ICONO PARA ABRIR LA GALERIA-->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imagenAgregarAudio"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:src="@drawable/image_ico" />
+
+        <!--ICONO PARA ABRIR BUSCAR AUDIOS-->
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ico_Agregar_Audio"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/audio_ico" />
+
+        <!--BOTON PARA ENVIAR EL FORMULARIO-->
+        <Button
+            android:id="@+id/BotonAudio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_personalizado"
+            android:text="@string/PublicarAudio"
+            android:textColor="@color/white"/>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+
+</RelativeLayout>

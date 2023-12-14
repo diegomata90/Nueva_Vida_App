@@ -19,11 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/Nueva_Vida_App"
         tools:targetApi="31">
-        <activity
-            android:name=".ui.view.AudioA.AudioAgregarActivity"
-            android:exported="false" />
+
         <activity
             android:name=".ui.view.AudioA.AudioaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.AudioA.AudioAgregarActivity"
             android:exported="false" />
         <activity
             android:name=".ui.view.Biblia.BibliaActivity"

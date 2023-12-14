@@ -62,13 +62,15 @@
     <!-- Agregar Eventos A-->
     <string name="EventoA">Evento Administrador</string>
 
-    <!-- Agregar Audio-->
+    <!-- Agregar y detalle Audio-->
     <string name="AudioTXT">Agregar Audio</string>
     <string name="AudioListaTXT">Lista de Audios</string>
     <string name="TituloAudio">Título</string>
     <string name="DescripcionAudio">Descripción</string>
     <string name="FechaAudio">Fecha del audio</string>
     <string name="PlayAudio">Play</string>
+    <string name="PublicarAudio">Publicar</string>
+
 
 
     <!-- ACERCA DE APLICACION-->
@@ -96,6 +98,8 @@
     <string name="versiculoTXT">Versiculo</string>
     <string name="nversiculo">1</string>
     <string name="versiculo">En el principio creó Dios los cielos y la tierra</string>
+
+
 
 
 </resources>
