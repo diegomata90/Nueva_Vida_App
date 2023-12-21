@@ -86,13 +86,34 @@ tools:context=".ui.view.AudioA.AudioAgregarActivity">
             android:src="@drawable/image_ico" />
 
         <!--ICONO PARA ABRIR BUSCAR AUDIOS-->
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/ico_Agregar_Audio"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/holder_Agregar_Audio"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:layout_marginBottom="5dp"
-            android:src="@drawable/audio_ico" />
+            android:orientation="vertical">
+
+            <!--ICONO PARA ABRIR BUSCAR AUDIOS-->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ico_Agregar_Audio"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                android:src="@drawable/audio_ico"/>
+
+            <TextView
+                android:id="@+id/ico_Agregar_Audio_Txt"
+                tools:text="@string/Audio"
+                android:textSize="9dp"
+                android:textColor="#F0BFBFBF"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
 
         <!--BOTON PARA ENVIAR EL FORMULARIO-->
         <Button
