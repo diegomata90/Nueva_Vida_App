@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import com.devdiegomata90.nueva_vida_app.R
+import kotlin.random.Random
 
 class NotificationBuilder(context: Context, channelId: String) {
     private val context: Context
@@ -58,11 +59,14 @@ class NotificationBuilder(context: Context, channelId: String) {
     }
 
     fun notify(notification: Notification) {
+        //Obtiene un id diferente para la notificacion
+        val idNotifacion = Random.nextInt()
+
         // Obtiene el administrador de notificaciones
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         // Envía la notificación
-        notificationManager.notify(1, notification)
+        notificationManager.notify(idNotifacion, notification)
     }
 }
 

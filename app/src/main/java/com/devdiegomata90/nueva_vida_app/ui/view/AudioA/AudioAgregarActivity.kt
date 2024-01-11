@@ -7,6 +7,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.OpenableColumns
+import android.util.Log
 import android.view.View
 import android.webkit.MimeTypeMap
 import android.widget.Toast
@@ -26,8 +27,8 @@ class AudioAgregarActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAudioAgregarBinding
     private val audioAgregarViewModel: AudioAgregarViewModel by viewModels()
-    private lateinit var RutaArchivoUri: Uri
-    private lateinit var RutaArchivoUriAudio: Uri
+    private var RutaArchivoUri: Uri? = null
+    private var RutaArchivoUriAudio: Uri? = null
     private lateinit var extensionImagen: String
     private lateinit var extensionAudio: String
     private lateinit var extensiones: Pair<String, String>
@@ -103,6 +104,11 @@ class AudioAgregarActivity : AppCompatActivity() {
             audioAgregar.imagen = ""
             audioAgregar.url = ""
 
+            // Añade registros de depuración para verificar
+            Log.d("Depuracion", "RutaArchivoUri: $RutaArchivoUri")
+            // Añade registros de depuración para verificar
+            Log.d("Depuracion", "RutaArchivoUriAudio: $RutaArchivoUriAudio")
+
             //Validar si los campos tiene valore
             if (binding.TituloAudio.text.toString()
                     .isEmpty() || binding.DescripcionAudio.text.toString().isEmpty() ||
@@ -110,10 +116,12 @@ class AudioAgregarActivity : AppCompatActivity() {
                     .isBlank() || binding.DescripcionAudio.text.toString().isBlank()
             ) {
                 Toast.makeText(this, "Campos vacios", Toast.LENGTH_SHORT).show()
-            } else if (RutaArchivoUriAudio == null || RutaArchivoUri == null
+            }
+            else if (RutaArchivoUri == null || RutaArchivoUriAudio == null
             ) {
                 Toast.makeText(this, "Agregue un audio o una imagen", Toast.LENGTH_SHORT).show()
-            } else {
+            }
+            else {
                 //Obtener la fecha de hoy
                 val c = Calendar.getInstance()
                 val year = c.get(Calendar.YEAR)
@@ -151,7 +159,7 @@ class AudioAgregarActivity : AppCompatActivity() {
                 // Mostrar la imagen en ImageView
                 binding.imagenAgregarAudio.setImageURI(RutaArchivoUri)
                 // Obtener la extension de la ImagenView
-                extensionImagen = getExtension(RutaArchivoUri)!!
+                extensionImagen = getExtension(RutaArchivoUri!!)!!
             } else {
                 Toast.makeText(this, "Cancelado", Toast.LENGTH_SHORT).show()
             }
@@ -174,11 +182,11 @@ class AudioAgregarActivity : AppCompatActivity() {
 
                 // Obtener el nombre del archivo
                 if (RutaArchivoUriAudio != null) {
-                    val fileName = contentResolver.getFileName(RutaArchivoUriAudio)
+                    val fileName = contentResolver.getFileName(RutaArchivoUriAudio!!)
                     binding.icoAgregarAudioTxt.text = fileName
                     binding.icoAgregarAudioTxt.visibility = View.VISIBLE
                     // Obtener la extension del archivo
-                    extensionAudio = getExtension(RutaArchivoUriAudio)!!
+                    extensionAudio = getExtension(RutaArchivoUriAudio!!)!!
                 }
 
                 // Mostrar la audio en ImageView

@@ -27,6 +27,7 @@ class InicioAdmin : Fragment() {
     private lateinit var cardBiblia: CardView
     private lateinit var cardAudio: CardView
     private lateinit var cardVideo: CardView
+    private lateinit var cardNotification:CardView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,6 +80,7 @@ class InicioAdmin : Fragment() {
         cardBiblia = view.findViewById(R.id.cardBiblia)
         cardAudio = view.findViewById(R.id.cardAudio)
         cardVideo = view.findViewById(R.id.cardVideo)
+        cardNotification = view.findViewById(R.id.cardNotification)
     }
 
 
@@ -97,6 +99,13 @@ class InicioAdmin : Fragment() {
             Toast.makeText(
                 requireContext(),
                 "Ya casi esta listo los VIDEO, porfavor esperar",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        cardNotification.setOnClickListener {
+            Toast.makeText(
+                requireContext(),
+                "En proceso...",
                 Toast.LENGTH_SHORT
             ).show()
         }

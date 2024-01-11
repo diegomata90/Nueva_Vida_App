@@ -40,7 +40,6 @@ class BibliaActivity : AppCompatActivity() {
 
         initComponent()
 
-
         bibliaViewModel.onCreate()
 
         //Suscribe la ViewModel
@@ -73,6 +72,7 @@ class BibliaActivity : AppCompatActivity() {
                 loadingDialog.isDismiss()
             }
         })
+
 
     }
 

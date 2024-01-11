@@ -37,7 +37,7 @@ class AudioAgregarViewModel: ViewModel(){
 
 
     //Funciones
-    fun addAudio(audio: Audio, RutaArchivoUri: Uri? = null, RutaAudioUri: Uri,extensiones:Pair<String?,String?>) {
+    fun addAudio(audio: Audio, RutaArchivoUri: Uri? = null, RutaAudioUri: Uri?,extensiones:Pair<String?,String?>) {
 
         viewModelScope.launch {
 

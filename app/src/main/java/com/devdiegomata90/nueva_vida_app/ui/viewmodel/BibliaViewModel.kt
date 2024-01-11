@@ -43,11 +43,14 @@ class BibliaViewModel() : ViewModel() {
                 val orderResult = result.sortedBy { it.order }
                 books.postValue(orderResult)
 
-                //Mostrar libro Génesis 1 al inicial activity
-                showVerse("Génesis", "1")
+
+                // Mostrar libro y capítulo guardados
+               // val book = "Génesis"
+               // val chapter = "1"
+               // showVerse(book, chapter)
 
                 //Demorar medio seconds
-                delay(500)
+                //delay(500)
             }
 
             loading.postValue(false)

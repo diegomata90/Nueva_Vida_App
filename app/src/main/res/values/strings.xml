@@ -72,7 +72,6 @@
     <string name="PublicarAudio">Publicar</string>
 
 
-
     <!-- ACERCA DE APLICACION-->
     <string name="desarrollador">Desarrollado por : Diego Mata M.</string>
     <string name="AcercaDeApp">Acerca De </string>
@@ -92,14 +91,21 @@
     <string name="CapituloTXT">Capítulo</string>
     <string name="VersiculoTXT2">Versiculo</string>
     <string name="TestamentoTXT">Testamento</string>
-    <string name="SeleccionTXT">Select</string>
+    <string name="SeleccionTXT">Elige</string>
     <string name="itemTXT">item dropdown</string>
     <string name="btnMostrar">B</string>
     <string name="versiculoTXT">Versiculo</string>
     <string name="nversiculo">1</string>
     <string name="versiculo">En el principio creó Dios los cielos y la tierra</string>
+    
+    <!-- Notifiaciones -->
+    <string name="NoficacionTXT">Notificación</string>
+    <string name="TituloNotificacion">Título Notificación</string>
+    <string name="MensajeNotificacion">Mensaje Notificación</string>
+    <string name="BotonNotificacion"> Enviar Notificación</string>
+    <string name="SendNotification">NOTIFICACIONES</string>
 
-
-
+    <string name="notification_channel_group_general">General</string>
+    <string name="default_notification_channel_id">ID</string>
 
 </resources>

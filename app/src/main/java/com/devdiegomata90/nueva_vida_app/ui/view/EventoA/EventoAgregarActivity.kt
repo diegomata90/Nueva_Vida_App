@@ -13,6 +13,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.app.NotificationCompat
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.data.model.Evento
 import com.devdiegomata90.nueva_vida_app.ui.view.Evento.EventoActivity
@@ -26,6 +27,9 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.ktx.initialize
+import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
@@ -509,6 +513,11 @@ class EventoAgregarActivity : AppCompatActivity() {
                 loadingDialog.isDismiss()
                 Toast.makeText(this@EventoAgregarActivity, "Evento actualizado", Toast.LENGTH_SHORT)
                     .show()
+
+                // Verifica si la casilla de notificación está marcada
+                if (switchEnviarNotificacion.isChecked) {
+                    envioNotificacion(eventoTxt.titulo.toString(),eventoTxt.descripcion.toString())
+                }
                 startActivity(Intent(this@EventoAgregarActivity, EventoaActivity::class.java))
                 finish()
             }
@@ -537,6 +546,9 @@ class EventoAgregarActivity : AppCompatActivity() {
         // Envia la notificación
         notificationBuilder.notify(notification)
     }
+
+
+
 
 
     //Metodo para modificar el action bar
