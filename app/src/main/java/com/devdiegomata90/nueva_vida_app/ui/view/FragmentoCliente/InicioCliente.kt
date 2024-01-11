@@ -67,6 +67,7 @@ class InicioCliente : Fragment() {
 
         initComponent(view)
         initRecyclerView()
+        askNotificationPermission(view)
 
         eventos()
 
@@ -83,7 +84,7 @@ class InicioCliente : Fragment() {
         }
 
 
-        inicioClienteViewModel.dailyVerse.observe( this, Observer { dailyVerse ->
+        inicioClienteViewModel.dailyVerse.observe( viewLifecycleOwner, Observer { dailyVerse ->
             if (dailyVerse != null) {
                 libro.text = dailyVerse.libro
                 capitulo.text = "${dailyVerse.capitulo}:${dailyVerse.versiculo}"
@@ -198,10 +199,10 @@ class InicioCliente : Fragment() {
         }
     }
 
-    private fun askNotificationPermission() {
+    private fun askNotificationPermission(view: View) {
         // This is only necessary for API level >= 33 (TIRAMISU)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(view!!.context, Manifest.permission.POST_NOTIFICATIONS) ==
+            if (ContextCompat.checkSelfPermission(view.context, Manifest.permission.POST_NOTIFICATIONS) ==
                 PackageManager.PERMISSION_GRANTED
             ) {
                 // FCM SDK (and your app) can post notifications.
