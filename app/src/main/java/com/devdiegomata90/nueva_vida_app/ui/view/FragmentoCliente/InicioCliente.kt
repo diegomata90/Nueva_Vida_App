@@ -29,6 +29,7 @@ import com.devdiegomata90.nueva_vida_app.ui.adapter.CategoriasAdapter
 import com.devdiegomata90.nueva_vida_app.core.TypefaceUtil
 import com.google.firebase.database.*
 import com.devdiegomata90.nueva_vida_app.ui.view.Biblia.BibliaActivity
+import com.devdiegomata90.nueva_vida_app.ui.view.OtrasCategorias.OtrasCategoriasActivity
 import com.devdiegomata90.nueva_vida_app.ui.viewmodel.InicioClienteViewModel
 
 @Suppress("DEPRECATION")
@@ -144,12 +145,21 @@ class InicioCliente : Fragment() {
 
         // Configurar el adaptador de la lista
         categoriasAdapter = CategoriasAdapter(
-            categoriaList
-            //categoriaList = categoriaList
-            //onClickListener = { versiculo -> getVersiculo(versiculo) }
+            categoriaList,
+            onClickListener = { categoriaList -> getOtraCategoria(categoriaList) }
         )
         rvCategorias.layoutManager =LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         rvCategorias.adapter = categoriasAdapter
+    }
+
+    private fun getOtraCategoria(categoriaList: Categoria) {
+        //Mostrar la categoria seleccionada
+        Toast.makeText(requireContext(),"Haz elegido: ${categoriaList.nombre}",Toast.LENGTH_SHORT).show()
+
+        //Enviar a otra activity para la categoria seleccionada
+        val intent = Intent(requireContext(), OtrasCategoriasActivity::class.java)
+        intent.putExtra("NombreCategoria", categoriaList.nombre.toString())
+        startActivity(intent)
     }
 
     private fun eventos() {
@@ -215,6 +225,7 @@ class InicioCliente : Fragment() {
         }
     }
 }
+
 
 
 

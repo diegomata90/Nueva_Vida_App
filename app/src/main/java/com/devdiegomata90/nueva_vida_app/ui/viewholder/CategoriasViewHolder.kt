@@ -17,7 +17,7 @@ class CategoriasViewHolder(view: View):RecyclerView.ViewHolder(view) {
     private val imgCategoria: AppCompatImageView = view.findViewById(R.id.imgCategoria)
 
 
-    fun render(categoria: Categoria){
+    fun render(categoria: Categoria,onClickListener: (Categoria) -> Unit){
         tvCategoriaName.text = categoria.nombre
 
         //mostrar la imagen
@@ -28,6 +28,8 @@ class CategoriasViewHolder(view: View):RecyclerView.ViewHolder(view) {
             Picasso.get().load(R.drawable.categoria).into(imgCategoria)
 
         }
+
+        itemView.setOnClickListener{ onClickListener(categoria) }
 
 
         //Aplicando el tipo de letra a los elementos
