@@ -2,17 +2,31 @@ package com.devdiegomata90.nueva_vida_app.ui.view.OtrasCategorias
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.devdiegomata90.nueva_vida_app.R
+import androidx.activity.viewModels
+import com.devdiegomata90.nueva_vida_app.databinding.ActivityOtrasCategoriasBinding
+import com.devdiegomata90.nueva_vida_app.ui.viewmodel.BibliaViewModel
+import com.devdiegomata90.nueva_vida_app.ui.viewmodel.OtrasCategoriaViewModel
 
 class OtrasCategoriasActivity : AppCompatActivity() {
+
+    lateinit var binding: ActivityOtrasCategoriasBinding
+    private val oCategoriasViewModel: OtrasCategoriaViewModel by viewModels() //Inicializa el ViewModel
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_otras_categorias)
+        binding = ActivityOtrasCategoriasBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         //Recuperar informacion enviada por el intent
         val nombreOtraCategoria = getIntent().getStringExtra("NombreCategoria");
 
         actionBarpersonalizado(nombreOtraCategoria!!)
+
+        //Oncreate del viewModel
+        oCategoriasViewModel.onCreate()
     }
 
     //Metodo para crear un recicle view
