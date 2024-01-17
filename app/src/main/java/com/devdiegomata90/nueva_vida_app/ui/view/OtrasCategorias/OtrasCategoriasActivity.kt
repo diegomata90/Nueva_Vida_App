@@ -15,6 +15,11 @@ class OtrasCategoriasActivity : AppCompatActivity() {
         actionBarpersonalizado(nombreOtraCategoria!!)
     }
 
+    //Metodo para crear un recicle view
+    private fun crearRecycleView(){
+       //
+    }
+
 
     //Metodo para modificar el action bar
     private fun actionBarpersonalizado(titulo: String){
