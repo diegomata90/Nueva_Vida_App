@@ -30,7 +30,7 @@ class OtrasCategoriasViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
             Picasso.get().load(categoriaDetalle.imagen).into(imagen)
         } catch (e: Exception) {
             //Asignar una imagen opcional en el image viewer
-            Picasso.get().load(R.drawable.album).into(imagen)
+            Picasso.get().load(R.drawable.image_ico).into(imagen)
         }
 
         //Asignar el evento al item para el evento de click
