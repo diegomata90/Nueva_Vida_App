@@ -11,16 +11,10 @@ tools:context=".ui.view.OtrasCategorias.OtrasCategoriasActivity">
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Estamos escribiendo el codigo."
-        android:textColor="@android:color/black"
-        android:textSize="25sp" />
 
-    <!-- Recycleview Evento  -->
+    <!-- Recycleview Detalle Categoria  -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvEventos"
+        android:id="@+id/rvOtrasCategorias"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

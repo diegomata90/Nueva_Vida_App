@@ -4,12 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
-import com.devdiegomata90.nueva_vida_app.data.model.Categoria
+import com.devdiegomata90.nueva_vida_app.data.model.CategoriaDetalle
 import com.devdiegomata90.nueva_vida_app.ui.viewholder.OtrasCategoriasViewHolder
 
 class OtrasCategoriasAdapter(
-    private var oCategoriaList: List<Categoria>,
-    private val onClickListener: (Categoria) -> Unit
+    private var CategoriaDetalleList: List<CategoriaDetalle>,
+    private val onClickListener: (CategoriaDetalle) -> Unit
 ) : RecyclerView.Adapter<OtrasCategoriasViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OtrasCategoriasViewHolder {
 
@@ -20,17 +20,17 @@ class OtrasCategoriasAdapter(
     }
 
     override fun getItemCount(): Int {
-        return oCategoriaList.size
+        return CategoriaDetalleList.size
     }
 
     override fun onBindViewHolder(holder: OtrasCategoriasViewHolder, position: Int) {
 
-        val oCategoria = oCategoriaList[position]
+        val oCategoria = CategoriaDetalleList[position]
         holder.bind(oCategoria, onClickListener)
     }
 
-    fun updateData(newOCategoriaList: List<Categoria>) {
-        oCategoriaList = newOCategoriaList
+    fun updateData(newOCategoriaList: List<CategoriaDetalle>) {
+        CategoriaDetalleList = newOCategoriaList
         notifyDataSetChanged()
     }
 }

@@ -1,7 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+<androidx.cardview.widget.CardView
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tool="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_marginHorizontal="15dp"
+android:layout_marginVertical="8dp"
+android:clickable="true"
+tool:cardBackgroundColor="@color/backgroud_RV"
+tool:cardCornerRadius="16dp">
+
+<androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp"
+    android:orientation="horizontal">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imageCategoriaDetalle"
+        android:layout_width="124dp"
+        android:layout_height="124dp"
+        android:scaleType="centerCrop"
+        tools:src="@drawable/image_ico" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:scaleType="centerCrop"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/CategoriasDetalleTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/textcolor_rv"
+            android:textSize="19sp"
+            android:textStyle="bold"
+            tools:text="@string/CategoriasDetalleTitulo" />
+
+        <TextView
+            android:id="@+id/AutorCategoriaDetalle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:drawableStart="@drawable/reader_et"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            tools:text="@string/AutorCategoriaDetalle" />
+
+        <TextView
+            android:id="@+id/DescripCategoriaDetalle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:drawableStart="@drawable/descrip_et"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/black"
+            tools:text="@string/DescripCategoriaDetalle" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</androidx.cardview.widget.CardView>

@@ -2,16 +2,22 @@ package com.devdiegomata90.nueva_vida_app.ui.view.OtrasCategorias
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.devdiegomata90.nueva_vida_app.data.model.CategoriaDetalle
 import com.devdiegomata90.nueva_vida_app.databinding.ActivityOtrasCategoriasBinding
-import com.devdiegomata90.nueva_vida_app.ui.viewmodel.BibliaViewModel
-import com.devdiegomata90.nueva_vida_app.ui.viewmodel.OtrasCategoriaViewModel
+import com.devdiegomata90.nueva_vida_app.ui.adapter.OtrasCategoriasAdapter
+import com.devdiegomata90.nueva_vida_app.ui.viewmodel.OtrasCategoriasViewModel
+
 
 class OtrasCategoriasActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityOtrasCategoriasBinding
-    private val oCategoriasViewModel: OtrasCategoriaViewModel by viewModels() //Inicializa el ViewModel
-
+    private val oCategoriasViewModel: OtrasCategoriasViewModel by viewModels() //Inicializa el ViewModel
+    lateinit var adapterOCategorias:OtrasCategoriasAdapter
+    private lateinit var categoriasDetalleList: List<CategoriaDetalle>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,13 +31,38 @@ class OtrasCategoriasActivity : AppCompatActivity() {
 
         actionBarpersonalizado(nombreOtraCategoria!!)
 
+        initRecycleView()
+
         //Oncreate del viewModel
         oCategoriasViewModel.onCreate()
+
+        //Para obtener la categoria selecionada
+        oCategoriasViewModel.showCategorieDetail(nombreOtraCategoria)
+
+        //Para mostrar la lista detalle de la categoria seleccionada
+        oCategoriasViewModel.oCategories.observe(this, Observer { oCategories ->
+
+            adapterOCategorias.updateData(oCategories as List<CategoriaDetalle>)
+        })
     }
 
     //Metodo para crear un recicle view
-    private fun crearRecycleView(){
-       //
+    private fun initRecycleView(){
+        categoriasDetalleList= emptyList()
+
+        // Configurar el adaptador de la lista
+       adapterOCategorias = OtrasCategoriasAdapter(
+           CategoriaDetalleList = categoriasDetalleList,
+           onClickListener = { categoriaDetalle -> getOCategories(categoriaDetalle) }
+       )
+
+        binding.rvOtrasCategorias.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.rvOtrasCategorias.adapter = adapterOCategorias
+
+    }
+
+    private fun getOCategories(categoriaDetalle: CategoriaDetalle) {
+        Toast.makeText(this, "Haz dado click en ${categoriaDetalle.titulo}", Toast.LENGTH_SHORT).show()
     }
 
 

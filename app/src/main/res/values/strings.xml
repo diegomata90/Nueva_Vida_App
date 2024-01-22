@@ -108,4 +108,9 @@
     <string name="notification_channel_group_general">General</string>
     <string name="default_notification_channel_id">ID</string>
 
+    <!-- Otras Categorias -->
+    <string name="CategoriasDetalleTitulo">Item Categorías Detalle</string>
+    <string name="AutorCategoriaDetalle">Autor </string>
+    <string name="DescripCategoriaDetalle">Descripcion </string>
+
 </resources>
