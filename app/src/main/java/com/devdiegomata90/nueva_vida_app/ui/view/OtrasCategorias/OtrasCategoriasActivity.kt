@@ -1,5 +1,6 @@
 package com.devdiegomata90.nueva_vida_app.ui.view.OtrasCategorias
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -62,7 +63,15 @@ class OtrasCategoriasActivity : AppCompatActivity() {
     }
 
     private fun getOCategories(categoriaDetalle: CategoriaDetalle) {
-        Toast.makeText(this, "Haz dado click en ${categoriaDetalle.titulo}", Toast.LENGTH_SHORT).show()
+        //Enviar a otra activity para la categoria seleccionada
+        val intent = Intent(this, ContenidoCategoriasActivity::class.java)
+        intent.putExtra("Titulo", categoriaDetalle.titulo.toString())
+        intent.putExtra("Autor", categoriaDetalle.autor.toString())
+        intent.putExtra("Id", categoriaDetalle.id.toString())
+        intent.putExtra("Imagen", categoriaDetalle.imagen.toString())
+        intent.putExtra("Descripcion",categoriaDetalle.descripcion.toString())
+        intent.putExtra("Contenido",categoriaDetalle.contenido.toString())
+        startActivity(intent)
     }
 
 
