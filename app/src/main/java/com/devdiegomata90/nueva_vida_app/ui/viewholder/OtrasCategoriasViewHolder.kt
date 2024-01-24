@@ -5,6 +5,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
+import com.devdiegomata90.nueva_vida_app.core.TypefaceUtil
 import com.devdiegomata90.nueva_vida_app.data.model.CategoriaDetalle
 import com.squareup.picasso.Picasso
 
@@ -35,6 +36,15 @@ class OtrasCategoriasViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
 
         //Asignar el evento al item para el evento de click
         itemView.setOnClickListener { onClickListener(categoriaDetalle) }
+
+        //Cambiar el tipo de letras
+        //Asigna Tipo Letra de Ubuntu a los texView (funcion Disenada para usar en cualquier activity)
+        TypefaceUtil.asignarTipoLetra(itemView.context,
+            null,
+            titulo,
+            autor,
+            description
+        )
 
     }
 

@@ -2,7 +2,9 @@ package com.devdiegomata90.nueva_vida_app.ui.view.OtrasCategorias
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.devdiegomata90.nueva_vida_app.R
+import com.devdiegomata90.nueva_vida_app.core.TypefaceUtil
 import com.devdiegomata90.nueva_vida_app.data.model.CategoriaDetalle
 import com.devdiegomata90.nueva_vida_app.databinding.ActivityContenidoCategoriasBinding
 import com.squareup.picasso.Picasso
@@ -30,6 +32,9 @@ class ContenidoCategoriasActivity : AppCompatActivity() {
         //Asignacion de los valores en los XML
         initComponent()
 
+        TypefaceUtil.asignarTipoLetra(this, null,
+            binding.ContenidoOtrasCategorias,binding.AutorOCategoria,binding.tituloOCategoria)
+
     }
 
     private fun getDataInten() {
@@ -39,6 +44,9 @@ class ContenidoCategoriasActivity : AppCompatActivity() {
         autor = getIntent().getStringExtra("Autor").toString()
         imagen = getIntent().getStringExtra("Imagen").toString()
         contenido = getIntent().getStringExtra("Contenido").toString()
+
+        //Remplazar los saltos de linea por un salto de linea normal
+        contenido = contenido.replace("\\n", "\n")
 
     }
 
@@ -53,11 +61,12 @@ class ContenidoCategoriasActivity : AppCompatActivity() {
         try {
             //Asignar la imagen en la image viewer
             Picasso.get().load(imagen).into(binding.imageOCategoria)
+            //Darle visibilitadad al imageviewer
+            binding.imageOCategoria.visibility = View.VISIBLE
         } catch (e: Exception) {
             //Asignar una imagen opcional en el image viewer
             Picasso.get().load(R.drawable.image_ico).into(binding.imageOCategoria)
         }
-
 
     }
 
