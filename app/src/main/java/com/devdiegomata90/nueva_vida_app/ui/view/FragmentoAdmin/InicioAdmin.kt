@@ -10,15 +10,20 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.ui.view.EventoA.EventoaActivity
 import com.devdiegomata90.nueva_vida_app.core.TypefaceUtil
 import com.devdiegomata90.nueva_vida_app.ui.view.AudioA.AudioaActivity
 import com.devdiegomata90.nueva_vida_app.ui.view.Biblia.BibliaActivity
+import com.devdiegomata90.nueva_vida_app.ui.viewmodel.InicioAdminViewModel
 
 class InicioAdmin : Fragment() {
 
     private lateinit var CategoriasTXT: TextView
+    private lateinit var OtrasCategoriasTXT: TextView
+    private lateinit var NombreTXT: TextView
     private lateinit var Evento: TextView
     private lateinit var Biblia: TextView
     private lateinit var Audio: TextView
@@ -27,7 +32,7 @@ class InicioAdmin : Fragment() {
     private lateinit var cardBiblia: CardView
     private lateinit var cardAudio: CardView
     private lateinit var cardVideo: CardView
-    private lateinit var cardNotification:CardView
+    private val inicioAdminViewModel: InicioAdminViewModel by viewModels() //Inicializa el ViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,6 +56,23 @@ class InicioAdmin : Fragment() {
             Video
         )
 
+        // Suscribirse a la view model
+        //Oncreated
+        inicioAdminViewModel.Oncreate()
+
+        //Obtener los usuarios
+        inicioAdminViewModel.user.observe(viewLifecycleOwner) { user ->
+            if (user != null) {
+                NombreTXT.text = user.NOMBRES.toString() + " " + user.APELLIDOS.toString()
+                Toast.makeText(
+                    requireContext(),
+                    "Bienvenido: ${user.NOMBRES.toString()} ${user.APELLIDOS.toString()}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+
+        }
+
         /*
         ///Forma convencional para asignar tipo letra a los elementos de texto
 
@@ -72,6 +94,8 @@ class InicioAdmin : Fragment() {
     private fun initComponent(view: View) {
 
         CategoriasTXT = view.findViewById(R.id.CategoriasTXT)
+        OtrasCategoriasTXT = view.findViewById(R.id.OtrasCategoriasTXT)
+        NombreTXT = view.findViewById(R.id.NombreTXT)
         Evento = view.findViewById(R.id.Evento)
         Biblia = view.findViewById(R.id.Biblia)
         Audio = view.findViewById(R.id.Audio)
@@ -80,10 +104,7 @@ class InicioAdmin : Fragment() {
         cardBiblia = view.findViewById(R.id.cardBiblia)
         cardAudio = view.findViewById(R.id.cardAudio)
         cardVideo = view.findViewById(R.id.cardVideo)
-        cardNotification = view.findViewById(R.id.cardNotification)
     }
-
-
 
     private fun eventos() {
         cardEvento.setOnClickListener {
@@ -99,13 +120,6 @@ class InicioAdmin : Fragment() {
             Toast.makeText(
                 requireContext(),
                 "Ya casi esta listo los VIDEO, porfavor esperar",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-        cardNotification.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                "En proceso...",
                 Toast.LENGTH_SHORT
             ).show()
         }

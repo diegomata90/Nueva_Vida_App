@@ -43,6 +43,8 @@
     <string name="VersiculoTXT">Versículo del día</string>
     <string name="libro">Libro</string>
     <string name="capitulo">1:1</string>
+    <string name="BienvenidoTXT">Bienvenido(a): </string>
+    <string name="NombreTXT"> -- </string>
 
 
     <!-- Informacion de Iglesia-->
@@ -119,5 +121,6 @@
     Vel soluta autem quas temporibus vero praesentium omnis rem deserunt? Veritatis, at. Accusantium officiis quam facere iure inventore ipsum necessitatibus, pariatur illum sed quo sequi tempora alias asperiores hic consectetur!
     Deserunt blanditiis nulla rem, iusto aut velit, officia dignissimos excepturi, eius ratione quae. Omnis debitis esse praesentium reprehenderit illum. Consequuntur doloribus laudantium ullam natus molestiae et non ut veritatis optio?
     </string>
+
 
 </resources>

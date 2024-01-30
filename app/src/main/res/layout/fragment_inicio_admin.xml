@@ -9,13 +9,46 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <!-- Contenedor Principal-->
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
+            <!-- Bienvenida -->
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginStart="10dp"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/bienvenida"/>
+
+                <TextView
+                    android:id="@+id/BienvenidoTXT"
+                    android:text="@string/BienvenidoTXT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="5dp"
+                    />
+
+                <TextView
+                    android:id="@+id/NombreTXT"
+                    android:text="@string/NombreTXT"
+                    android:layout_marginStart="5dp"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <!-- Contenedor de menu Principal-->
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -28,7 +61,7 @@
                     android:id="@+id/CategoriasTXT"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="5dp"
                     android:padding="5dp"
                     android:text="@string/CategoriasTXT"
@@ -198,38 +231,13 @@
                 android:id="@+id/OtrasCategoriasTXT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:padding="5dp"
                 android:text="@string/OtrasCategoriasTXT"
                 android:textColor="@color/titulos"
                 android:textSize="20sp"
                 android:textStyle="bold" />
-
-
-            <!-- NOTIFICACIONES-->
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardNotification"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:cardBackgroundColor="@color/menu"
-                app:cardCornerRadius="5dp"
-                app:cardElevation="5dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp">
-
-                <TextView
-                    style="@style/menuApp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="@string/SendNotification" />
-
-
-
-            </androidx.cardview.widget.CardView>
-
 
 
 
