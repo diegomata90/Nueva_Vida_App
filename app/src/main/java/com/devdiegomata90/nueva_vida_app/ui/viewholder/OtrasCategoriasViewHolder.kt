@@ -16,6 +16,7 @@ class OtrasCategoriasViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
     private val imagen: AppCompatImageView = itemView.findViewById(R.id.imageCategoriaDetalle)
     private val autor: TextView = itemView.findViewById(R.id.AutorCategoriaDetalle)
     private val description: TextView = itemView.findViewById(R.id.DescripCategoriaDetalle)
+    private val vistas: TextView = itemView.findViewById(R.id.Vistas)
 
     fun bind(categoriaDetalle: CategoriaDetalle, onClickListener: (CategoriaDetalle) -> Unit) {
 
@@ -23,6 +24,7 @@ class OtrasCategoriasViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
         titulo.text = categoriaDetalle.titulo
         autor.text = categoriaDetalle.autor
         description.text = categoriaDetalle.descripcion
+        vistas.text = categoriaDetalle.vistas.toString()
 
 
         //Setear o asignar la imagen al XML

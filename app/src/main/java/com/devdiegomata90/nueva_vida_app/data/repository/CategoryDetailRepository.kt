@@ -1,6 +1,7 @@
 package com.devdiegomata90.nueva_vida_app.data.repository
 
-import com.devdiegomata90.nueva_vida_app.data.model.Categoria
+
+import android.util.Log
 import com.devdiegomata90.nueva_vida_app.data.model.CategoriaDetalle
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -10,6 +11,7 @@ import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.tasks.await
 
 
 class CategoryDetailRepository {
@@ -36,5 +38,37 @@ class CategoryDetailRepository {
         awaitClose { databaseReference.removeEventListener(valueEventListener) }
     }
 
+    suspend fun updateVistasOCategorie(id:String,cat:String) : Boolean {
+
+        return try {
+
+            //Obtener el valor de la vista
+            val vista  = databaseReference.child(cat).child(id).child("vistas").get().await().value
+
+            Log.i("DatosRecibidos", "Categoria: $cat, ID: $id, Vistas: $vista")
+
+            //Convierta a int
+            var intVistas = 0
+
+            if(vista != null) {
+                intVistas = vista.toString().toInt()
+            }
+
+
+            //Sumar 1 a la vista
+            var nVistas = intVistas+1
+
+            //Actualizar el valor de la vista
+            databaseReference.child(cat).child(id).child("vistas").setValue(nVistas).await()
+
+            true
+
+        } catch (e: Exception) {
+
+            Log.e("ERROR REPO VISTAOCATEGORIAS", "ERROR al actualizar la vista: ${e.message}")
+            false
+        }
+
+    }
 
 }

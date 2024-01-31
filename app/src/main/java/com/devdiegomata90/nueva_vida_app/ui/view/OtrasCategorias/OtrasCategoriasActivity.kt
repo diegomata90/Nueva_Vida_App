@@ -71,6 +71,13 @@ class OtrasCategoriasActivity : AppCompatActivity() {
         intent.putExtra("Imagen", categoriaDetalle.imagen.toString())
         intent.putExtra("Descripcion",categoriaDetalle.descripcion.toString())
         intent.putExtra("Contenido",categoriaDetalle.contenido.toString())
+
+
+        val categoryName = getIntent().getStringExtra("NombreCategoria").toString(); //Recuperamos el nombreOtraCategoria
+
+        //Para actualizar la vista
+        oCategoriasViewModel.updateVistaOCategorie(categoriaDetalle.id.toString(),categoryName)
+
         startActivity(intent)
     }
 

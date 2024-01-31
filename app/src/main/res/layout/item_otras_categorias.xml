@@ -64,6 +64,32 @@ tool:cardCornerRadius="16dp">
             android:textColor="@color/black"
             tools:text="@string/DescripCategoriaDetalle" />
 
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="30dp"
+                android:layout_height="20dp"
+                android:src="@drawable/eye_s"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:id="@+id/Vistas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                android:layout_marginStart="3sp"
+                tools:text="@string/VistasOCategoria" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

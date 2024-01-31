@@ -114,6 +114,7 @@
     <string name="CategoriasDetalleTitulo">Item Categorías Detalle</string>
     <string name="AutorCategoriaDetalle">Autor </string>
     <string name="DescripCategoriaDetalle">Descripcion </string>
+    <string name="VistasOCategoria">--</string>
     <string name="tituloOCategoria">Titulo de Categoria</string>
     <string name="AutorOCategoria">Jesus</string>
     <string name="ContenidoOCategorias">

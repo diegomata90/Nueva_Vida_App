@@ -6,7 +6,8 @@ data class CategoriaDetalle (
     var imagen: String? = null,
     var descripcion: String? = null,
     var autor: String? = null,
-    var contenido: String? = null
+    var contenido: String? = null,
+    var vistas:Int?=null
     ) {
 
     }
