@@ -45,27 +45,26 @@ class CategoryDetailRepository {
             //Obtener el valor de la vista
             val vista  = databaseReference.child(cat).child(id).child("vistas").get().await().value
 
-            Log.i("DatosRecibidos", "Categoria: $cat, ID: $id, Vistas: $vista")
+            Log.i("DatosRecibidosOCATEGORIASS", "Categoria: $cat, ID: $id, Vistas: $vista")
 
             //Convierta a int
             var intVistas = 0
 
             if(vista != null) {
-                intVistas = vista.toString().toInt()
+                intVistas = "$vista".toInt()
             }
 
-
             //Sumar 1 a la vista
-            var nVistas = intVistas+1
+            intVistas += 1
 
             //Actualizar el valor de la vista
-            databaseReference.child(cat).child(id).child("vistas").setValue(nVistas).await()
+            databaseReference.child(cat).child(id).child("vistas").setValue(intVistas).await()
 
             true
 
         } catch (e: Exception) {
 
-            Log.e("ERROR REPO VISTAOCATEGORIAS", "ERROR al actualizar la vista: ${e.message}")
+            Log.e("ERROR REPO VISTAOCATEGORIASS", "ERROR al actualizar la vista: ${e.message}")
             false
         }
 

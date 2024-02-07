@@ -103,7 +103,7 @@ tools:context=".ui.view.AudioA.AudioAgregarActivity">
                 android:src="@drawable/audio_ico"/>
 
             <TextView
-                android:id="@+id/ico_Agregar_Audio_Txt"
+                android:id="@+id/NombreAudioTxt"
                 tools:text="@string/Audio"
                 android:textSize="9dp"
                 android:textColor="#F0BFBFBF"

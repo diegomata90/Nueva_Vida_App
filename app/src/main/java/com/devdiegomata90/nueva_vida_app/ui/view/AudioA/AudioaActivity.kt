@@ -107,6 +107,18 @@ class AudioaActivity : AppCompatActivity() {
     private fun onUpdateAudioClick(audio: Audio) {
         // "Selecionando: Actualizar"
         Toast.makeText(this, "Actualizar ${audio.titulo}", Toast.LENGTH_SHORT).show()
+
+        // Envia intent para actualizar
+        val intent = Intent(this, AudioAgregarActivity::class.java)
+        intent.putExtra("id", audio.id)
+        intent.putExtra("descripcion", audio.descripcion)
+        intent.putExtra("url", audio.url)
+        intent.putExtra("titulo", audio.titulo)
+        intent.putExtra("fecha", audio.fecha)
+        intent.putExtra("imagen", audio.imagen)
+        intent.putExtra("uid", audio.uid)
+        startActivity(intent)
+        finish()
     }
 
     //Dialogo de Confirmacion de eliminacion

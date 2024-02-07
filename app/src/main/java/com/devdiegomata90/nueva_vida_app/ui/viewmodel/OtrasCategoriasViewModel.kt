@@ -38,15 +38,16 @@ class OtrasCategoriasViewModel: ViewModel() {
 
         }
     }
+    //Update of the views
     fun updateVistaOCategorie(id: String, categoryName: String){
 
         viewModelScope.launch {
             val result = updateVistaOCategorieUseCase("$id", "$categoryName")
 
             if( result){
-                Log.d("VISTAOCATEGORIAS", "SE ACTUALIZO CORRECTAMENTE")
+                Log.i("VISTAOCATEGORIASS", "SE ACTUALIZARON LAS VISTAS CORRECTAMENTE")
             }else {
-                Log.d("VISTAOCATEGORIAS", "ERROR AL ACTUALIZAR LAS VISTAS")
+                Log.e("VISTAOCATEGORIASS", "ERROR AL ACTUALIZAR LAS VISTAS")
             }
         }
     }

@@ -20,6 +20,7 @@ import com.devdiegomata90.nueva_vida_app.data.model.Audio
 import com.devdiegomata90.nueva_vida_app.databinding.ActivityAudioAgregarBinding
 import com.devdiegomata90.nueva_vida_app.ui.view.MainActivityAdmin
 import com.devdiegomata90.nueva_vida_app.ui.viewmodel.AudioAgregarViewModel
+import com.squareup.picasso.Picasso
 import java.util.*
 
 
@@ -41,8 +42,12 @@ class AudioAgregarActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
+
         //Se agregar el actionBar personalizado
         actionBarpersonalizado("Nuevo Audio")
+
+        //Obtener los datos
+        getIntents()
 
         //Funciones
         initComponent()
@@ -86,7 +91,6 @@ class AudioAgregarActivity : AppCompatActivity() {
     }
 
 
-
     private fun eventoBoton() {
         binding.imagenAgregarAudio.setOnClickListener {
             seleccionarImagenDeGaleria()
@@ -116,12 +120,10 @@ class AudioAgregarActivity : AppCompatActivity() {
                     .isBlank() || binding.DescripcionAudio.text.toString().isBlank()
             ) {
                 Toast.makeText(this, "Campos vacios", Toast.LENGTH_SHORT).show()
-            }
-            else if (RutaArchivoUri == null || RutaArchivoUriAudio == null
+            } else if (RutaArchivoUri == null || RutaArchivoUriAudio == null
             ) {
                 Toast.makeText(this, "Agregue un audio o una imagen", Toast.LENGTH_SHORT).show()
-            }
-            else {
+            } else {
                 //Obtener la fecha de hoy
                 val c = Calendar.getInstance()
                 val year = c.get(Calendar.YEAR)
@@ -183,8 +185,8 @@ class AudioAgregarActivity : AppCompatActivity() {
                 // Obtener el nombre del archivo
                 if (RutaArchivoUriAudio != null) {
                     val fileName = contentResolver.getFileName(RutaArchivoUriAudio!!)
-                    binding.icoAgregarAudioTxt.text = fileName
-                    binding.icoAgregarAudioTxt.visibility = View.VISIBLE
+                    binding.NombreAudioTxt.text = fileName
+                    binding.NombreAudioTxt.visibility = View.VISIBLE
                     // Obtener la extension del archivo
                     extensionAudio = getExtension(RutaArchivoUriAudio!!)!!
                 }
@@ -214,6 +216,58 @@ class AudioAgregarActivity : AppCompatActivity() {
     private fun getExtension(uri: Uri): String? {
         val mimeTypeMap = MimeTypeMap.getSingleton()
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri))
+    }
+
+
+    //Recibir el intent de actualizacion
+    private fun getIntents() {
+
+        //Se obtiene los valores enviados por el intent
+        val intent = intent.extras
+
+        //Validar si el intent tiene valor null
+        if (intent != null) {
+
+            //Se cambia el titulo del Actionbar personalizado
+            supportActionBar!!.title = "Actualizar Audio"
+
+            //Se cambiar el titulo de la activity
+            binding.AudioTXT.text = "Actualizar Audio"
+
+            //Cambiar el nombre al boton
+            binding.BotonAudio.text = "Actualizar"
+
+
+            //Se obtiene los valores del intent
+            val titulo = intent.getString("titulo")
+            val imagen = intent.getString("imagen")
+            val url = intent.getString("url")
+            val id = intent.getString("id")
+            val fecha = intent.getString("fecha")
+            val uid = intent.getString("uid")
+            val descripcion = intent.getString("descripcion")
+
+            //Asignar los valores a la XML
+            binding.run {
+                TituloAudio.setText(titulo)
+                DescripcionAudio.setText(descripcion)
+                NombreAudioTxt.text = titulo
+                NombreAudioTxt.visibility = View.VISIBLE
+
+            }
+
+            //Seteo de imagen
+            try {
+                Picasso.get().load(imagen).into(binding.imagenAgregarAudio)
+            } catch (e: Exception) {
+                Toast.makeText(this, "Error al cargar la imagen: " + e.message, Toast.LENGTH_SHORT)
+                    .show()
+                Picasso.get().load(R.drawable.categoria).into(binding.imagenAgregarAudio)
+            }
+
+        }
+
+
     }
 
 
