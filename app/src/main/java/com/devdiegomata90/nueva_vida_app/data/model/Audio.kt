@@ -10,6 +10,10 @@ class Audio {
     var fecha: String? = null
     var uid: String? = null
     var descripcion: String? = null
+    var imagenUri: String?  = null
+    var audioUri: String? = null
+    var extentionAudio: String? = null
+    var extentionImagen: String? = null
 
     constructor()
 
@@ -20,7 +24,11 @@ class Audio {
         url: String?,
         fecha: String?,
         uid: String?,
-        descripcion: String?
+        descripcion: String?,
+        imagenUri:String?,
+        audioUri:String,
+        extentionAudio:String?,
+        extentionImagen:String
     ) {
         this.id = id
         this.titulo = titulo
@@ -29,6 +37,10 @@ class Audio {
         this.fecha = fecha
         this.uid = uid
         this.descripcion = descripcion
+        this.imagenUri = imagenUri
+        this.audioUri = audioUri
+        this.extentionAudio = extentionAudio
+        this.extentionImagen = extentionImagen
     }
 
 }
