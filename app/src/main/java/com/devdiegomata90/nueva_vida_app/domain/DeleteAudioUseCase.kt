@@ -1,9 +1,10 @@
 package com.devdiegomata90.nueva_vida_app.domain
 
 import com.devdiegomata90.nueva_vida_app.data.model.Audio
-import com.devdiegomata90.nueva_vida_app.data.repository.DeleteAudioRepository
+import com.devdiegomata90.nueva_vida_app.data.repository.AudioRepository
 
-private val repository = DeleteAudioRepository()
+
+private val repository = AudioRepository()
 
 class DeleteAudioUseCase {
 

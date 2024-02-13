@@ -16,12 +16,13 @@ import kotlinx.coroutines.tasks.await
 class AudioRepository {
 
     private var referenciaBD = FirebaseDatabase.getInstance().getReference("AUDIOS")
+    private val referenceStoreBD = FirebaseStorage.getInstance()
     private val auth = FirebaseAuth.getInstance()
 
     private var rutaImageSubida: String = "Audio/Imagen_Audio/"
     private var rutaAudioSubida: String = "Audio/Audio_Subido/"
-    private var storage = FirebaseStorage.getInstance()
-    private var downloadUrl: Uri? =null
+
+    private var downloadUrl: Uri? = null
     private var downloadUrlAudio: Uri? = null
 
 
@@ -49,20 +50,20 @@ class AudioRepository {
             /* -----------------------------
                 ---AGREGAR AUDIO
             -------------------------------- */
-            if(audio.audioUri != null){
+            if (audio.audioUri != null) {
                 addAudioSound(audio)
-            }else{
-                Log.e("addAudioAA","Error: No se cargo el audio")
+            } else {
+                Log.e("addAudioAA", "Error: No se cargo el audio")
             }
 
 
             /* -----------------------------
             ---AGREGAR IMAGEN
             -------------------------------- */
-            if(audio.imagenUri != null){
+            if (audio.imagenUri != null) {
                 addAudioImagen(audio)
-            }else{
-                Log.e("addAudioAI","Error: No se cargo la imagen")
+            } else {
+                Log.e("addAudioAI", "Error: No se cargo la imagen")
             }
 
 
@@ -92,7 +93,7 @@ class AudioRepository {
 
         } catch (e: Exception) {
             println("Error al intentar guardar el audio: ${e.message}")
-            Log.e("addAudio","Error al intentar guardar el audio: ${e.message}")
+            Log.e("addAudio", "Error al intentar guardar el audio: ${e.message}")
             false
         }
     }
@@ -109,7 +110,7 @@ class AudioRepository {
             //Validar URL audio es nulo,
             if (audio.url == null) {
                 addAudioSound(audio)
-            }else {
+            } else {
                 //Borrar el audioUri
                 audio.audioUri = null
                 //No insertar el audio porque ya existe
@@ -124,7 +125,7 @@ class AudioRepository {
             //Validar URL imagen es nulo,
             if (audio.imagen == null) {
                 addAudioImagen(audio)
-            }else{
+            } else {
                 //Borrar el imagenUri
                 audio.imagenUri = null
                 //No insertar el imagen porque ya existe
@@ -163,90 +164,122 @@ class AudioRepository {
         }
     }
 
+    suspend fun deleteAudio(audio: Audio): Boolean {
+
+        try {
+            val IdAudio = audio.id.toString()
+            val Imagen = audio.imagen.toString()
+            val Audio = audio.url.toString()
+
+            /* -----------------------------
+            ---ELIMINA DETALLE DEL AUDIO
+            -------------------------------- */
+            referenciaBD.child(IdAudio).removeValue().await()
+
+            /* -----------------------------
+            ---ELIMINA IMAGEN DEL STORAGE
+            -------------------------------- */
+            if (!(Imagen == null || Imagen == "")) {
+                referenceStoreBD.getReferenceFromUrl(Imagen).delete().await()
+            }
+
+            /* -----------------------------
+            ---ELIMINA AUDIO DEL STORAGE
+            -------------------------------- */
+            if (!(Audio == null || Audio == "")) {
+                referenceStoreBD.getReferenceFromUrl(Audio).delete().await()
+            }
+
+            return true
+        } catch (e: Exception) {
+            println("Error al intentar eliminar: ${e.message}")
+            return false
+        }
+    }
+
     //Funcion para agregar un audio
     private suspend fun addAudioSound(audio: Audio): Boolean {
 
 
         //Insertar el audio
         return try {
-                //Obtener la direcion uri
-                val uri: Uri = Uri.parse(audio.audioUri)
+            //Obtener la direcion uri
+            val uri: Uri = Uri.parse(audio.audioUri)
 
-                if (uri != null) {
+            if (uri != null) {
 
-                    //Obtener las extensiones
-                    val extension = audio.extentionAudio.toString()
-                    //val extension = audioUri.path?.split(".")
+                //Obtener las extensiones
+                val extension = audio.extentionAudio.toString()
+                //val extension = audioUri.path?.split(".")
 
-                    // Referencia al Storage
-                    val storageRef_Audio = storage.reference
+                // Referencia al Storage
+                val storageRef_Audio = referenceStoreBD.reference
 
-                    // Ruta en el Storage donde deseas almacenar la imagen
-                    val path = "$rutaAudioSubida/audio_${System.currentTimeMillis()}.$extension"
+                // Ruta en el Storage donde deseas almacenar la imagen
+                val path = "$rutaAudioSubida/audio_${System.currentTimeMillis()}.$extension"
 
-                    // Referencia al archivo en el Storage
-                    val audioRef = storageRef_Audio.child(path)
+                // Referencia al archivo en el Storage
+                val audioRef = storageRef_Audio.child(path)
 
-                    // Subir la imagen al Storage
-                    val uploadTask = audioRef.putFile(uri).await()
+                // Subir la imagen al Storage
+                val uploadTask = audioRef.putFile(uri).await()
 
-                    // Obtener la URL de la imagen subida
-                    downloadUrlAudio = uploadTask.storage.downloadUrl.await()
+                // Obtener la URL de la imagen subida
+                downloadUrlAudio = uploadTask.storage.downloadUrl.await()
 
-                    //Borrar el audioUri
-                    audio.audioUri = null
-                }
-                true
-
-            } catch (e: Exception) {
-                Log.e("updateAudioAS", "Error al insertar el audio $e")
-                false
+                //Borrar el audioUri
+                audio.audioUri = null
             }
+            true
 
+        } catch (e: Exception) {
+            Log.e("updateAudioAS", "Error al insertar el audio $e")
+            false
         }
 
+    }
 
     //Funcion para agregar una imagen del audio
     private suspend fun addAudioImagen(audio: Audio): Boolean {
 
         return try {
 
-                //Obtener la direcion uri
-                val uri: Uri = Uri.parse(audio.imagenUri)
+            //Obtener la direcion uri
+            val uri: Uri = Uri.parse(audio.imagenUri)
 
 
-                if (uri != null) {
+            if (uri != null) {
 
-                    //Obtener las extensiones
-                    val extension = audio.extentionAudio.toString()
-                    //val extensiones = audioUri.path?.split(".")
+                //Obtener las extensiones
+                val extension = audio.extentionAudio.toString()
+                //val extensiones = audioUri.path?.split(".")
 
-                    // Referencia al Storage
-                    val storageRef = storage.reference
+                // Referencia al Storage
+                val storageRef = referenceStoreBD.reference
 
-                    // Ruta en el Storage donde deseas almacenar la imagen
-                    val path =
-                        "$rutaImageSubida/img_${System.currentTimeMillis()}.$extension"
+                // Ruta en el Storage donde deseas almacenar la imagen
+                val path =
+                    "$rutaImageSubida/img_${System.currentTimeMillis()}.$extension"
 
-                    // Referencia al archivo en el Storage
-                    val imageRef = storageRef.child(path)
+                // Referencia al archivo en el Storage
+                val imageRef = storageRef.child(path)
 
-                    // Subir la imagen al Storage
-                    val uploadTask = imageRef.putFile(uri).await()
+                // Subir la imagen al Storage
+                val uploadTask = imageRef.putFile(uri).await()
 
-                    // Obtener la URL de la imagen subida
-                    downloadUrl = uploadTask.storage.downloadUrl.await()
+                // Obtener la URL de la imagen subida
+                downloadUrl = uploadTask.storage.downloadUrl.await()
 
-                    //Borrar el imagenUri
-                    audio.imagenUri = null
-                }
-
-                true
-
-            } catch (e: Exception) {
-                Log.e("updateAudioAI", e.toString())
-                false
+                //Borrar el imagenUri
+                audio.imagenUri = null
             }
+
+            true
+
+        } catch (e: Exception) {
+            Log.e("updateAudioAI", e.toString())
+            false
+        }
 
     }
 
