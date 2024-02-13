@@ -9,6 +9,7 @@ class Audio {
     var url: String? = null
     var fecha: String? = null
     var uid: String? = null
+    var uidEdit:String? =null
     var descripcion: String? = null
     var imagenUri: String?  = null
     var audioUri: String? = null
@@ -24,6 +25,7 @@ class Audio {
         url: String?,
         fecha: String?,
         uid: String?,
+        uidEdit:String?,
         descripcion: String?,
         imagenUri:String?,
         audioUri:String,
@@ -36,6 +38,7 @@ class Audio {
         this.url = url
         this.fecha = fecha
         this.uid = uid
+        this.uidEdit = uidEdit
         this.descripcion = descripcion
         this.imagenUri = imagenUri
         this.audioUri = audioUri

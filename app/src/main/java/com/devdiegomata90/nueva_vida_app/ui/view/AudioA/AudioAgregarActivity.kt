@@ -31,7 +31,6 @@ class AudioAgregarActivity : AppCompatActivity() {
     private var RutaArchivoUriAudio: Uri? = null
     private lateinit var extensionImagen: String
     private lateinit var extensionAudio: String
-    private lateinit var extensiones: Pair<String, String>
     private lateinit var audioGet: Audio
 
     private lateinit var loadingDialog: LoadingDialog
@@ -191,42 +190,43 @@ class AudioAgregarActivity : AppCompatActivity() {
     private fun addAudio() {
         val audioAgregar = Audio()
 
-        audioAgregar.titulo = binding.TituloAudio.text.toString()
-        audioAgregar.descripcion = binding.DescripcionAudio.text.toString()
-        audioAgregar.imagen = ""
-        audioAgregar.url = ""
-
         // Añade registros de depuración para verificar
         Log.d("addAudio", "RutaArchivoUri: $RutaArchivoUri")
         // Añade registros de depuración para verificar
         Log.d("addAudio", "RutaArchivoUriAudio: $RutaArchivoUriAudio")
 
         //Validar si los campos tiene valore
-        if (binding.TituloAudio.text.toString()
-                .isEmpty() || binding.DescripcionAudio.text.toString().isEmpty() ||
-            binding.TituloAudio.text.toString()
-                .isBlank() || binding.DescripcionAudio.text.toString().isBlank()
+        if (binding.TituloAudio.text.toString().isEmpty()
+            || binding.DescripcionAudio.text.toString().isEmpty()
+            || binding.TituloAudio.text.toString().isBlank()
+            || binding.DescripcionAudio.text.toString().isBlank()
         ) {
             Toast.makeText(this, "Campos vacios", Toast.LENGTH_SHORT).show()
         } else if (RutaArchivoUri == null || RutaArchivoUriAudio == null
         ) {
             Toast.makeText(this, "Agregue un audio o una imagen", Toast.LENGTH_SHORT).show()
         } else {
+            //SETEO de los valores
+            audioAgregar.titulo = binding.TituloAudio.text.toString()
+            audioAgregar.descripcion = binding.DescripcionAudio.text.toString()
+
             audioAgregar.fecha = getDateToday()
 
-            //Asignan las extensiones a la variable extension
-            extensiones = extensionAudio to extensionImagen
+            //Asignar el URL de la imagen y audio
+            audioAgregar.imagenUri = RutaArchivoUri.toString()
+            audioAgregar.audioUri = RutaArchivoUriAudio.toString()
 
-            audioAgregarViewModel.addAudio(
-                audioAgregar, RutaArchivoUri, RutaArchivoUriAudio, extensiones
-            )
+            //Asignar las extensiones a la variable audioAgregar
+            audioAgregar.extentionAudio = extensionAudio
+            audioAgregar.extentionImagen = extensionImagen
+
+            audioAgregarViewModel.addAudio(audioAgregar)
         }
     }
 
 
     //Para actualizar el audio
     private fun updateAudio() {
-        Toast.makeText(this, "Actualizando...", Toast.LENGTH_SHORT).show()
 
         // Seteo de los valores de la variable audioGet
         audioGet.titulo = binding.TituloAudio.text.toString()

@@ -28,7 +28,7 @@ class AudioAgregarViewModel : ViewModel() {
     private val _loading = MutableLiveData<Boolean>()
     val loading get() = _loading
 
-    //Casos de uso
+    //Casos de Uso
     val addAudioUseCase = AddAudioUseCase()
     val updateAudioUseCase = UpdateAudioUseCase()
 
@@ -39,50 +39,34 @@ class AudioAgregarViewModel : ViewModel() {
 
 
     //Funciones
-    fun addAudio(
-        audio: Audio,
-        RutaArchivoUri: Uri? = null,
-        RutaAudioUri: Uri?,
-        extensiones: Pair<String?, String?>,
-    ) {
 
+    fun addAudio(audio:Audio){
         viewModelScope.launch {
 
-            //Inicilizar el dialogo
+            //Inicializar el dialogo
             _loading.value = true
 
-            val result = addAudioUseCase(audio, RutaArchivoUri, RutaAudioUri!!, extensiones)
+            val result = addAudioUseCase(audio)
             _successful.value = result
 
             if (result) {
                 _message.value = "Audio Agregado"
-                //Inicilizar el dialogo
+                //Finalizar el dialogo
                 _loading.value = false
             } else {
                 _message.value = "Error al agregar el audio"
-                //Inicilizar el dialogo
+                //Finalizar el dialogo
                 _loading.value = false
             }
+
         }
     }
+
+
 
     //Actualiza el audio
     fun updateAudio(audio: Audio) {
 
-        Log.d(
-            "updateAudioVM",
-            "audio.titulo: ${audio.titulo} \n" +
-            "audio.descripcion: ${audio.descripcion} \n" +
-            "audio.imagen: ${audio.imagen} \n" +
-            "audio.url: ${audio.url} \n"+
-            "audio.id: ${audio.id} \n"+
-            "audio.fecha: ${audio.fecha} \n"+
-            "audio.uid: ${audio.uid} \n"+
-            "audio.extensionAudio: ${audio.extentionAudio} \n"+
-            "audio.extensionImagen: ${audio.extentionImagen} \n"+
-            "audio.audioUri: ${audio.audioUri} \n"+
-            "audio.imagenUri: ${audio.imagenUri} \n"
-        )
 
         viewModelScope.launch {
 
@@ -94,11 +78,11 @@ class AudioAgregarViewModel : ViewModel() {
 
             if (result) {
                 _message.value = "Audio Modificado"
-                //Inicilizar el dialogo
+                //Finalizar el dialogo
                 _loading.value = false
             } else {
                 _message.value = "Error al actualizar el audio"
-                //Inicilizar el dialogo
+                //Finalizar el dialogo
                 _loading.value = false
             }
         }

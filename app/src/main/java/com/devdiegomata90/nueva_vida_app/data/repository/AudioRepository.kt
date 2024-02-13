@@ -42,6 +42,62 @@ class AudioRepository {
         awaitClose { referenciaBD.removeEventListener(valueEventListener) }
     }
 
+    //Funcion para agregar el detalle del audio, Si como agregar archivo de audio y archivo de imagen
+    suspend fun addAudio(audio: Audio): Boolean {
+        return try {
+
+            /* -----------------------------
+                ---AGREGAR AUDIO
+            -------------------------------- */
+            if(audio.audioUri != null){
+                addAudioSound(audio)
+            }else{
+                Log.e("addAudioAA","Error: No se cargo el audio")
+            }
+
+
+            /* -----------------------------
+            ---AGREGAR IMAGEN
+            -------------------------------- */
+            if(audio.imagenUri != null){
+                addAudioImagen(audio)
+            }else{
+                Log.e("addAudioAI","Error: No se cargo la imagen")
+            }
+
+
+            /* -----------------------------
+            ---AGREGAR DETALLE
+            -------------------------------- */
+
+            //Genera el id del audio
+            val audioID = referenciaBD.push().key
+
+            //Usuario que creo el audio
+            val uid = auth.currentUser?.uid
+
+            //Obtener el nombre
+            val name =
+                FirebaseDatabase.getInstance().getReference("BD ADMINISTRADORES").child(uid!!)
+                    .child("NOMBRES").get().await().value.toString()
+
+            //Guarda el audio en la base de datos
+            audio.id = audioID
+            audio.uid = "$name - $uid"
+            audio.imagen = if (downloadUrl.toString() != "") downloadUrl.toString() else ""
+            audio.url = if (downloadUrlAudio.toString() != "") downloadUrlAudio.toString() else ""
+            referenciaBD.child(audioID!!).setValue(audio).await()
+
+            true
+
+        } catch (e: Exception) {
+            println("Error al intentar guardar el audio: ${e.message}")
+            Log.e("addAudio","Error al intentar guardar el audio: ${e.message}")
+            false
+        }
+    }
+
+    //Funcion para actualizar el detalle del audio, Si como actualizar archivo de audio y actualizar archivo de imagen
     suspend fun updateAudio(audio: Audio): Boolean {
 
         return try {
@@ -49,12 +105,31 @@ class AudioRepository {
             /* -----------------------------
                ---AGREGAR AUDIO
                -------------------------------- */
-            addAudioSound(audio)
+
+            //Validar URL audio es nulo,
+            if (audio.url == null) {
+                addAudioSound(audio)
+            }else {
+                //Borrar el audioUri
+                audio.audioUri = null
+                //No insertar el audio porque ya existe
+                Log.i("updateAudioAS", "No insertar el audio porque ya existe")
+            }
+
 
             /* -----------------------------
                ---AGREGAR IMAGEN
                -------------------------------- */
-            addAudioImagen(audio)
+
+            //Validar URL imagen es nulo,
+            if (audio.imagen == null) {
+                addAudioImagen(audio)
+            }else{
+                //Borrar el imagenUri
+                audio.imagenUri = null
+                //No insertar el imagen porque ya existe
+                Log.i("updateAudioAI", "No insertar la imagen porque ya existe")
+            }
 
             /* -----------------------------
             ---AGREGAR DETALLE
@@ -68,7 +143,7 @@ class AudioRepository {
                     .child("NOMBRES").get().await().value.toString()
 
             //Guarda el audio en la base de datos
-            audio.uid = "$name - $uid - m"
+            audio.uidEdit = "$name - $uid"
 
             //Validar si downloadUrl existe, si existe se actualiza
             if (downloadUrl != null) {
@@ -89,16 +164,11 @@ class AudioRepository {
     }
 
     //Funcion para agregar un audio
-    suspend fun addAudioSound(audio: Audio): Boolean {
+    private suspend fun addAudioSound(audio: Audio): Boolean {
 
-        //Validar URL audio es nulo,
-        // Si true >> se inserta el audio,
-        // Si false >> No hacer la insercion porque ya existe y Devuelve true
 
-        return if (audio.url == null) {
-            //Insertar el audio
-            try {
-
+        //Insertar el audio
+        return try {
                 //Obtener la direcion uri
                 val uri: Uri = Uri.parse(audio.audioUri)
 
@@ -126,31 +196,20 @@ class AudioRepository {
                     //Borrar el audioUri
                     audio.audioUri = null
                 }
-
                 true
 
             } catch (e: Exception) {
-                Log.e("updateAudioAS", e.toString())
+                Log.e("updateAudioAS", "Error al insertar el audio $e")
                 false
             }
 
-        } else {
-            //No insertar el audio porque ya existe
-            Log.i("updateAudioAS", "No insertar el audio porque ya existe")
-            true
-
         }
-    }
+
 
     //Funcion para agregar una imagen del audio
-    suspend fun addAudioImagen(audio: Audio): Boolean {
-        //Validar URL imagen es nulo,
-        // Si true >> se inserta el imagen,
-        // Si false >> No hacer la insercion porque ya existe y Devuelve true
+    private suspend fun addAudioImagen(audio: Audio): Boolean {
 
-        return if (audio.imagen == null) {
-            //Insertar la imagen
-            try {
+        return try {
 
                 //Obtener la direcion uri
                 val uri: Uri = Uri.parse(audio.imagenUri)
@@ -189,11 +248,6 @@ class AudioRepository {
                 false
             }
 
-        } else {
-            //No insertar el imagen porque ya existe
-            Log.i("updateAudioAI", "No insertar la imagen porque ya existe")
-            true
-        }
     }
 
 
