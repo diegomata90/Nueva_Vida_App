@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.view.FragmentoAdmin.CambioPass">
+    <!-- Contenedor principal-->
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:orientation="vertical">
+
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animacion"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="password.json"
+            app:lottie_imageAssetsFolder="assets"
+            app:lottie_loop="true" />
+
+        <!-- Titulo -->
+        <TextView
+            android:id="@+id/MisCredencialesTXT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/MisCredencialesTXT"
+            android:textColor="#000"
+            android:textSize="20sp" />
+
+        <!-- Contenedor de Password Actual -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:tooltipText="@string/password"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/red2_app">
+
+            <EditText
+                android:id="@+id/PassActualET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/PassActualET"
+                android:inputType="textPassword" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Contenedor de Nueva Password -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:tooltipText="@string/password"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/red2_app">
+
+            <EditText
+                android:id="@+id/PassNewET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/PassNewET"
+                android:inputType="textPassword" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <!-- Contenedor de Confirmar Password -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:tooltipText="@string/password"
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/red2_app">
+
+            <EditText
+                android:id="@+id/PassConfirmET"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/PassConfirmET"
+                android:inputType="textPassword" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Botón Cambiar Password -->
+        <Button
+            android:id="@+id/CAMBIARPASSBTN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/btn_personalizado"
+            android:text="@string/CAMBIARPASSBTN"
+            android:textColor="@color/white" />
+
+        <!-- Botón IR A INICIO -->
+        <Button
+            android:id="@+id/IRINICIOBTN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/btn_personalizado"
+            android:text="@string/IRINICIOBTN"
+            android:textColor="@color/white" />
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</FrameLayout>
+

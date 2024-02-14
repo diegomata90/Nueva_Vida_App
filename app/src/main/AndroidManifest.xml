@@ -19,6 +19,9 @@
         android:theme="@style/Nueva_Vida_App"
         tools:targetApi="31">
         <activity
+            android:name=".ui.view.FragmentoAdmin.CambioPass"
+            android:exported="false" />
+        <activity
             android:name=".ui.view.OtrasCategorias.ContenidoCategoriasActivity"
             android:exported="false" />
         <activity
