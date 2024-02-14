@@ -2,8 +2,6 @@ package com.devdiegomata90.nueva_vida_app.data.repository
 
 import android.net.Uri
 import android.util.Log
-import android.webkit.MimeTypeMap
-import androidx.core.net.toUri
 import com.devdiegomata90.nueva_vida_app.data.model.Audio
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*

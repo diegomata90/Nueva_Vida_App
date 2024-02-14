@@ -11,8 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- Contenedor Principal-->
+        <!-- Contenedor Principal con Conexion-->
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/ConConexion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -235,21 +236,21 @@
                 <!-- Text libro  -->
                 <TextView
                     android:id="@+id/libro"
-                    android:textSize="35sp"
-                    android:textStyle="bold"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:textSize="35sp"
+                    android:textStyle="bold"
                     tools:text="@string/libro" />
 
                 <!-- Text Capitulo y Versiculo  -->
                 <TextView
                     android:id="@+id/Capitulo"
-                    android:textSize="35sp"
-                    android:textStyle="bold"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginStart="10dp"
+                    android:textSize="35sp"
+                    android:textStyle="bold"
                     tools:text="@string/capitulo" />
 
 
@@ -275,10 +276,10 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:gravity="end"
                 android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="10dp"
+                android:gravity="end"
+                android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/btnCompartir"
@@ -289,9 +290,37 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-
         </androidx.appcompat.widget.LinearLayoutCompat>
 
+        <!-- Contenedor Principal sin Conexion-->
+        <!-- NO HAY INTERNET -->
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/SinConexion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="@string/SinConexionTxt"
+                android:textColor="#000"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="15dp"
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="desconectado.json"
+                app:lottie_imageAssetsFolder="assets"
+                app:lottie_loop="true" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
     </RelativeLayout>
 

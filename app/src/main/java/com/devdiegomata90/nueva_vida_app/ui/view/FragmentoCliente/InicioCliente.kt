@@ -1,8 +1,14 @@
 package com.devdiegomata90.nueva_vida_app.ui.view.FragmentoCliente
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.ConnectivityManager
+import android.net.ConnectivityManager.NetworkCallback
+import android.net.Network
+import android.net.NetworkCapabilities
+import android.net.NetworkRequest
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,6 +18,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.cardview.widget.CardView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -21,16 +28,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
-import com.devdiegomata90.nueva_vida_app.data.model.Categoria
-
-import com.devdiegomata90.nueva_vida_app.ui.view.Audio.AudioActivity
-import com.devdiegomata90.nueva_vida_app.ui.view.Evento.EventoActivity
-import com.devdiegomata90.nueva_vida_app.ui.adapter.CategoriasAdapter
 import com.devdiegomata90.nueva_vida_app.core.TypefaceUtil
-import com.google.firebase.database.*
+import com.devdiegomata90.nueva_vida_app.data.model.Categoria
+import com.devdiegomata90.nueva_vida_app.ui.adapter.CategoriasAdapter
+import com.devdiegomata90.nueva_vida_app.ui.view.Audio.AudioActivity
 import com.devdiegomata90.nueva_vida_app.ui.view.Biblia.BibliaActivity
+import com.devdiegomata90.nueva_vida_app.ui.view.Evento.EventoActivity
 import com.devdiegomata90.nueva_vida_app.ui.view.OtrasCategorias.OtrasCategoriasActivity
 import com.devdiegomata90.nueva_vida_app.ui.viewmodel.InicioClienteViewModel
+import com.google.firebase.database.*
 
 @Suppress("DEPRECATION")
 class InicioCliente : Fragment() {
@@ -53,6 +59,11 @@ class InicioCliente : Fragment() {
     private lateinit var libro: TextView
     private lateinit var capitulo: TextView
     private lateinit var btnCompartir: AppCompatImageView
+    private lateinit var ConConexion: LinearLayoutCompat
+    private lateinit var SinConexion: LinearLayoutCompat
+    private lateinit var connectivityManager: ConnectivityManager
+    private lateinit var networkCallback: NetworkCallback
+
 
     private lateinit var categoriaList: List<Categoria>
 
@@ -116,8 +127,34 @@ class InicioCliente : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        ConConexion = view.findViewById(R.id.ConConexion)
+        SinConexion = view.findViewById(R.id.SinConexion)
+        connectivityManager =
+            requireContext().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        networkCallback = object : NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                super.onAvailable(network)
+                requireActivity().runOnUiThread {
+                    ConConexion.setVisibility(View.VISIBLE)
+                    SinConexion.setVisibility(View.GONE)
+                }
+            }
 
+            override fun onLost(network: Network) {
+                super.onLost(network)
+                requireActivity().runOnUiThread {
+                    ConConexion.setVisibility(View.GONE)
+                    SinConexion.setVisibility(View.VISIBLE)
+                }
+            }
+        }
+        val networkRequest = NetworkRequest.Builder()
+            .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+            .build()
+        connectivityManager.registerNetworkCallback(networkRequest, networkCallback)
     }
+
+
 
     private fun initComponent(view: View) {
         rvCategorias = view.findViewById(R.id.rvCategorias)

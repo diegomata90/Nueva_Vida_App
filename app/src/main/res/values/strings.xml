@@ -46,6 +46,8 @@
     <string name="BienvenidoTXT">Bienvenido(a): </string>
     <string name="NombreTXT"> -- </string>
 
+    <string name="SinConexionTxt">No hay conexión a Internet</string>
+
 
     <!-- Informacion de Iglesia-->
     <string name="PastorTXT">Pastor: Samuel Morera</string>
