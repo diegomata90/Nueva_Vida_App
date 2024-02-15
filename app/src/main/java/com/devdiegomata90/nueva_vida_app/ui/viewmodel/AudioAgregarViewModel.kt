@@ -1,8 +1,6 @@
 package com.devdiegomata90.nueva_vida_app.ui.viewmodel
 
-import android.content.ContentResolver
-import android.net.Uri
-import android.util.Log
+
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -33,7 +31,7 @@ class AudioAgregarViewModel : ViewModel() {
     val updateAudioUseCase = UpdateAudioUseCase()
 
     //Inicializa la funcion Oncreate para el viewModel
-    fun Oncreate() {
+    fun onCreate() {
 
     }
 

@@ -1,8 +1,13 @@
 package com.devdiegomata90.nueva_vida_app.domain
 
+import com.devdiegomata90.nueva_vida_app.data.repository.UserRepository
+
 class ChangePassUseCase {
     //repository
+    private val repository = UserRepository()
 
-    operator fun invoke(): Boolean{ return true}
+    suspend operator fun invoke( newPass:String): Boolean =
+         repository.changePass( newPass)
+
 
 }
