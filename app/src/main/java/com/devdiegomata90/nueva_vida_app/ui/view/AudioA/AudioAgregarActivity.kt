@@ -54,7 +54,7 @@ class AudioAgregarActivity : AppCompatActivity() {
 
 
         //Inicializa la funcion Oncreate para el viewModel
-        audioAgregarViewModel.Oncreate()
+        audioAgregarViewModel.onCreate()
 
         //Suscribirse al ViewModel
         //Mostrar el mensaje al agregar

@@ -7,5 +7,7 @@ class GetUserUseCase {
 
     private val repository = UserRepository()
 
+    
+
     suspend operator fun invoke(): User?= repository.getUser()
 }

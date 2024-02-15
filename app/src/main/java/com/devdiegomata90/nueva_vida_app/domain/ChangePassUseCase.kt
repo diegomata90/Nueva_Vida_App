@@ -6,8 +6,8 @@ class ChangePassUseCase {
     //repository
     private val repository = UserRepository()
 
-    suspend operator fun invoke( newPass:String): Boolean =
-         repository.changePass( newPass)
+    suspend operator fun invoke(email:String,currentPass:String, newPass:String): Boolean =
+         repository.changePass( email, currentPass,newPass)
 
 
 }
