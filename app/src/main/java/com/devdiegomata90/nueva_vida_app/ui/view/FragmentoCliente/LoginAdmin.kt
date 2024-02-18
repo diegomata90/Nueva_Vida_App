@@ -10,11 +10,13 @@ import android.widget.Button
 import android.widget.TextView
 import com.devdiegomata90.nueva_vida_app.ui.view.InicioSesion
 import com.devdiegomata90.nueva_vida_app.R
+import com.devdiegomata90.nueva_vida_app.R.id.btnRestaurar
 import com.devdiegomata90.nueva_vida_app.core.TypefaceUtil
 
 class LoginAdmin : Fragment() {
     lateinit var btnAcceder: Button
     private lateinit var SoloadminTXT: TextView
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,6 +27,7 @@ class LoginAdmin : Fragment() {
 
         btnAcceder = view.findViewById(R.id.btnAcceder)
         SoloadminTXT = view.findViewById(R.id.SoloadminTXT)
+
 
         btnAcceder.setOnClickListener {
             startActivity(Intent(requireContext(), InicioSesion::class.java))

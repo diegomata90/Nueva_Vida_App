@@ -64,4 +64,17 @@ class UserRepository {
             false
         }
     }
+
+    suspend fun resetPass(email: String): Boolean {
+
+        return try {
+            auth.sendPasswordResetEmail(email).await()
+            true
+        } catch (e: Exception){
+            Log.e("CAMBIARPASSr", "Error al intentar cambiar la contraseña: ${e.message}")
+            false
+        }
+
+    }
 }
+

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -71,19 +70,37 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/btnAcceder"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/btn_personalizado"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp"
+            android:gravity="bottom"
+            android:orientation="vertical">
 
-            android:text="@string/btnAcceder"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
+            <Button
+                android:id="@+id/btnAcceder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_personalizado"
+                android:text="@string/btnAcceder"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btnRestaurar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/btn_personalizadog"
+                android:text="@string/btnRestaurar"
+                android:textColor="@color/black_app"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
 
     </androidx.appcompat.widget.LinearLayoutCompat>
-
 
 
 </RelativeLayout>
