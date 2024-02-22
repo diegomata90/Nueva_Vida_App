@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="10dp"
+    android:elevation="2dp"
+    app:cardBackgroundColor="#fff"
+    app:contentPadding="7dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <!-- FOTO DE PERFIL-->
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/PerfilADMIN"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:src="@drawable/perfil_item"/>
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="10dp">
+
+            <!-- NOMBRE DEL ADMINISTRADOR-->
+            <TextView
+                android:id="@+id/nombre_Admin"
+                tools:text="@string/nombre_Admin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:layout_marginBottom="3dp"/>
+
+            <!-- APELLIDOS DEL ADMINISTRADOR-->
+            <TextView
+                android:id="@+id/apellido_Admin"
+                tools:text="@string/apellidos_Admin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="#999595"
+                android:layout_marginBottom="3dp"/>
+
+            <!-- CORREO DEL ADMINISTRADOR-->
+            <TextView
+                android:id="@+id/correo_Admin"
+                tools:text="@string/correo_Admin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="#000"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</androidx.cardview.widget.CardView>

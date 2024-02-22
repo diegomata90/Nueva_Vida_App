@@ -8,6 +8,4 @@ data class User(
     var NOMBRES: String? = null,
     val PASSWORD: String? = null,
     val UID: String? = null,
-) {
-
-}
+)

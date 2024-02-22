@@ -26,6 +26,10 @@ class AudioAdminViewModel: ViewModel() {
 
     //Funciones
     fun Oncreate(){
+        getAudios()
+    }
+
+    fun getAudios() {
         viewModelScope.launch {
 
             val result = getAudiosUseCase()

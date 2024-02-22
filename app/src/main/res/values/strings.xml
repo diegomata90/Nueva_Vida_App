@@ -148,5 +148,12 @@
     <string name="RestaurarTxt">Restablecer Contraseña</string>
     <string name="btnSentEmail">Enviar Correo</string>
 
+    <!-- Lista Administrador -->
+    <string name="nombre_Admin">Nombre ADMIN</string>
+    <string name="apellidos_Admin">Apellidos ADMIN</string>
+    <string name="correo_Admin">Correo ADMIN</string>
+    <string name="buscar">Buscar...</string>
+
+
 
 </resources>

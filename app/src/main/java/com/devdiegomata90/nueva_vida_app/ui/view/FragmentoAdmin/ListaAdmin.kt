@@ -1,60 +1,93 @@
 package com.devdiegomata90.nueva_vida_app.ui.view.FragmentoAdmin
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.devdiegomata90.nueva_vida_app.R
+import android.widget.Toast
+import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.devdiegomata90.nueva_vida_app.data.model.User
+import com.devdiegomata90.nueva_vida_app.databinding.FragmentListaAdminBinding
+import com.devdiegomata90.nueva_vida_app.ui.adapter.ListaAdminAdapter
+import com.devdiegomata90.nueva_vida_app.ui.viewmodel.ListAdminViewModel
+import kotlinx.coroutines.launch
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ListaAdmin.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class ListaAdmin : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentListaAdminBinding
+    private lateinit var adapter: ListaAdminAdapter
+
+    private val listAdminVM: ListAdminViewModel by viewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_lista_admin, container, false)
+        binding = FragmentListaAdminBinding.inflate(inflater, container, false)
+        val view = binding.root
+
+
+        //Se inicializa el RecyclerView
+        initRecyclerView(view)
+
+        eventos()
+
+        //Inicializar el onCreate del ViewModel
+        listAdminVM.onCreate()
+
+
+        //Escuchar los cambio en el reciclerView
+        // Observa cambios en el StateFlow de los Usuarios
+        lifecycleScope.launch {
+            listAdminVM.users.collect { users ->
+
+                Log.d("ListAdminV","Datos ${users}")
+                // Recupera los audios y agragar la lista al reciclerView
+                adapter.updateData(users as List<User>)
+            }
+        }
+
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ListaAdmin.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ListaAdmin().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    private fun eventos(){
+
+        binding.name.apply {
+
+            //escuchar los cambios del EditText
+            doOnTextChanged { name, _, _, _ ->
+               // listAdminVM.
+                listAdminVM.searchUser(name.toString())
+
             }
+        }
     }
+
+    private fun initRecyclerView(view: View) {
+        // Configurar el adaptador de la lista
+        adapter = ListaAdminAdapter(
+            userList = emptyList(),
+            onClickListener = { user -> getUser(user) }
+        )
+
+        binding.rvListaAdmin.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.VERTICAL, false)
+        binding.rvListaAdmin.adapter = adapter
+
+    }
+
+    private fun getUser(user: User){
+        Toast.makeText(requireContext(),"Haz elegido: ${user.NOMBRES} ${user.APELLIDOS}",Toast.LENGTH_SHORT).show()
+    }
+
+
 }
+
