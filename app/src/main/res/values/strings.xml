@@ -154,6 +154,13 @@
     <string name="correo_Admin">Correo ADMIN</string>
     <string name="buscar">Buscar...</string>
 
+    <!-- Perfil Administrador -->
+    <string name="perfilTxt">Mi Perfil</string>
+    <string name="infoTxt">Mi Información</string>
+    <string name="guiones"> --- </string>
+    <string name="uidAdminTXT">UID: </string>
+    <string name="btnEditar">Editar</string>
+
 
 
 </resources>

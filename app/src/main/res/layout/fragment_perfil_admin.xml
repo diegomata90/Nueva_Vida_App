@@ -10,15 +10,163 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="10dp"
         android:orientation="vertical">
 
+        <!-- TEXTOPERFIL-->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@string/perfil"
-            android:textColor="#000000"
-            android:textSize="20sp" />
+            android:text="@string/perfilTxt"
+            android:textColor="@color/red2_app"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <!-- FOTO DE PERFIL-->
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imagenADMIN"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/perfil_img" />
+
+        <!-- Linea arriba-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/backgroud_RV" />
+
+        <!-- Titulo Info-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:gravity="center"
+            android:text="@string/infoTxt"
+            android:textColor="@color/red2_app"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <!-- Contenedor UID-->
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/uidAdminTXT"
+                android:textColor="@color/black_app"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/uidAdmin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/guiones"
+                android:textColor="@color/black_app"
+                android:textSize="15sp" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <!-- Contenedor Nombre-->
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/nombreAdminTXT"
+                android:textColor="@color/black_app"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/nombreAdmin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/guiones"
+                android:textColor="@color/black_app"
+                android:textSize="15sp" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <!-- Contenedor Apellidos-->
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/apellidosAdminTXT"
+                android:textColor="@color/black_app"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/apellidosAdmin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/guiones"
+                android:textColor="@color/black_app"
+                android:textSize="15sp" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <!-- Contenedor Correo-->
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/correoAdminTXT"
+                android:textColor="@color/black_app"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/correoAdmin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="@string/guiones"
+                android:textColor="@color/black_app"
+                android:textSize="15sp" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        <!-- Linea abajo-->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/backgroud_RV" />
+
 
         <Button
             android:id="@+id/CambioPass"
@@ -27,6 +175,21 @@
             android:layout_marginTop="15dp"
             android:background="@drawable/btn_personalizado"
             android:text="@string/CambioPass"
+            android:textColor="@color/white"
+            android:drawableStart="@drawable/ic_edit"
+            android:drawableTint="@color/white"
+            android:padding="10dp"/>
+
+        <Button
+            android:id="@+id/btnEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/btn_personalizado"
+            android:drawableStart="@drawable/ic_edit"
+            android:drawableTint="@color/white"
+            android:padding="10dp"
+            android:text="@string/btnEditar"
             android:textColor="@color/white" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
