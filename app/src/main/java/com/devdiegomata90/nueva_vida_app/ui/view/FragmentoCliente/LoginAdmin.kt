@@ -10,7 +10,6 @@ import android.widget.Button
 import android.widget.TextView
 import com.devdiegomata90.nueva_vida_app.ui.view.InicioSesion
 import com.devdiegomata90.nueva_vida_app.R
-import com.devdiegomata90.nueva_vida_app.R.id.btnRestaurar
 import com.devdiegomata90.nueva_vida_app.core.TypefaceUtil
 
 class LoginAdmin : Fragment() {

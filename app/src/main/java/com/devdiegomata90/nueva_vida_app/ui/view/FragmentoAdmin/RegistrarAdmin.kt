@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import com.devdiegomata90.nueva_vida_app.ui.view.MainActivityAdmin
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.core.LoadingDialog
+import com.devdiegomata90.nueva_vida_app.core.TypefaceUtil
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import java.time.LocalDate
@@ -33,6 +34,9 @@ class RegistrarAdmin : Fragment() {
     private lateinit var btnRegistrar: Button
     private lateinit var auth: FirebaseAuth
     private lateinit var loadingDialog: LoadingDialog
+    private lateinit var registroTXT: TextView
+
+
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -50,6 +54,9 @@ class RegistrarAdmin : Fragment() {
         Nombre = view.findViewById(R.id.nombre)
         Apellidos = view.findViewById(R.id.apellidos)
         btnRegistrar = view.findViewById(R.id.btnregistrar)
+
+        registroTXT = view.findViewById(R.id.RegistroTXT)
+
 
 
 
@@ -79,6 +86,19 @@ class RegistrarAdmin : Fragment() {
         loadingDialog = LoadingDialog(requireActivity())
         loadingDialog.mensaje = "Registrando, espere por favor"
         loadingDialog.setCancelable= false
+
+        //Asignar un tipo de letra
+        TypefaceUtil.asignarTipoLetra(
+            requireContext(),
+            null,
+            fechaRegistrarAdmin,
+            Correo,
+            Password,
+            Nombre,
+            Apellidos,
+            registroTXT,
+            btnRegistrar
+        )
 
         return view
     }
@@ -129,7 +149,7 @@ class RegistrarAdmin : Fragment() {
                     reference.child(UID).setValue(Administradores)
                     startActivity(Intent(activity, MainActivityAdmin::class.java))
                     Toast.makeText(activity, "Registro existoso", Toast.LENGTH_SHORT).show()
-                    activity!!.finish()
+                    requireActivity().finish()
                 } else {
                     //progressDialog.dismiss()
                     loadingDialog.isDismiss()

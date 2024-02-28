@@ -4,6 +4,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
+import com.devdiegomata90.nueva_vida_app.core.TypefaceUtil
 import com.devdiegomata90.nueva_vida_app.data.model.User
 import com.squareup.picasso.Picasso
 import de.hdodenhof.circleimageview.CircleImageView
@@ -34,6 +35,14 @@ class ListaAdminViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         }
 
         itemView.setOnClickListener { onClickListener(user) }
+
+        // Asigna Tipo Letra de Ubuntu a los texView (funcion Disenada para usar en cualquier activity)
+        TypefaceUtil.asignarTipoLetra(itemView.context,
+            null,
+            nombreAdmin,
+            apellidoAdmin,
+            correoAdmin
+        )
 
     }
 

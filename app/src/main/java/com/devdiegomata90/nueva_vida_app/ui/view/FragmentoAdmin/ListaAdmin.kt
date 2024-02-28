@@ -11,6 +11,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.devdiegomata90.nueva_vida_app.core.TypefaceUtil
 import com.devdiegomata90.nueva_vida_app.data.model.User
 import com.devdiegomata90.nueva_vida_app.databinding.FragmentListaAdminBinding
 import com.devdiegomata90.nueva_vida_app.ui.adapter.ListaAdminAdapter
@@ -55,6 +56,13 @@ class ListaAdmin : Fragment() {
                 adapter.updateData(users as List<User>)
             }
         }
+
+        //Asignar tipo de letra
+        TypefaceUtil.asignarTipoLetra(
+            view.context,
+            null,
+            binding.name
+        )
 
         return view
     }

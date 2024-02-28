@@ -95,7 +95,7 @@ class AudioAgregarActivity : AppCompatActivity() {
     private fun initComponent() {
         // Inicializa la instancia del LoadingDialog
         loadingDialog = LoadingDialog(this)
-        loadingDialog.mensaje = "Agregando valores por favor espere..."
+        loadingDialog.mensaje = "Guardando imagen por favor espere..."
         loadingDialog.setCancelable = false
 
     }

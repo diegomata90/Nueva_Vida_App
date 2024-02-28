@@ -18,13 +18,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.MimeTypeMap
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.devdiegomata90.nueva_vida_app.R
+import com.devdiegomata90.nueva_vida_app.core.LoadingDialog
+import com.devdiegomata90.nueva_vida_app.core.TypefaceUtil
 import com.devdiegomata90.nueva_vida_app.databinding.FragmentPerfilAdminBinding
 import com.devdiegomata90.nueva_vida_app.ui.viewmodel.PerfilAdminViewModel
 import com.squareup.picasso.Picasso
@@ -40,6 +44,7 @@ class PerfilAdmin : Fragment() {
     private val perfilAdminViewModel: PerfilAdminViewModel by viewModels()
     private var rutaArchivoUri: Uri? = null
     private var extensionImagen: String? = null
+    private lateinit var loadingDialog: LoadingDialog
 
 
     override fun onCreateView(
@@ -50,6 +55,7 @@ class PerfilAdmin : Fragment() {
         binding = FragmentPerfilAdminBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        initComponent()
         eventos()
 
         //Inicializar el onCreate del ViewModel
@@ -79,12 +85,45 @@ class PerfilAdmin : Fragment() {
             Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
         }
 
+        //Escuchar el loading
+        perfilAdminViewModel.loading.observe(requireActivity()) { loading ->
+            if (loading) {
+                loadingDialog.starLoading()
+            } else {
+                loadingDialog.isDismiss()
+            }
+        }
+
+        //Cambiar el tipo letra de Ubuntu
+        TypefaceUtil.asignarTipoLetra(
+            requireContext(),
+            null,
+            TextView(
+                requireContext()
+            ),
+            binding.perfilTxt,
+            binding.infoTxt,
+            binding.uidAdminTXT,
+            binding.nombreAdminTXT,
+            binding.apellidosAdminTXT,
+            binding.correoAdminTXT,
+            binding.uidAdmin,
+            binding.nombreAdmin,
+            binding.apellidosAdmin,
+            binding.correoAdmin,
+            binding.CambioPass,
+            binding.btnEdit
+        )
+
 
         return view
     }
 
-    fun initComponent(view: View) {
-
+    fun initComponent() {
+        // Inicializa la instancia del LoadingDialog
+        loadingDialog = LoadingDialog(requireActivity())
+        loadingDialog.mensaje = "Agregando valores por favor espere..."
+        loadingDialog.setCancelable = false
 
     }
 
@@ -302,4 +341,5 @@ class PerfilAdmin : Fragment() {
     }
 
 }
+
 

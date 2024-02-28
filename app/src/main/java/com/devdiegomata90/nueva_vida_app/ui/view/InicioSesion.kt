@@ -18,7 +18,6 @@ import com.google.firebase.auth.FirebaseAuth
 class InicioSesion : AppCompatActivity() {
 
     lateinit var btnAceder: Button
-    lateinit var btnRestaurar: Button
     lateinit var Correo: EditText
     lateinit var Password: EditText
     lateinit var firebaseAuth: FirebaseAuth
@@ -37,7 +36,6 @@ class InicioSesion : AppCompatActivity() {
         Correo = findViewById(R.id.Correo)
         Password = findViewById(R.id.Password)
         btnAceder = findViewById(R.id.btnAcceder)
-        btnRestaurar = findViewById(R.id.btnRestaurar)
         inicioSession = findViewById(R.id.inicioSession)
 
         //INICIALIZA FIREBASE
@@ -69,9 +67,6 @@ class InicioSesion : AppCompatActivity() {
             }
         }
 
-        btnRestaurar.setOnClickListener {
-            startActivity(Intent(this, RestaurarPass::class.java))
-        }
 
         // Asigna Tipo Letra de Ubuntu a los texView (funcion Disenada para usar en cualquier activity)
         TypefaceUtil.asignarTipoLetra(this,
@@ -79,8 +74,7 @@ class InicioSesion : AppCompatActivity() {
             btnAceder,
             Correo,
             Password,
-            inicioSession,
-            btnRestaurar
+            inicioSession
         )
     }
 

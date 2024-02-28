@@ -161,6 +161,7 @@
     <string name="uidAdminTXT">UID: </string>
     <string name="btnEditar">Editar</string>
 
-
+    <string name="CompartirTxt">Compartir a los mientros de la Iglesia</string>
+    <string name="ButonCompartir">Compartir</string>
 
 </resources>

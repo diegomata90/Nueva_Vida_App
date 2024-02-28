@@ -74,7 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="15dp"
-            android:gravity="bottom"
+            android:gravity="top"
             android:orientation="vertical">
 
             <Button
@@ -85,16 +85,6 @@
                 android:background="@drawable/btn_personalizado"
                 android:text="@string/btnAcceder"
                 android:textColor="@color/white"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/btnRestaurar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/btn_personalizadog"
-                android:text="@string/btnRestaurar"
-                android:textColor="@color/black_app"
                 android:textStyle="bold" />
 
         </LinearLayout>

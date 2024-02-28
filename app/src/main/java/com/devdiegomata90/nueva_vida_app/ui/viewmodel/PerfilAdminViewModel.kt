@@ -12,6 +12,7 @@ import com.devdiegomata90.nueva_vida_app.domain.EditNameUseCase
 import com.devdiegomata90.nueva_vida_app.domain.GetUserUseCase
 import com.devdiegomata90.nueva_vida_app.domain.UpdateImageCamaraUseCase
 import com.devdiegomata90.nueva_vida_app.domain.UpdateImageUseCase
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.io.File
 
@@ -23,6 +24,9 @@ class PerfilAdminViewModel: ViewModel() {
 
     private val _message = MutableLiveData<String>()
     val message get() = _message
+
+    private val _loading = MutableLiveData<Boolean>()
+    val loading get() = _loading
 
 
 
@@ -71,11 +75,16 @@ class PerfilAdminViewModel: ViewModel() {
 
     fun editImage(url: String, extension: String) {
         viewModelScope.launch {
+            _loading.value = true
+
             val result = updateImageUseCase(url,extension)
+
             if (result) {
-                _message.value = "Imagen editada"
                 onCreate()
+                _loading.value = false
+                _message.value = "Imagen editada"
             }else{
+                _loading.value = false
                 _message.value = "Error al editar la imagen"
             }
 
@@ -85,11 +94,17 @@ class PerfilAdminViewModel: ViewModel() {
 
     fun editImageCamara(bitmap: Bitmap, extension: String) {
         viewModelScope.launch {
+            _loading.value = true
+
             val result = updateImageCamaraUseCase(bitmap,extension)
+
             if (result){
-                _message.value = "Imagen editada"
                 onCreate()
+                delay(1000)
+                _loading.value = false
+                _message.value = "Imagen editada"
             }else{
+                _loading.value = false
                 _message.value = "Error al editar la imagen"
             }
         }
