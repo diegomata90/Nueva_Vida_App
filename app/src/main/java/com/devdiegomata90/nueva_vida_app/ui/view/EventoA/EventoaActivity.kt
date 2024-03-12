@@ -206,8 +206,8 @@ class EventoaActivity : AppCompatActivity(), EventosViewHolder.onItemClickListen
         return super.onSupportNavigateUp()
     }
 
-    override fun onClick(position: Int) {
-        Toast.makeText(this, "OnClick ${position.toString()}", Toast.LENGTH_SHORT).show()
+    override fun onClick(evento: Evento) {
+       // Toast.makeText(this, "OnClick ${position.toString()}", Toast.LENGTH_SHORT).show()
     }
 
     override fun onLongClick(evento: Evento) {

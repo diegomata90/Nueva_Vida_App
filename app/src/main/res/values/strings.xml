@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Nueva Vida App</string>
+    <string name="linkdescargaApp">https://diegomata90.github.io/</string>
 
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
@@ -161,7 +162,9 @@
     <string name="uidAdminTXT">UID: </string>
     <string name="btnEditar">Editar</string>
 
+    <!-- Detalle Evento -->
     <string name="CompartirTxt">Compartir a los mientros de la Iglesia</string>
     <string name="ButonCompartir">Compartir</string>
+    <string name="AddCalendar">Añadir al calendario</string>
 
 </resources>

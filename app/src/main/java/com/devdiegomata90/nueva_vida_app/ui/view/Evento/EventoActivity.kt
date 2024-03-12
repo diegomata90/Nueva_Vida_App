@@ -1,6 +1,7 @@
 package com.devdiegomata90.nueva_vida_app.ui.view.Evento
 
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -17,6 +18,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import android.util.Log
 
+@Suppress("CAST_NEVER_SUCCEEDS")
 class EventoActivity : AppCompatActivity(), EventosViewHolder.onItemClickListener  {
 
     //Variable de la XML
@@ -114,9 +116,20 @@ class EventoActivity : AppCompatActivity(), EventosViewHolder.onItemClickListene
     }
 
     //Cuando se le da un click al evento
-    override fun onClick(position: Int) {
-        Toast.makeText(this, "OnClick CLIENTE de la vista #${position.toString()}", Toast.LENGTH_SHORT).show()
+    override fun onClick(evento: Evento) {
+        //enviar al detalle evento a la vista
 
+        val intent = Intent(this, EventoDetalleActivity::class.java)
+
+        intent.putExtra("tituloEvento", evento.titulo)
+        intent.putExtra("descripcionEvento", evento.descripcion)
+        intent.putExtra("fechaEvento", evento.fecha)
+        intent.putExtra("horaEvento", evento.hora)
+        intent.putExtra("lugarEvento", evento.lugar)
+        intent.putExtra("imagenEvento", evento.imagen)
+        intent.putExtra("id", evento.id)
+
+        startActivity(intent)
     }
 
     //Cuando se deja precionado el evento

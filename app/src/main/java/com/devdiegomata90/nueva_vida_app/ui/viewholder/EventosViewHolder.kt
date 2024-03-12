@@ -27,14 +27,14 @@ class EventosViewHolder(private val view: View, onItemClickListener: onItemClick
     //METODO PARA LA ACCION DEL ADMINISTRADOR
     interface onItemClickListener {
 
-        fun onClick(position: Int)
+        fun onClick(evento: Evento)
         fun onLongClick(evento: Evento)
 
     }
 
     init {
             view.setOnClickListener {
-                onItemClickListener.onClick(adapterPosition)
+                onItemClickListener.onClick(EventoArray)
             }
             view.setOnLongClickListener {
                 onItemClickListener.onLongClick(EventoArray)
