@@ -2,30 +2,32 @@ package com.devdiegomata90.nueva_vida_app.ui.viewmodel
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.ImageDecoder
-import android.net.Uri
-import android.os.Build
-import android.provider.MediaStore
 import android.util.Log
 import android.widget.ImageView
+import androidx.activity.result.ActivityResultLauncher
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+
+import com.devdiegomata90.nueva_vida_app.data.model.Evento
+import com.devdiegomata90.nueva_vida_app.domain.AddEventCalendarUseCase
 import com.devdiegomata90.nueva_vida_app.domain.GetImagenUseCase
+import kotlinx.coroutines.launch
+
 
 class EventoDetalleViewModel : ViewModel() {
 
     //Livedata
-    val _url = MutableLiveData<Uri>()
-    val url get() = _url
 
 
     //Casos de uso
-    val getImagenUseCase = GetImagenUseCase()
+    private val getImagenUseCase = GetImagenUseCase()
+    private val addEventCalendarUseCase = AddEventCalendarUseCase()
 
     //Funciones
 
-    fun shareImage(context: Context, imagenDetalle: ImageView, mensage:String) {
+    fun shareImage(context: Context, imagenDetalle: ImageView, mensage: String) {
         val bitmap = imagenDetalle.drawable.toBitmap()
 
         val uri = getImagenUseCase(context, bitmap)
@@ -44,6 +46,16 @@ class EventoDetalleViewModel : ViewModel() {
         } else {
             Log.e("ImpotanteError", "No se pudo compartir la imagen uri es nulo")
         }
+    }
+
+    fun addEvent(context: Context, event: Evento) {
+
+        viewModelScope.launch {
+            addEventCalendarUseCase(context, event)
+
+        }
+
+
     }
 
 

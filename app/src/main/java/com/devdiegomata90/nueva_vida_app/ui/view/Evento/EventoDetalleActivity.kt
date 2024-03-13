@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.core.TypefaceUtil
+import com.devdiegomata90.nueva_vida_app.data.model.Evento
 import com.devdiegomata90.nueva_vida_app.ui.viewmodel.EventoDetalleViewModel
 import com.devdiegomata90.nueva_vida_app.databinding.ActivityEventoDetalleBinding
 import com.squareup.picasso.Picasso
@@ -25,6 +26,7 @@ class EventoDetalleActivity : AppCompatActivity() {
     private lateinit var hora: String
     private lateinit var lugar: String
     private lateinit var imagen: String
+    private lateinit var evento: Evento
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +48,7 @@ class EventoDetalleActivity : AppCompatActivity() {
 
         //Inicializar eventos
         initEventos()
+
 
     }
 
@@ -89,9 +92,19 @@ class EventoDetalleActivity : AppCompatActivity() {
     }
 
     private fun initEventos(){
+
         binding.AddCalendar.setOnClickListener {
+           val event = Evento()
+
+            //Setear informacion del evento
+            event.titulo = titulo
+            event.descripcion = descripcion
+            event.lugar = lugar
+            event.fecha = fecha
+            event.hora = hora
+
             //Agregar evento al calendario
-            Toast.makeText(this, "Agregando evento al calendario", Toast.LENGTH_SHORT).show()
+            eventoDetalleViewModel.addEvent(this,event)
         }
 
         binding.Compartir.setOnClickListener {
@@ -106,23 +119,6 @@ class EventoDetalleActivity : AppCompatActivity() {
             //Compartir evento
             eventoDetalleViewModel.shareImage(this  , binding.ImagenEvento,mensage)
         }
-
-        /*
-        binding.Compartir.setOnClickListener {
-         val text = "$imagen \n $titulo  ${formatFecha(fecha)} $lugar ${formatHora(hora)}"
-
-            // Crear un Intent
-            val sendIntent = Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, text)
-                type = "text/plain"
-            }
-
-            // Iniciar la actividad de compartir
-            this.startActivity(Intent.createChooser(sendIntent, null))
-
-        }
-        */
 
 
     }
