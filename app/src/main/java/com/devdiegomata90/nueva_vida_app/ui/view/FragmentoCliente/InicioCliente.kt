@@ -35,6 +35,7 @@ import com.devdiegomata90.nueva_vida_app.ui.view.Audio.AudioActivity
 import com.devdiegomata90.nueva_vida_app.ui.view.Biblia.BibliaActivity
 import com.devdiegomata90.nueva_vida_app.ui.view.Evento.EventoActivity
 import com.devdiegomata90.nueva_vida_app.ui.view.OtrasCategorias.OtrasCategoriasActivity
+import com.devdiegomata90.nueva_vida_app.ui.view.Video.VideoActivity
 import com.devdiegomata90.nueva_vida_app.ui.viewmodel.InicioClienteViewModel
 import com.google.firebase.database.*
 
@@ -211,11 +212,7 @@ class InicioCliente : Fragment() {
             startActivity(Intent(requireContext(), AudioActivity::class.java))
         }
         cardVideo.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                "Ya casi esta listo los VIDEO, porfavor esperar",
-                Toast.LENGTH_SHORT
-            ).show()
+            startActivity(Intent(requireContext(), VideoActivity::class.java))
         }
 
         btnCompartir.setOnClickListener {

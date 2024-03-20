@@ -167,4 +167,10 @@
     <string name="ButonCompartir">Compartir</string>
     <string name="AddCalendar">Añadir al calendario</string>
 
+    <!-- Video -->
+    <string name="Videotitulo">Titulo del Video</string>
+    <string name="VideoDescrip">Descripción del Video</string>
+    <string name="LinkVideo">Link del Video</string>
+
+
 </resources>

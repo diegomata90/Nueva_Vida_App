@@ -34,9 +34,10 @@ class ListAdminViewModel : ViewModel() {
 
             val result = getUserListUseCase()
 
+
             result.collect { _users.value = it }
 
-            Log.d("ListAdminVM", "Datos $result")
+
 
         }
     }

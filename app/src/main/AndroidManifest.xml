@@ -7,13 +7,15 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" /> <!-- PERMISO PARA NOTIFICAR -->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- LEER ALMACENAMIENTO EXTERNO -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" /> <!-- LEER ALMACENAMIENTO EXTERNO -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.Intent.FLAG_GRANT_READ_URI_PERMISSION" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -23,6 +25,9 @@
         android:supportsRtl="true"
         android:theme="@style/Nueva_Vida_App"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.view.Video.VideoActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.view.Evento.EventoDetalleActivity"
             android:exported="false" />
@@ -115,13 +120,10 @@
             android:authorities="com.devdiegomata90.nueva_vida_app.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
-
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_path">
-            </meta-data>
+                android:resource="@xml/file_path"></meta-data>
         </provider>
-
     </application>
 
 </manifest>

@@ -104,6 +104,7 @@ class UserRepository {
 
         val query = firebase.orderByChild("NOMBRE")
         query.addValueEventListener(valueEventListener)
+        Log.d("FUSER", "DATA: ${query}")
 
         awaitClose { query.removeEventListener(valueEventListener) }
 
