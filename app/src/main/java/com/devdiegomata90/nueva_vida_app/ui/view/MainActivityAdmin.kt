@@ -18,6 +18,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import android.graphics.Typeface
+import android.util.Log
 import android.util.TypedValue
 
 
@@ -104,18 +105,24 @@ class MainActivityAdmin : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
     private fun ComprabarInicioSession() {
-        //Validar que exista el usuario
-        if (currentUser != null) {
-            Toast.makeText(
-                this,
-                "Session iniciada con correo " + currentUser?.email,
-                Toast.LENGTH_LONG
-            ).show()
-        } else {
-            //Si no se ha inciado sesion, es porque el usuario es un cliente
-            startActivity(Intent(this@MainActivityAdmin, MainActivity::class.java))
-            finish()
+        try {
+            //Validar que exista el usuario
+            if (currentUser != null) {
+                Toast.makeText(
+                    this,
+                    "Session iniciada con correo " + currentUser?.email,
+                    Toast.LENGTH_LONG
+                ).show()
+            } else {
+                //Si no se ha inciado sesion, es porque el usuario es un cliente
+                startActivity(Intent(this@MainActivityAdmin, MainActivity::class.java))
+                finish()
+            }
+        } catch (e: Exception) {
+            Toast.makeText(this, "Error: " + e.message, Toast.LENGTH_SHORT).show()
+            Log.e("Errores: ", e.message.toString())
         }
+
     }
 
     private fun CerraSession() {

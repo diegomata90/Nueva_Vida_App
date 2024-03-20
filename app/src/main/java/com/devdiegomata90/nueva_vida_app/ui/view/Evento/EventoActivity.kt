@@ -134,7 +134,7 @@ class EventoActivity : AppCompatActivity(), EventosViewHolder.onItemClickListene
 
     //Cuando se deja precionado el evento
     override fun onLongClick(evento: Evento) {
-        Toast.makeText(this, "OnLongClick CLIENTE del Evento: ${evento.titulo}", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Evento: ${evento.titulo}", Toast.LENGTH_SHORT).show()
     }
 
 }

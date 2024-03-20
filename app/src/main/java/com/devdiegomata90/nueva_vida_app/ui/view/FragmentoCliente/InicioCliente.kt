@@ -44,7 +44,6 @@ class InicioCliente : Fragment() {
 
     private lateinit var rvCategorias: RecyclerView
     private lateinit var categoriasAdapter: CategoriasAdapter
-    private lateinit var databaseReference: DatabaseReference
     private lateinit var CategoriasTXT: TextView
     private lateinit var OtrasCategoriasTXT: TextView
     private lateinit var Evento: TextView
@@ -159,7 +158,6 @@ class InicioCliente : Fragment() {
 
     private fun initComponent(view: View) {
         rvCategorias = view.findViewById(R.id.rvCategorias)
-        databaseReference = FirebaseDatabase.getInstance().getReference("Categorias")
         CategoriasTXT = view.findViewById(R.id.CategoriasTXT)
         OtrasCategoriasTXT = view.findViewById(R.id.OtrasCategoriasTXT)
         Evento = view.findViewById(R.id.Evento)

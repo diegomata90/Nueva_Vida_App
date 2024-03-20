@@ -17,12 +17,12 @@ import com.devdiegomata90.nueva_vida_app.ui.view.EventoA.EventoaActivity
 import com.devdiegomata90.nueva_vida_app.core.TypefaceUtil
 import com.devdiegomata90.nueva_vida_app.ui.view.AudioA.AudioaActivity
 import com.devdiegomata90.nueva_vida_app.ui.view.Biblia.BibliaActivity
+import com.devdiegomata90.nueva_vida_app.ui.view.Video.VideoActivity
 import com.devdiegomata90.nueva_vida_app.ui.viewmodel.InicioAdminViewModel
 
 class InicioAdmin : Fragment() {
 
     private lateinit var CategoriasTXT: TextView
-    private lateinit var OtrasCategoriasTXT: TextView
     private lateinit var NombreTXT: TextView
     private lateinit var Evento: TextView
     private lateinit var Biblia: TextView
@@ -94,7 +94,6 @@ class InicioAdmin : Fragment() {
     private fun initComponent(view: View) {
 
         CategoriasTXT = view.findViewById(R.id.CategoriasTXT)
-        OtrasCategoriasTXT = view.findViewById(R.id.OtrasCategoriasTXT)
         NombreTXT = view.findViewById(R.id.NombreTXT)
         Evento = view.findViewById(R.id.Evento)
         Biblia = view.findViewById(R.id.Biblia)
@@ -117,11 +116,7 @@ class InicioAdmin : Fragment() {
             startActivity(Intent(requireContext(), AudioaActivity::class.java))
         }
         cardVideo.setOnClickListener {
-            Toast.makeText(
-                requireContext(),
-                "Ya casi esta listo los VIDEO, porfavor esperar",
-                Toast.LENGTH_SHORT
-            ).show()
+            startActivity(Intent(requireContext(), VideoActivity::class.java))
         }
     }
 
