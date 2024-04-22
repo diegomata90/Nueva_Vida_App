@@ -60,31 +60,35 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.inicio_cliente -> {
-                supportFragmentManager.beginTransaction().replace(
-                    R.id.fragment_container,
-                    InicioCliente()
-                ).commit()
-            }
+                    supportFragmentManager.beginTransaction().replace(
+                        R.id.fragment_container,
+                        InicioCliente()
+                    ).commit()
+                }
+
             R.id.acercade -> {
                 supportFragmentManager.beginTransaction().replace(
                     R.id.fragment_container,
                     AcercaDeCliente()
                 ).commit()
             }
+
             R.id.compartir -> {
                 supportFragmentManager.beginTransaction().replace(
                     R.id.fragment_container,
                     CompartirCliente()
                 ).commit()
             }
+
             R.id.administrador -> {
                 supportFragmentManager.beginTransaction().replace(
                     R.id.fragment_container,
                     LoginAdmin()
                 ).commit()
             }
+
             R.id.salir -> {
-                Toast.makeText(this,"Salir",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Salir", Toast.LENGTH_SHORT).show()
             }
         }
         drawerLayout.closeDrawer(GravityCompat.START)

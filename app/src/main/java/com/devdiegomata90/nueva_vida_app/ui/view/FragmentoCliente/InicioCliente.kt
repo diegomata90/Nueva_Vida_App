@@ -135,16 +135,20 @@ class InicioCliente : Fragment() {
             override fun onAvailable(network: Network) {
                 super.onAvailable(network)
                 requireActivity().runOnUiThread {
-                    ConConexion.setVisibility(View.VISIBLE)
-                    SinConexion.setVisibility(View.GONE)
+                    if(isAdded) {
+                        ConConexion.setVisibility(View.VISIBLE)
+                        SinConexion.setVisibility(View.GONE)
+                    }
                 }
             }
 
             override fun onLost(network: Network) {
                 super.onLost(network)
                 requireActivity().runOnUiThread {
-                    ConConexion.setVisibility(View.GONE)
-                    SinConexion.setVisibility(View.VISIBLE)
+                    if(isAdded) {
+                        ConConexion.setVisibility(View.GONE)
+                        SinConexion.setVisibility(View.VISIBLE)
+                    }
                 }
             }
         }
