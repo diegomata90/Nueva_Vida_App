@@ -23,7 +23,7 @@ class CargaActivity : AppCompatActivity() {
         setContentView(R.layout.activity_carga)
         initComponent()
 
-        val duracion:Long  = 1500
+        val duracion:Long  = 500
 
         // Mostrar la actividad de carga
         Handler(Looper.getMainLooper()).postDelayed({

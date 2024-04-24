@@ -33,6 +33,21 @@
 
     </style>
 
+    <!-- Thema de Cargar SplashScreen-->
+    <style name="Theme.App.Staring" parent="Theme.SplashScreen">
+
+        <!-- Color Fondo -->
+        <item name="windowSplashScreenBackground">@color/backgroundSplash</item>
+
+        <!-- Icono -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ico_splash</item>
+
+        <!-- Duración de la animación del Icono -->
+        <item name="windowSplashScreenAnimationDuration">1000</item>
+
+        <!-- Redirecionamiento del tema de la aplicación -->
+        <item name="postSplashScreenTheme">@style/Theme.Nueva_Vida_App</item>
+    </style>
 
 
 
