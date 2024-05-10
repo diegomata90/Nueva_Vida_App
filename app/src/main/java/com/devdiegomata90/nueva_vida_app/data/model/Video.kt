@@ -8,6 +8,7 @@ class Video {
     var DESCRIPCION: String? = null
     var LINK: String? = null
     var IMAGE: String? = null
+    var IDYOUTUBE: String? = null
 
 
     constructor()
@@ -17,13 +18,15 @@ class Video {
         titulo: String?,
         descripcion: String?,
         link: String?,
-        image: String?
+        image: String?,
+        idYoutube: String?
     ) {
         this.ID = id
         this.TITULO = titulo
         this.DESCRIPCION = descripcion
         this.LINK = link
         this.IMAGE = image
+        this.IDYOUTUBE = idYoutube
     }
 
 }

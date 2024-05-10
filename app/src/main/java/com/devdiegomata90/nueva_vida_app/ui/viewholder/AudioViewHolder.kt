@@ -1,9 +1,11 @@
 package com.devdiegomata90.nueva_vida_app.ui.viewholder
 
+import android.annotation.SuppressLint
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.compose.ui.text.substring
 import androidx.recyclerview.widget.RecyclerView
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.data.model.Audio
@@ -21,9 +23,17 @@ class AudioViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
     private val botonPlay: AppCompatImageView = view.findViewById(R.id.PlayAudio)
 
 
-
     //Metodo para setear los valores de la vista
+    @SuppressLint("SetTextI18n")
     fun bind(audio: Audio, onClickListener: (Audio) -> Unit, admin: Boolean) {
+
+        val num = "${audio.id} ${audio.fecha!!.replace("-","")}"
+        val conDes ="${itemView.context.getString(R.string.contentDescBTNPlay)} $num"
+
+
+        //Asigna contentDescription al boton
+        botonPlay.contentDescription = conDes
+
 
         //Asigna texto de basedatos al textView
         audioTitulo.text = audio.titulo
@@ -33,12 +43,12 @@ class AudioViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
         //Si es administrador muestra el boton editar si el boton play
         //De se le asigna el Evento a cada boton
-        if(admin){
+        if (admin) {
             botonPlay.visibility = View.GONE
-            itemView.setOnClickListener {onClickListener(audio)}
-        }else{
+            itemView.setOnClickListener { onClickListener(audio) }
+        } else {
             botonPlay.visibility = View.VISIBLE
-            botonPlay.setOnClickListener {onClickListener(audio)}
+            botonPlay.setOnClickListener { onClickListener(audio) }
         }
 
         ///Capturar la imagen con libreria Picaso
@@ -52,7 +62,8 @@ class AudioViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         }
 
         // Asigna Tipo Letra de Ubuntu a los texView (funcion Disenada para usar en cualquier activity)
-        TypefaceUtil.asignarTipoLetra(itemView.context,
+        TypefaceUtil.asignarTipoLetra(
+            itemView.context,
             null,
             audioTitulo,
             descripcionAudio,

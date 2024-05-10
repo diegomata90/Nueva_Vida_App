@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.Fragment
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.core.TypefaceUtil
@@ -19,15 +20,21 @@ class AcercaDeCliente : Fragment() {
     private lateinit var correoDev: TextView
     private lateinit var versionApp: TextView
     private lateinit var redesSocial: TextView
-    private lateinit var irWebsite: TextView
-    private lateinit var irLinkedin: TextView
-    private lateinit var irTelegram: TextView
-    private lateinit var irYouTube: TextView
-    private lateinit var irGithub: TextView
-    private lateinit var irCorreo: TextView
+    private lateinit var txtIrWebsite: TextView
+    private lateinit var txtIrLinkedin: TextView
+    private lateinit var txtIrTelegram: TextView
+    private lateinit var txtIrYouTube: TextView
+    private lateinit var txtIrGithub: TextView
+    private lateinit var txtIrCorreo: TextView
     private lateinit var logon: AppCompatImageView
     private lateinit var infoContact: TextView
 
+    private lateinit var irWebsite: LinearLayoutCompat
+    private lateinit var irLinkedin: LinearLayoutCompat
+    private lateinit var irTelegram: LinearLayoutCompat
+    private lateinit var irYouTube: LinearLayoutCompat
+    private lateinit var irGithub: LinearLayoutCompat
+    private lateinit var irCorreo: LinearLayoutCompat
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +50,7 @@ class AcercaDeCliente : Fragment() {
             view.context,
             null,
             acercade, desarrollador, correoDev, versionApp,
+            txtIrWebsite,txtIrLinkedin,txtIrTelegram,txtIrYouTube,txtIrGithub,txtIrCorreo,
             redesSocial,infoContact, irWebsite, irLinkedin, irTelegram, irYouTube, irGithub,irCorreo
         )
 
@@ -64,6 +72,13 @@ class AcercaDeCliente : Fragment() {
         irYouTube = view.findViewById(R.id.Ir_youtube)
         irGithub = view.findViewById(R.id.Ir_Github)
         irCorreo = view.findViewById(R.id.Ir_correo)
+
+        txtIrWebsite = view.findViewById(R.id.txtIr_website)
+        txtIrLinkedin = view.findViewById(R.id.txtIr_linkedin)
+        txtIrTelegram = view.findViewById(R.id.txtIr_telegram)
+        txtIrYouTube = view.findViewById(R.id.txtIr_youtube)
+        txtIrGithub = view.findViewById(R.id.txtIr_Github)
+        txtIrCorreo = view.findViewById(R.id.txtIr_correo)
 
     }
     private fun eventos(){

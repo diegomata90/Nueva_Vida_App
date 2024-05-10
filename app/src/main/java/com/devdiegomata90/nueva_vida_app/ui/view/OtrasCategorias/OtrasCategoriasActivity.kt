@@ -71,6 +71,7 @@ class OtrasCategoriasActivity : AppCompatActivity() {
         intent.putExtra("Imagen", categoriaDetalle.imagen.toString())
         intent.putExtra("Descripcion",categoriaDetalle.descripcion.toString())
         intent.putExtra("Contenido",categoriaDetalle.contenido.toString())
+        intent.putExtra("Link",categoriaDetalle.link.toString())
 
 
         val categoryName = getIntent().getStringExtra("NombreCategoria").toString(); //Recuperamos el nombreOtraCategoria

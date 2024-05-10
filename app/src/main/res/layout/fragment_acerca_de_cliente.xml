@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,7 +18,9 @@
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:layout_marginTop="3dp"
+            android:contentDescription="@string/contentDescLOGON"
             android:src="@drawable/logon" />
+
 
         <!-- Contenedor de acerca de-->
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -84,6 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:layout_marginTop="30dp"
+            android:layout_marginBottom="40dp"
             android:orientation="vertical">
 
             <!-- Titulo Redes Sociales-->
@@ -105,172 +108,238 @@
                 android:background="@color/red2_app" />
 
             <TextView
-                android:textSize="10sp"
                 android:id="@+id/InfoContact"
-                android:text="@string/InfoContact"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="@string/InfoContact"
+                android:textSize="10sp" />
 
             <!-- PÁGINA WEB -->
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/Ir_website"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_height="80dp"
                 android:layout_marginStart="15dp"
-                android:orientation="horizontal">
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:gravity="start">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/www"/>
-
-                <TextView
-                    android:id="@+id/Ir_website"
-                    android:text="@string/Ir_website"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="#000"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/www" />
+
+                    <TextView
+                        android:id="@+id/txtIr_website"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/Ir_website"
+                        android:textColor="#000"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <!-- PÁGINA LINKEDIN -->
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/Ir_linkedin"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_height="80dp"
                 android:layout_marginStart="15dp"
-                android:orientation="horizontal">
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:gravity="start">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/linkedin"/>
 
-                <TextView
-                    android:id="@+id/Ir_linkedin"
-                    android:text="@string/Ir_linkedin"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="#000"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/linkedin" />
+
+                    <TextView
+                        android:id="@+id/txtIr_linkedin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/Ir_linkedin"
+                        android:textColor="#000"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <!-- PÁGINA TELEGRAM -->
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/Ir_telegram"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_height="80dp"
                 android:layout_marginStart="15dp"
-                android:orientation="horizontal">
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:gravity="start">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/telegrama"/>
-
-                <TextView
-                    android:id="@+id/Ir_telegram"
-                    android:text="@string/Ir_telegram"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="#000"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/telegrama" />
+
+                    <TextView
+                        android:id="@+id/txtIr_telegram"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/Ir_telegram"
+                        android:textColor="#000"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <!-- PÁGINA YOUTUBE -->
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/Ir_youtube"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_height="80dp"
                 android:layout_marginStart="15dp"
-                android:orientation="horizontal">
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:gravity="start">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/youtube_r"/>
-
-                <TextView
-                    android:id="@+id/Ir_youtube"
-                    android:text="@string/Ir_youtube"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="#000"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/youtube_r" />
+
+                    <TextView
+                        android:id="@+id/txtIr_youtube"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/Ir_youtube"
+                        android:textColor="#000"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <!-- PÁGINA CORREO -->
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/Ir_correo"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_height="80dp"
                 android:layout_marginStart="15dp"
-                android:orientation="horizontal">
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:gravity="start">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/gmail"/>
-
-                <TextView
-                    android:id="@+id/Ir_correo"
-                    android:text="@string/Ir_correo"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="#000"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/gmail" />
+
+                    <TextView
+                        android:id="@+id/txtIr_correo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/Ir_correo"
+                        android:textColor="#000"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <!-- PÁGINA GITHUB -->
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/Ir_Github"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_height="80dp"
                 android:layout_marginStart="15dp"
-                android:orientation="horizontal">
+                android:layout_marginTop="15dp"
+                android:orientation="horizontal"
+                android:gravity="start">
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:src="@drawable/git"/>
-
-                <TextView
-                    android:id="@+id/Ir_Github"
-                    android:text="@string/Ir_Github"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="#000"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/git" />
+
+                    <TextView
+                        android:id="@+id/txtIr_Github"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/Ir_Github"
+                        android:textColor="#000"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
 
             </androidx.appcompat.widget.LinearLayoutCompat>
-
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-</FrameLayout>
+</ScrollView>

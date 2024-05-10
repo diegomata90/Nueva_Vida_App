@@ -29,7 +29,8 @@
             app:lottie_autoPlay="true"
             android:layout_gravity="center"
             android:layout_width="300dp"
-            android:layout_height="300dp"/>
+            android:layout_height="300dp"
+            android:background="@color/white"/>
 
         <Button
             android:id="@+id/ButonCompartir"

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="70dp"
     android:layout_marginTop="8dp"
     tool:cardBackgroundColor="@color/backgroud_RV">
 
@@ -15,11 +16,9 @@
 
         <ImageView
             android:id="@+id/audio_preview"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
             tools:background="@drawable/album"/>
 
         <androidx.appcompat.widget.LinearLayoutCompat

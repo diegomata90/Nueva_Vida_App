@@ -11,13 +11,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.devdiegomata90.nueva_vida_app.R
 import com.devdiegomata90.nueva_vida_app.ui.view.EventoA.EventoaActivity
 import com.devdiegomata90.nueva_vida_app.core.TypefaceUtil
 import com.devdiegomata90.nueva_vida_app.ui.view.AudioA.AudioaActivity
 import com.devdiegomata90.nueva_vida_app.ui.view.Biblia.BibliaActivity
-import com.devdiegomata90.nueva_vida_app.ui.view.Video.VideoActivity
+import com.devdiegomata90.nueva_vida_app.ui.view.Video.VideoYouTubeActivity
 import com.devdiegomata90.nueva_vida_app.ui.viewmodel.InicioAdminViewModel
 
 class InicioAdmin : Fragment() {
@@ -116,7 +115,7 @@ class InicioAdmin : Fragment() {
             startActivity(Intent(requireContext(), AudioaActivity::class.java))
         }
         cardVideo.setOnClickListener {
-            startActivity(Intent(requireContext(), VideoActivity::class.java))
+            startActivity(Intent(requireContext(), VideoYouTubeActivity::class.java))
         }
     }
 

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Nueva Vida App</string>
     <string name="linkdescargaApp">https://diegomata90.github.io/</string>
 
@@ -100,17 +100,20 @@
     <string name="Ir_Github">GitHub</string>
     <string name="Ir_correo">Correo</string>
 
+
     <!-- BIBLIA-->
     <string name="LibroTXT">Libro</string>
     <string name="CapituloTXT">Capítulo</string>
     <string name="VersiculoTXT2">Versiculo</string>
     <string name="TestamentoTXT">Testamento</string>
-    <string name="SeleccionTXT">Elige</string>
+    <string name="EligeBook">Libro</string>
+    <string name="EligeChapterTXT">Capítulo</string>
     <string name="itemTXT">item dropdown</string>
     <string name="btnMostrar">B</string>
     <string name="versiculoTXT">Versiculo</string>
     <string name="nversiculo">1</string>
     <string name="versiculo">En el principio creó Dios los cielos y la tierra</string>
+
 
     <!-- Notifiaciones -->
     <string name="NoficacionTXT">Notificación</string>
@@ -129,6 +132,7 @@
     <string name="VistasOCategoria">--</string>
     <string name="tituloOCategoria">Titulo de Categoria</string>
     <string name="AutorOCategoria">Jesus</string>
+    <string name="link">Ver Video : </string>
     <string name="ContenidoOCategorias">
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque sunt debitis officiis sint harum, numquam, aspernatur aliquam impedit porro voluptatibus ad suscipit? Veritatis nihil molestiae nisi voluptate labore fugiat deleniti!
     Vel soluta autem quas temporibus vero praesentium omnis rem deserunt? Veritatis, at. Accusantium officiis quam facere iure inventore ipsum necessitatibus, pariatur illum sed quo sequi tempora alias asperiores hic consectetur!
@@ -172,5 +176,17 @@
     <string name="VideoDescrip">Descripción del Video</string>
     <string name="LinkVideo">Link del Video</string>
 
+    <!-- Lector de Pantalla -->
+    <string name="contentDescBTNPlay">Boton para dar play al audio</string>
+    <string name="contentDescBTNPause">Boton para dar pausa al audio</string>
+    <string name="contentDescICOVolumen">Icono volumen</string>
+    <string name="contentDescBARVolumen">Icono volumen</string>
+    <string name="contentDescBTNCompartir">Boton para compartir</string>
+    <string name="contentDescLOGON">Logo developer</string>
+    <string name="contentDescBTNVerYOUTUBE">Boton para ver en youtube</string>
+    <string name="contentDescTXVCorreo">Cuadro texto para ingresar el correo</string>
+    <string name="contentDescTXVPass">Cuadro texto para ingresar la contraseña</string>
+    <string name="contentDescBARAvance">Barra de progreso del audio</string>
+    <string name="contentDescRVAudio">Listado de audios</string>
 
 </resources>

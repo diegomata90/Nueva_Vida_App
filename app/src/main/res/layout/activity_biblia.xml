@@ -8,7 +8,8 @@ tools:context=".ui.view.Biblia.BibliaActivity">
 
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:ignore="ScrollViewSize">
 
     <!-- Contenedor principal-->
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -32,7 +33,7 @@ tools:context=".ui.view.Biblia.BibliaActivity">
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/InputBook"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="160dp"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="10dp"
@@ -44,7 +45,7 @@ tools:context=".ui.view.Biblia.BibliaActivity">
                     android:layout_height="48dp"
                     android:inputType="none"
                     android:padding="10dp"
-                    android:text="@string/SeleccionTXT"
+                    android:text="@string/EligeBook"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -52,7 +53,7 @@ tools:context=".ui.view.Biblia.BibliaActivity">
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/InputChapter"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="130dp"
+                android:layout_width="155dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="10dp"
@@ -64,7 +65,7 @@ tools:context=".ui.view.Biblia.BibliaActivity">
                     android:layout_height="48dp"
                     android:inputType="none"
                     android:padding="10dp"
-                    android:text="@string/SeleccionTXT"
+                    android:text="@string/EligeChapterTXT"
                     android:textSize="16sp" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -108,9 +109,11 @@ tools:context=".ui.view.Biblia.BibliaActivity">
             <!-- Muestra la lista de los versiculos  -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvVersiculo"
+                tools:listitem="@layout/item_versiculo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"/>
+                android:padding="10dp"
+                android:contentDescription="@string/contentDescRVAudio"/>
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>

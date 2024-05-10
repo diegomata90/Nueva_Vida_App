@@ -1,13 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tool="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="30dp"
+    android:layout_marginHorizontal="15dp"
     android:layout_marginVertical="15dp"
     tool:cardBackgroundColor="@color/backgroud_RV"
     tool:cardCornerRadius="16dp">
@@ -16,97 +13,89 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
         android:orientation="vertical">
 
         <!-- Imagen -->
         <androidx.appcompat.widget.AppCompatImageView
-            android:scaleType="fitXY"
             android:id="@+id/imageAudio"
             android:layout_width="match_parent"
             android:layout_height="150dp"
+            android:scaleType="fitXY"
             tools:src="@drawable/image_ico" />
 
-        <!-- Contenedor titulo y boton -->
-        <androidx.cardview.widget.CardView
+        <!-- Contenedor Boton-->
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <!-- Boton de play-->
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/PlayAudio"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="right|center"
+                android:src="@drawable/ic_play"
+                android:visibility="visible" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <!-- Contenedor titulo -->
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tool:cardBackgroundColor="@color/backgroud_RV"
-            android:layout_marginTop="-4dp">
+            android:layout_marginTop="-60dp"
+            android:orientation="horizontal"
+            tool:cardBackgroundColor="@color/backgroud_RV">
 
+            <!-- Contenedor titulo -->
             <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
 
-                <!-- Contenedor Titulos-->
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="245dp"
+                <!-- Titulo -->
+                <TextView
+                    android:id="@+id/TituloAudio"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:orientation="vertical">
+                    android:layout_marginStart="5dp"
+                    android:textColor="@color/textcolor_rv"
+                    android:textSize="19sp"
+                    android:textStyle="bold"
+                    tools:text="@string/TituloAudio" />
 
-                    <TextView
-                        android:id="@+id/TituloAudio"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginBottom="5dp"
-                        android:textColor="@color/textcolor_rv"
-                        android:textSize="19sp"
-                        android:textStyle="bold"
-                        tools:text="@string/TituloAudio" />
+                <!-- Descripcion -->
+                <TextView
+                    android:id="@+id/DescripcionAudio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:textColor="@color/black"
+                    tools:text="@string/DescripcionAudio" />
 
-                    <TextView
-                        android:id="@+id/DescripcionAudio"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="3dp"
-                        android:layout_marginBottom="6dp"
-                        android:drawablePadding="10dp"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/black"
-                        tools:text="@string/DescripcionAudio" />
-
-                    <TextView
-                        android:id="@+id/FechaAudio"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="3dp"
-                        android:layout_marginBottom="6dp"
-                        android:drawablePadding="10dp"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/black"
-                        android:textSize="10sp"
-                        tools:text="@string/FechaAudio" />
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
-
-                <!-- Contenedor Boton-->
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:layout_gravity="center"
-                    android:orientation="vertical">
-
-                    <!-- Boton de play-->
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/PlayAudio"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_play"
-                        android:visibility="visible" />
-
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                <!-- Fecha -->
+                <TextView
+                    android:id="@+id/FechaAudio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="6dp"
+                    android:textColor="@color/black"
+                    android:textSize="10sp"
+                    tools:ignore="SmallSp"
+                    tools:text="@string/FechaAudio" />
 
 
             </androidx.appcompat.widget.LinearLayoutCompat>
-        </androidx.cardview.widget.CardView>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-</LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -71,10 +71,10 @@ class EventosViewHolder(private val view: View, onItemClickListener: onItemClick
         ///Controlar posibles errores
         try {
             //Si la imagen fue traida exitosamente
-            Picasso.get().load(imagen).placeholder(R.drawable.categoria).into(imageEvento)
+            Picasso.get().load(imagen).placeholder(R.drawable.image_ico).into(imageEvento)
         } catch (e: Exception) {
             //Si la imagen no fue traida exitosamente
-            Picasso.get().load(R.drawable.categoria).into(imageEvento)
+            Picasso.get().load(R.drawable.image_ico).into(imageEvento)
         }
 
         // Asigna Tipo Letra de Ubuntu a los texView (funcion Disenada para usar en cualquier activity)

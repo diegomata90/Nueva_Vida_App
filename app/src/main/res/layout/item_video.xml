@@ -17,9 +17,9 @@
         <!-- Imagen -->
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imageVideo"
-            android:layout_width="124dp"
+            android:layout_width="144dp"
             android:layout_height="124dp"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             android:src="@drawable/image_ico" />
 
         <!-- Contenedor texto -->
@@ -35,7 +35,6 @@
             android:id="@+id/tvTituloVideo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             tools:text="@string/Videotitulo" />
 
 
@@ -45,7 +44,6 @@
             android:id="@+id/tvDesVideo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             tools:text="@string/VideoDescrip" />
 
 

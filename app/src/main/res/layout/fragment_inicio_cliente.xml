@@ -206,7 +206,7 @@
                 android:text="@string/OtrasCategoriasTXT"
                 android:textColor="@color/titulos"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"  />
 
             <!-- Recycleview Categoria  -->
             <androidx.recyclerview.widget.RecyclerView
@@ -225,7 +225,8 @@
                 android:text="@string/VersiculoTXT"
                 android:textColor="@color/titulos"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="gone"/>
 
             <!-- Contenedor libro y capitulo  -->
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -283,9 +284,11 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/btnCompartir"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:src="@drawable/compartir_ico" />
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/compartir_ico"
+                    android:visibility="gone"
+                    android:contentDescription="@string/contentDescBTNCompartir"/>
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -16,6 +16,7 @@ class ContenidoCategoriasActivity : AppCompatActivity() {
     lateinit var contenido: String
     lateinit var autor: String
     lateinit var imagen: String
+    lateinit var link: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +45,7 @@ class ContenidoCategoriasActivity : AppCompatActivity() {
         autor = getIntent().getStringExtra("Autor").toString()
         imagen = getIntent().getStringExtra("Imagen").toString()
         contenido = getIntent().getStringExtra("Contenido").toString()
+        link = getIntent().getStringExtra("Link").toString()
 
         //Remplazar los saltos de linea por un salto de linea normal
         contenido = contenido.replace("\\n", "\n")
@@ -55,6 +57,19 @@ class ContenidoCategoriasActivity : AppCompatActivity() {
         binding.tituloOCategoria.text = titulo
         binding.ContenidoOtrasCategorias.text = contenido
         binding.AutorOCategoria.text = autor
+
+        //Muestra el link si no es nulo
+        if(link != "null"){
+
+            binding.LinkOCategoria.visibility = View.VISIBLE
+            binding.btnVerYOUTUBE.setOnClickListener {
+                //Abrir el navegador
+                val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse(link))
+                startActivity(intent)
+            }
+        }
+
+
 
         //Asignar la imagen de la categoria
         //Setear o asignar la imagen al XML

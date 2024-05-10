@@ -32,7 +32,7 @@
             android:lines="1"
             android:marqueeRepeatLimit="1"
             android:textAppearance="@style/MarqueeText"
-            android:textColor="#989494"
+            android:textColor="@color/red2_app"
             android:textSize="20sp"
             android:textStyle="bold"
             tools:text="@string/TituloAudio" />
@@ -41,7 +41,9 @@
         <SeekBar
             android:id="@+id/progress_seek_bar"
             android:layout_width="match_parent"
-            android:layout_height="30dp" />
+            android:layout_height="30dp"
+            android:contentDescription="@string/contentDescBARAvance"
+            tools:progress="0"/>
 
         <!-- Contenedor del tiempo avance del audio-->
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -81,7 +83,8 @@
                 android:layout_weight="1"
                 android:gravity="start"
                 android:src="@drawable/ic_play"
-                android:visibility="visible" />
+                android:visibility="visible"
+                android:contentDescription="@string/contentDescBTNPlay"/>
 
             <!-- Boton de pausa-->
             <androidx.appcompat.widget.AppCompatImageView
@@ -91,7 +94,8 @@
                 android:layout_weight="1"
                 android:gravity="start"
                 android:src="@drawable/ic_pause"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:contentDescription="@string/contentDescBTNPause"/>
 
             <!-- Icono de audio -->
             <androidx.appcompat.widget.AppCompatImageView
@@ -99,7 +103,8 @@
                 android:layout_height="30dp"
                 android:layout_gravity="end|center"
                 android:layout_weight="1"
-                android:src="@drawable/ic_volume" />
+                android:src="@drawable/ic_volume"
+                android:contentDescription="@string/contentDescICOVolumen"/>
 
             <SeekBar
                 android:id="@+id/volume_seek_bar"
@@ -107,7 +112,9 @@
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:gravity="end" />
+                android:gravity="end"
+                android:contentDescription="@string/contentDescBARVolumen"/>
+
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

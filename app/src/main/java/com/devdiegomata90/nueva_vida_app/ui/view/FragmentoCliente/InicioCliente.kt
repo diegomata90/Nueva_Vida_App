@@ -35,9 +35,8 @@ import com.devdiegomata90.nueva_vida_app.ui.view.Audio.AudioActivity
 import com.devdiegomata90.nueva_vida_app.ui.view.Biblia.BibliaActivity
 import com.devdiegomata90.nueva_vida_app.ui.view.Evento.EventoActivity
 import com.devdiegomata90.nueva_vida_app.ui.view.OtrasCategorias.OtrasCategoriasActivity
-import com.devdiegomata90.nueva_vida_app.ui.view.Video.VideoActivity
+import com.devdiegomata90.nueva_vida_app.ui.view.Video.VideoYouTubeActivity
 import com.devdiegomata90.nueva_vida_app.ui.viewmodel.InicioClienteViewModel
-import com.google.firebase.database.*
 
 @Suppress("DEPRECATION")
 class InicioCliente : Fragment() {
@@ -93,6 +92,8 @@ class InicioCliente : Fragment() {
             inicioClienteViewModel.categories.collect { categories ->
                 categoriasAdapter.updateData(categories as List<Categoria>)
             }
+
+
         }
 
 
@@ -101,7 +102,8 @@ class InicioCliente : Fragment() {
                 libro.text = dailyVerse.libro
                 capitulo.text = "${dailyVerse.capitulo}:${dailyVerse.versiculo}"
                 versiculodia.text = dailyVerse.texto
-
+                btnCompartir.visibility = View.VISIBLE // muestra el boton de compartir
+                versiculodiaTXT.visibility = View.VISIBLE // muestra el textView del titulo
             }
         })
 
@@ -134,21 +136,17 @@ class InicioCliente : Fragment() {
         networkCallback = object : NetworkCallback() {
             override fun onAvailable(network: Network) {
                 super.onAvailable(network)
-                requireActivity().runOnUiThread {
-                    if(isAdded && activity != null) {
+                activity?.runOnUiThread {
                         ConConexion.setVisibility(View.VISIBLE)
                         SinConexion.setVisibility(View.GONE)
-                    }
                 }
             }
 
             override fun onLost(network: Network) {
                 super.onLost(network)
-                requireActivity().runOnUiThread {
-                    if(isAdded && activity != null) {
+                activity?.runOnUiThread {
                         ConConexion.setVisibility(View.GONE)
                         SinConexion.setVisibility(View.VISIBLE)
-                    }
                 }
             }
         }
@@ -214,7 +212,8 @@ class InicioCliente : Fragment() {
             startActivity(Intent(requireContext(), AudioActivity::class.java))
         }
         cardVideo.setOnClickListener {
-            startActivity(Intent(requireContext(), VideoActivity::class.java))
+            //startActivity(Intent(requireContext(), VideoActivity::class.java))
+            startActivity(Intent(requireContext(), VideoYouTubeActivity::class.java))
         }
 
         btnCompartir.setOnClickListener {
