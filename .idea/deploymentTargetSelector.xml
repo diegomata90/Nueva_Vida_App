@@ -4,11 +4,14 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2024-05-10T19:24:28.104157017Z">
+        <DropdownSelection timestamp="2024-05-14T20:40:21.698358562Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="LocalEmulator" identifier="path=/home/diego/.android/avd/Pixel_4_API_33.avd" />
+              <DeviceId pluginId="FirebaseDirectAccess" identifier="reservation=projects/app-nueva-vida/deviceSessions/session-vdvhakwt2knda" />
             </handle>
+            <template>
+              <DeviceId pluginId="FirebaseDirectAccess" type="TEMPLATE" identifier="model_id=husky/34" />
+            </template>
           </Target>
         </DropdownSelection>
         <DialogSelection />

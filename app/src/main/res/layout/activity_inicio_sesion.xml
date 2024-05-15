@@ -36,10 +36,13 @@
             app:lottie_imageAssetsFolder="assets"
             app:lottie_loop="true" />
 
+
         <!-- Correo -->
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:hint="@string/correo">
+
 
             <EditText
                 android:id="@+id/Correo"
@@ -47,10 +50,8 @@
                 android:layout_height="60dp"
                 android:drawableStart="@drawable/email_et"
                 android:drawablePadding="10dp"
-                android:hint="@string/correo"
-                android:inputType="textEmailAddress"
-                android:contentDescription="@string/contentDescTXVCorreo"
-                tools:ignore="ContentDescription" />
+                android:importantForAutofill="no"
+                android:inputType="textEmailAddress" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -59,7 +60,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            app:passwordToggleEnabled="true">
+            android:autofillHints=""
+            app:passwordToggleEnabled="true"
+            android:hint="@string/password">
 
             <EditText
                 android:id="@+id/Password"
@@ -67,10 +70,8 @@
                 android:layout_height="60dp"
                 android:drawableStart="@drawable/pass_et"
                 android:drawablePadding="10dp"
-                android:hint="@string/password"
-                android:inputType="textPassword"
-                android:contentDescription="@string/contentDescTXVPass"
-                tools:ignore="ContentDescription"/>
+                android:importantForAutofill="no"
+                android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

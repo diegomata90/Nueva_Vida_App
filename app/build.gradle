@@ -12,8 +12,8 @@ android {
         applicationId "com.devdiegomata90.nueva_vida_app"
         minSdk 23
         targetSdk 34
-        versionCode 8
-        versionName "1.8"
+        versionCode 15
+        versionName "1.15"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
