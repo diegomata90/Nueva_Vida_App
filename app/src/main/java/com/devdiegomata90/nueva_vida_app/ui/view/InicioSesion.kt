@@ -24,6 +24,8 @@ class InicioSesion : AppCompatActivity() {
     lateinit var loadinDialog: LoadingDialog
     lateinit var inicioSession: TextView
 
+    private var contIntentos: Int = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +65,7 @@ class InicioSesion : AppCompatActivity() {
                 Password.error = "Contraseña Ingresada es menor igual a 6"
                 Password.isFocusable = true
             } else {
+                contIntentos += 1
                 LogueAdministradores(correoStr, passStr)
             }
         }
@@ -76,6 +79,7 @@ class InicioSesion : AppCompatActivity() {
             Password,
             inicioSession
         )
+
     }
 
     private fun LogueAdministradores(correoStr: String, passStr: String) {
@@ -96,16 +100,29 @@ class InicioSesion : AppCompatActivity() {
                         "Bienvenido(a)" + user!!.email,
                         Toast.LENGTH_SHORT
                     ).show()
+                    contIntentos = 0
                     finish()
                 } else {
                     loadinDialog.isDismiss()
-                    UsuarioInvalido()
+                    validarIntentos()
                 }
             }.addOnFailureListener {
                 loadinDialog.isDismiss()
-                UsuarioInvalido()
+                validarIntentos()
             }
 
+    }
+
+    private fun validarIntentos(){
+        //validar el intento
+        if(contIntentos >= 5){
+            Toast.makeText(this, "Intentos excedidos", Toast.LENGTH_LONG).show()
+            intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }else{
+            UsuarioInvalido()
+        }
     }
 
     private fun UsuarioInvalido() {
